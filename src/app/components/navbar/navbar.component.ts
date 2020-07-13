@@ -15,6 +15,7 @@ export class NavbarComponent implements OnInit {
   public listTitles: any[];
   public location: Location;
   public currentUser: User;
+  public subTitle: string;
 
   constructor(location: Location,  private element: ElementRef, private router: Router, private authenticationService: AuthenticationService) {
     this.location = location;
@@ -29,6 +30,8 @@ export class NavbarComponent implements OnInit {
     }
   }
   getTitle(){
+    this.subTitle = null;
+
     var titlee = this.location.prepareExternalUrl(this.location.path());
     if(titlee.charAt(0) === '#'){
         titlee = titlee.slice( 1 );
@@ -39,7 +42,11 @@ export class NavbarComponent implements OnInit {
             return this.listTitles[item].title;
         }
     }
-    return 'Dashboard';
+    return 'Serviços';
+  }
+
+  getSubTitle(){
+    return this.subTitle;
   }
 
   logout() {

@@ -5,7 +5,7 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { PaginatorComponent } from './paginator/paginator.component';
+import { BreadcrumbComponent } from './breadcrumb/breadcrumb.component';
 
 @NgModule({
   imports: [
@@ -17,13 +17,13 @@ import { PaginatorComponent } from './paginator/paginator.component';
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    PaginatorComponent
+    BreadcrumbComponent,
   ],
   exports: [
     FooterComponent,
     NavbarComponent,
     SidebarComponent,
-    PaginatorComponent
+    BreadcrumbComponent,
   ]
 })
 export class ComponentsModule { }

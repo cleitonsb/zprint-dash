@@ -14,10 +14,9 @@ import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
 import {JwtInterceptor} from "./helpers/jwt.interceptor";
 import {ErrorInterceptor} from "./helpers/error.interceptor";
-import { UsersComponent } from './pages/users/users.component';
 import {NgxMaskModule} from "ngx-mask";
 import {NgxSpinnerModule} from "ngx-spinner";
-
+import {ToastrModule} from "ngx-toastr";
 
 @NgModule({
   imports: [
@@ -30,13 +29,13 @@ import {NgxSpinnerModule} from "ngx-spinner";
     RouterModule,
     AppRoutingModule,
     NgxMaskModule.forRoot(),
-    NgxSpinnerModule
+    NgxSpinnerModule,
+    ToastrModule.forRoot(),
   ],
   declarations: [
     AppComponent,
     AdminLayoutComponent,
     AuthLayoutComponent,
-    UsersComponent
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

@@ -1,0 +1,38 @@
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <button class="btn btn-primary mb-3" [routerLink]="['/users/create']">Novo perfil</button>
+
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center table-flush ">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Perfil</th>
+              <th scope="col">Descrição</th>
+              <th scope="col">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let role of roles" >
+              <th scope="row">{{role.id}}</th>
+              <td>{{role.nome}}</td>
+              <td>{{role.descricao}}</td>
+              <td>
+                <a [routerLink]="['/role/' + role.id]"><span class="material-icons text-primary">search</span></a>
+                <a [routerLink]="['/role/' + role.id]"><span class="material-icons text-red">delete_forever</span></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

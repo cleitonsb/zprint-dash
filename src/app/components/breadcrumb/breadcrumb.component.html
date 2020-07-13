@@ -1,0 +1,15 @@
+<div class="header bg-gradient-danger pb-7 pt-1 pt-md-7">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div id="breadcrumb-component" class="tab-pane tab-example-result fade show active" role="tabpanel" aria-labelledby="breadcrumb-component-tab">
+        <nav aria-label="breadcrumb ">
+          <ol class="breadcrumb ">
+            <li class="breadcrumb-item"><a href="#">Home</a></li>
+            <li class="breadcrumb-item" [ngClass]="{'active': subTitulo == undefined}" aria-current="page"><a href="/#/{{urlBreadcrumb}}">{{titulo}}</a></li>
+            <li *ngIf="subTitulo !== undefined" class="breadcrumb-item active" aria-current="page">{{subTitulo}}</li>
+          </ol>
+        </nav>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,3 +1,5 @@
+import {Endereco} from "./endereco";
+
 export class User {
   id: number;
   dt_nasc?: string;
@@ -8,4 +10,7 @@ export class User {
   celular?: string;
   perfil?: number;
   token?: string;
+  avatar?: any;
+  endereco = new Endereco();
 }
+

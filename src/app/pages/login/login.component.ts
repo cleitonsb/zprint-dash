@@ -20,7 +20,7 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
     if(this.authenticationService.currentUserValue){
-      this.router.navigate(['/dashboard']);
+      this.router.navigate(['/services']);
     }
   }
 
@@ -30,7 +30,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: ['', Validators.required],
     });
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/dashboard';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/services';
 
     this.userEmail = 'admin@user.com';
     this.userPass = 'password';

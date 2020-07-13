@@ -1,1 +1,39 @@
 /* You can add global styles to this file, and also import other style files */
+
+.breadcrumb {
+  background-color: rgba(0, 0, 0, 0.1) !important;
+  color: #fff !important;
+}
+
+.breadcrumb-item {
+  color: #ffffff !important;
+}
+
+.breadcrumb-item:before {
+  color: #ffffff !important;
+}
+
+.breadcrumb-item a{
+  font-weight: bold !important;
+  color: #ffffff !important;
+}
+
+.toast-top-center {
+  margin-top: 10px !important;
+}
+
+@media (min-width: 768px) {
+  .ngx-toastr {
+    width: 500px !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .ngx-toastr {
+    width: 90% !important;
+  }
+}
+
+
+
+
