@@ -5,13 +5,15 @@ import { ServiceShowComponent } from './service-show/service-show.component';
 import { ServiceListComponent } from './service-list/service-list.component';
 import {RouterModule} from "@angular/router";
 import {ServiceRoutes} from "./services.routing";
+import {ComponentsModule} from "../../components/components.module";
 
 
 @NgModule({
   declarations: [ServiceCreateComponent, ServiceShowComponent, ServiceListComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(ServiceRoutes)
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(ServiceRoutes),
+        ComponentsModule
+    ]
 })
 export class ServicesModule { }

@@ -7,14 +7,16 @@ import {RouterModule} from "@angular/router";
 import {RoleRoutes} from "./roles.routing";
 import {NgxMaskModule} from "ngx-mask";
 import {PaginatorModule} from "../../components/paginator/paginator.module";
+import {ComponentsModule} from "../../components/components.module";
 
 @NgModule({
   declarations: [RoleCreateComponent, RoleListComponent, RoleShowComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(RoleRoutes),
-    NgxMaskModule.forRoot(),
-    PaginatorModule
-  ]
+    imports: [
+        CommonModule,
+        RouterModule.forChild(RoleRoutes),
+        NgxMaskModule.forRoot(),
+        PaginatorModule,
+        ComponentsModule
+    ]
 })
 export class RolesModule { }

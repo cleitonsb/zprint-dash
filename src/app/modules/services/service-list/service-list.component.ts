@@ -11,6 +11,9 @@ import {PaginatorComponent} from "../../../components/paginator/paginator.compon
 })
 export class ServiceListComponent implements OnInit {
   private services: [];
+  titulo: string = 'Serviços';
+  subTitulo: string = '';
+  urlBreadcrumb: string = 'services'
 
   @ViewChild(PaginatorComponent)
   private paginator: PaginatorComponent;

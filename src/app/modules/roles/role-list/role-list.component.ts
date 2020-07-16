@@ -11,6 +11,9 @@ import {RoleService} from "../../../services/role.service";
 })
 export class RoleListComponent implements OnInit {
   roles: any;
+  titulo: string = 'Perfis';
+  subTitulo: string = '';
+  urlBreadcrumb: string = 'roles'
 
   @ViewChild(PaginatorComponent)
   paginator: PaginatorComponent;

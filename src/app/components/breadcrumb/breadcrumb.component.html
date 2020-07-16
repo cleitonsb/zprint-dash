@@ -6,7 +6,7 @@
           <ol class="breadcrumb ">
             <li class="breadcrumb-item"><a href="#">Home</a></li>
             <li class="breadcrumb-item" [ngClass]="{'active': subTitulo == undefined}" aria-current="page"><a href="/#/{{urlBreadcrumb}}">{{titulo}}</a></li>
-            <li *ngIf="subTitulo !== undefined" class="breadcrumb-item active" aria-current="page">{{subTitulo}}</li>
+            <li *ngIf="subTitulo !== ''" class="breadcrumb-item active" aria-current="page">{{subTitulo}}</li>
           </ol>
         </nav>
       </div>

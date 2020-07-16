@@ -1,5 +1,4 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {User} from "../../../models/user";
 import {PaginatorComponent} from "../../../components/paginator/paginator.component";
 import {UserService} from "../../../services/user.service";
 import {NgxSpinnerService} from "ngx-spinner";
@@ -11,8 +10,9 @@ import {first} from "rxjs/operators";
   styleUrls: ['./user-list.component.css']
 })
 export class UserListComponent implements OnInit {
-  users: User[];
+  users: any;
   titulo: string = 'Usuários';
+  subTitulo: string = '';
   urlBreadcrumb: string = 'users'
 
   @ViewChild(PaginatorComponent)

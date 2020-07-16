@@ -34,12 +34,18 @@ export class PaginatorComponent implements OnInit {
   getPaginator(meta) {
     let arr = [];
     let qtPerPages = parseInt(meta.total) / parseInt(meta.per_page);
-    qtPerPages = Math.trunc(qtPerPages);
+    qtPerPages = Math.ceil(qtPerPages);
+
+    if(qtPerPages < 1) qtPerPages = 1;
 
     if(qtPerPages == 1) this.pages = null;
     if(qtPerPages > 5) qtPerPages = 5;
 
-    if(meta.current_page == 1){
+    if(meta.current_page == meta.last_page && meta.current_page == 1) {
+      this.pages = [1];
+      this.prev = null;
+      this.next = null;
+    }else if(meta.current_page == 1){
       for (let i = 1; i <= qtPerPages; i++) {
         arr.push(i);
       }
@@ -79,5 +85,4 @@ export class PaginatorComponent implements OnInit {
 
     this.currentPage = meta.current_page;
   }
-
 }
