@@ -21,6 +21,7 @@ export class UserCreateComponent implements OnInit {
   estates: any;
   cities: any;
   avatar: any;
+  formEdit: boolean = false;
 
   user = new User();
 
@@ -50,6 +51,8 @@ export class UserCreateComponent implements OnInit {
         this.user = data.data;
         this.getCities(this.user.endereco.cidade.estado_id);
       });
+    }else{
+      this.formEdit = true;
     }
   }
 
@@ -63,7 +66,7 @@ export class UserCreateComponent implements OnInit {
     this.spinner.show();
     this.service.store(this.user, this.avatar).subscribe((response: any) => {
       if(response.status == 200) {
-        this.msg.sucess(msg.sucesso);
+        this.msg.sucess(msg.createSucesso);
         if(response.body.id) {
           this.router.navigate(['/user/' + response.body.id]);
         }
@@ -77,5 +80,22 @@ export class UserCreateComponent implements OnInit {
     if(event.target.files && event.target.files[0]) {
       this.avatar = event.target.files[0];
     }
+  }
+
+  deleteAvatar() {
+    this.user.avatar = '/assets/img/theme/profile2.png';
+  }
+
+  deleteUser() {
+    this.spinner.show();
+    this.service.delete(this.user.id).subscribe((response: any) => {
+      this.msg.sucess(msg.deleteSucesso);
+      this.router.navigate(['/users']);
+      this.spinner.hide();
+    });
+  }
+
+  editUser() {
+    this.formEdit = true;
   }
 }

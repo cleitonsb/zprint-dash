@@ -17,6 +17,7 @@ import {ErrorInterceptor} from "./helpers/error.interceptor";
 import {NgxMaskModule} from "ngx-mask";
 import {NgxSpinnerModule} from "ngx-spinner";
 import {ToastrModule} from "ngx-toastr";
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 
 @NgModule({
   imports: [
@@ -31,6 +32,7 @@ import {ToastrModule} from "ngx-toastr";
     NgxMaskModule.forRoot(),
     NgxSpinnerModule,
     ToastrModule.forRoot(),
+    SweetAlert2Module.forRoot(),
   ],
   declarations: [
     AppComponent,

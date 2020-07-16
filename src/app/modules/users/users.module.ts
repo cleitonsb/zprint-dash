@@ -11,20 +11,22 @@ import {PaginatorModule} from "../../components/paginator/paginator.module";
 import {ComponentsModule} from "../../components/components.module";
 import {NgbModule} from "@ng-bootstrap/ng-bootstrap";
 import localePT from "@angular/common/locales/pt"
+import {SweetAlert2Module} from "@sweetalert2/ngx-sweetalert2";
 
 registerLocaleData(localePT)
 
 @NgModule({
   declarations: [UserListComponent, UserCreateComponent, UserShowComponent],
-  imports: [
-    CommonModule,
-    RouterModule.forChild(UserRoutes),
-    NgxMaskModule.forRoot(),
-    FormsModule,
-    PaginatorModule,
-    ComponentsModule,
-    NgbModule,
-  ],
+    imports: [
+        CommonModule,
+        RouterModule.forChild(UserRoutes),
+        NgxMaskModule.forRoot(),
+        FormsModule,
+        PaginatorModule,
+        ComponentsModule,
+        NgbModule,
+        SweetAlert2Module,
+    ],
   providers: [
     { provide: LOCALE_ID, useValue: 'pt' }
   ]

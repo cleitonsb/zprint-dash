@@ -17,6 +17,7 @@ export class UserListComponent implements OnInit {
 
   @ViewChild(PaginatorComponent)
   paginator: PaginatorComponent;
+  paramBusca: string = '';
 
   constructor(private userService: UserService, private spinner: NgxSpinnerService) { }
 
@@ -25,8 +26,11 @@ export class UserListComponent implements OnInit {
   }
 
   getRegistros(page : number = 1){
+
+    let param = (this.paramBusca) ? '/' + this.paramBusca: '';
+
     this.spinner.show();
-    this.userService.getAll(page).pipe(first()).subscribe((users : any) => {
+    this.userService.getAll(param, page).pipe(first()).subscribe((users : any) => {
       this.users = users.data;
       this.paginator.getPaginator(users.meta);
       this.spinner.hide();

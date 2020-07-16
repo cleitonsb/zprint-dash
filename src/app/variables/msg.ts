@@ -1,3 +1,4 @@
 export const msg = {
-  sucesso: 'Registro salvo com sucesso!',
+  createSucesso: 'Registro salvo com sucesso!',
+  deleteSucesso: 'Registro removido com sucesso!',
 }

@@ -58,8 +58,6 @@ export class PaginatorComponent implements OnInit {
     }else{
       let divPages = Math.trunc(qtPerPages/2);
 
-      console.log(meta.current_page - divPages);
-
       if(meta.current_page - divPages <= 0) {
         for (let i = 1; i <= (qtPerPages); i++) {
           arr.push(i);
