@@ -1,1 +1,79 @@
-<p>role-create works!</p>
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <form (submit)="save()" class="col-xl-12 order-xl-1">
+      <input type="hidden" name="_method" [(ngModel)]="role._method">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Cadastro do perfis</h3>
+            </div>
+            <div class="col-4">
+              <button *ngIf="role.id && !formEdit" class="btn btn-primary btn-sm float-right" type="button" (click)="editItem()">Editar</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-5">
+              <div class="form-group">
+                <label class="form-control-label" >Nome</label>
+                <input type="text" [(ngModel)]="role.nome" [disabled]="!formEdit" required="required" name="nome" class="form-control form-control-alternative">
+              </div>
+            </div>
+            <div class="col-lg-7">
+              <div class="form-group">
+                <label class="form-control-label" >Descrição</label>
+                <textarea [(ngModel)]="role.descricao" [disabled]="!formEdit" name="descricao" class="form-control form-control-alternative"></textarea>
+              </div>
+            </div>
+          </div>
+
+          <hr class="my-4" />
+          <!-- Address -->
+          <h6 class="heading-small text-muted mb-4">Permissões</h6>
+          <div class="pl-lg-12" >
+            <!-- Table -->
+            <div class="row">
+              <div class="col-md-6 form-group">
+                <div class="card shadow">
+                  <div class="table-responsive">
+                    <table class="table table-hover align-items-center table-flush ">
+                      <thead class="thead-light">
+                      <tr>
+                        <th class="col-md-10">Nome</th>
+                        <th scope="col-md-2">Ações</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                      <tr *ngFor="let permission of permissions" >
+                        <td>{{permission.nome}}</td>
+                        <td>
+                          <div class="custom-control custom-checkbox mb-3">
+                            <input [(ngModel)]="permission.sit" name="permissao-{{permission.id}}" [disabled]="!formEdit" class="custom-control-input" id="{{permission.id}}" type="checkbox">
+                            <label class="custom-control-label" for="{{permission.id}}"></label>
+                          </div>
+                        </td>
+                      </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="form-group">
+                  <button class="btn btn-info" *ngIf="formEdit">Salvar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

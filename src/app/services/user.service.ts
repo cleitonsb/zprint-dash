@@ -64,6 +64,6 @@ export class UserService {
 
   public delete(id) {
     if(id === null) return;
-    return this.http.delete(environment.apiUrl + '/user/' + id);
+    return this.http.delete(environment.apiUrl + '/user/' + id, {observe: 'response'});
   }
 }

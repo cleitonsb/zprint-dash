@@ -2,7 +2,7 @@
 
 <!-- Page content -->
 <div class="container-fluid mt--7">
-  <button class="btn btn-primary mb-3" [routerLink]="['/users/create']">Novo perfil</button>
+  <button class="btn btn-primary mb-3" [routerLink]="['/role/create']">Novo perfil</button>
 
   <!-- Table -->
   <div class="row">
@@ -26,7 +26,6 @@
               <td>{{role.descricao}}</td>
               <td>
                 <a [routerLink]="['/role/' + role.id]"><span class="material-icons text-primary">search</span></a>
-                <a [routerLink]="['/role/' + role.id]"><span class="material-icons text-red">delete_forever</span></a>
               </td>
             </tr>
             </tbody>
