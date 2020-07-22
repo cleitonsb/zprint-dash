@@ -1,1 +1,59 @@
-<p>product-list works!</p>
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary mb-3" [routerLink]="['/user/create']">Novo produto</button>
+    </div>
+    <div class="col col-lg-4">
+      <div class="form-group">
+        <div class=" input-group input-group-merge">
+          <div class=" input-group-prepend">
+            <span class=" input-group-text"><span class="material-icons text-primary">search</span></span>
+          </div>
+          <input class="form-control" [(ngModel)]="paramBusca" (keyup.enter)="getRegistros()" placeholder="Buscar" type="text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Usuários</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center table-flush ">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Preço</th>
+              <th scope="col">Fornecedor</th>
+              <th scope="col">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let user of users" >
+              <th scope="row">{{user.id}}</th>
+              <td>{{user.nome}}</td>
+              <td>{{user.email}}</td>
+              <td>{{user.celular | mask: '(00) 00000-0000'}}</td>
+              <td>{{user.telefone | mask: '(00) 0000-0000'}}</td>
+              <td>
+                <a [routerLink]="['/user/' + user.id]"><span class="material-icons text-primary">search</span></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <app-paginator (clickPage)="getRegistros($event)"></app-paginator>
+
+      </div>
+    </div>
+  </div>
+
+</div>

@@ -17,6 +17,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   error = '';
   userEmail = '';
   userPass = '';
+  remember: any;
 
   constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
     if(this.authenticationService.currentUserValue){
@@ -28,12 +29,16 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.loginForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required],
+      remember: [false],
     });
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/services';
+    if(localStorage.getItem('remember') == 'true'){
+      this.userPass = localStorage.getItem('password');
+      this.userEmail = localStorage.getItem('email');
+      this.remember = localStorage.getItem('remember');
+    }
 
-    this.userEmail = 'admin@user.com';
-    this.userPass = 'password';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/services';
   }
 
   get f(){
@@ -42,6 +47,16 @@ export class LoginComponent implements OnInit, OnDestroy {
 
   onSubmit() {
     this.submitted = true;
+
+    if(this.f.remember.value === true){
+      localStorage.setItem('email', this.f.email.value);
+      localStorage.setItem('password', this.f.password.value);
+      localStorage.setItem('remember', this.f.remember.value);
+    }else{
+      localStorage.removeItem('email');
+      localStorage.removeItem('password');
+      localStorage.removeItem('remember');
+    }
 
     if(this.loginForm.invalid){
       return;
