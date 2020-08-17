@@ -19,6 +19,7 @@ export class ErrorInterceptor implements HttpInterceptor {
   intercept(request: HttpRequest<unknown>, next: HttpHandler): Observable<HttpEvent<any>> {
     return next.handle(request).pipe(catchError(err => {
       let errosString = '';
+console.log(err);
 
       if(err.status == 401){
         this.authenticationService.logout();

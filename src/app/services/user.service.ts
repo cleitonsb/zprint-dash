@@ -14,12 +14,17 @@ export class UserService {
   constructor(private http: HttpClient, private msg: NotificationService, private spinner: NgxSpinnerService, private date: DateFunctions) { }
 
   public getAll(param, page : number = 1) {
-    return this.http.get(environment.apiUrl + '/users' + param + '?page=' + page);
+    return this.http.get(environment.apiUrl + '/user' + param + '?page=' + page);
   }
 
   public get(id : number = null) {
     if(id === null) return;
     return this.http.get(environment.apiUrl + '/user/' + id);
+  }
+
+  public getByEmail(email : string = null) {
+    if(email === null) return;
+    return this.http.get(environment.apiUrl + '/user/' + email + '/email');
   }
 
   public store(data, arquivo) {

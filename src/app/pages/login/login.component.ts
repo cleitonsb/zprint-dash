@@ -3,6 +3,7 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {AuthenticationService} from "../../services/authentication.service";
 import {first} from "rxjs/operators";
+import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
   selector: 'app-login',
@@ -19,7 +20,13 @@ export class LoginComponent implements OnInit, OnDestroy {
   userPass = '';
   remember: any;
 
-  constructor(private formBuilder: FormBuilder, private route: ActivatedRoute, private router: Router, private authenticationService: AuthenticationService) {
+  constructor(
+      private formBuilder: FormBuilder, 
+      private route: ActivatedRoute, 
+      private router: Router, 
+      private authenticationService: AuthenticationService,
+      private msg: NotificationService
+    ) {
     if(this.authenticationService.currentUserValue){
       this.router.navigate(['/services']);
     }
@@ -48,11 +55,12 @@ export class LoginComponent implements OnInit, OnDestroy {
   onSubmit() {
     this.submitted = true;
 
-    if(this.f.remember.value === true){
+    if(this.f.remember.value){
       localStorage.setItem('email', this.f.email.value);
       localStorage.setItem('password', this.f.password.value);
       localStorage.setItem('remember', this.f.remember.value);
-    }else{
+    }else{ console.log('note');
+    
       localStorage.removeItem('email');
       localStorage.removeItem('password');
       localStorage.removeItem('remember');
@@ -66,10 +74,14 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authenticationService.login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        data => {
+        data => { console.log(data);
+        
           this.router.navigate([this.returnUrl]);
         },
         error => {
+
+          this.msg.error("Usuário ou senha inválida", 'Erro 401');
+          
           this.error = error;
           this.loading = false;
         }
