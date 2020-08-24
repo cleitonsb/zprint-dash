@@ -39,7 +39,7 @@ export class RoleCreateComponent implements OnInit {
 
     this.service.store(this.role).subscribe((response: any) => {
       if (response.status == 200 || response.status == 201) {
-        this.msg.sucess(msg.createSucesso);
+        this.msg.sucess(msg.S001);
         if (response.body.id) {
           this.router.navigate(['/role/' + response.body.id]);
           this.formEdit = false;

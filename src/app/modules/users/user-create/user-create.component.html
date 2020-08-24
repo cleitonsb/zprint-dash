@@ -121,7 +121,7 @@
                 <div class="form-group">
                   <label class="form-control-label" >Estado</label>
                   <select [(ngModel)]="user.endereco.cidade.estado_id" [disabled]="!formEdit" name="estado_id" class="form-control form-control-alternative" #estate (change)="getCities(estate.value)">
-                    <option>Selecione</option>
+                    <option value="0">Selecione</option>
                     <option *ngFor="let estate of estates; let i = index" value="{{estate.id}}">{{ estate.nome }}</option>
                   </select>
                 </div>
@@ -129,7 +129,7 @@
               <div class="col-lg-4">
                 <div class="form-group">
                   <label class="form-control-label" >Cidade</label>
-                  <select [(ngModel)]="user.endereco.cidade_id" [disabled]="!formEdit" name="cidade_id" class="form-control form-control-alternative">
+                  <select [(ngModel)]="user.endereco.cidade.id" [disabled]="!formEdit" name="cidade_id" class="form-control form-control-alternative">
                     <option>Selecione</option>
                     <option *ngFor="let city of cities; let i = index" value="{{city.id}}">{{ city.nome }}</option>
                   </select>

@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import {AuthenticationService} from "../../services/authentication.service";
+import {AuthenticationService} from '../../services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
 
 declare interface RouteInfo {
@@ -11,10 +11,10 @@ declare interface RouteInfo {
     route: string;
 }
 export const ROUTES: RouteInfo[] = [
-  { path: '/services', title: 'Serviços',  icon: 'ni-tv-2 text-primary', class: '', route: 'api/servicos' },
-  { path: '/users', title: 'Usuários',  icon: 'ni-single-02 text-green', class: '', route: 'api/users' },
-  { path: '/roles', title: 'Perfis',  icon:'ni-bullet-list-67 text-red', class: '', route: 'api/perfis' },
-  { path: '/products', title: 'Produtos',  icon:'ni-key-25 text-black', class: '', route: 'api/produtos' },
+  { path: '/services', title: 'Serviços',  icon: 'ni-tv-2 text-primary', class: '', route: '/servico' },
+  { path: '/users', title: 'Usuários',  icon: 'ni-single-02 text-green', class: '', route: '/usuario' },
+  { path: '/roles', title: 'Perfis',  icon: 'ni-bullet-list-67 text-red', class: '', route: '/perfil' },
+  { path: '/products', title: 'Produtos',  icon: 'ni-key-25 text-black', class: '', route: '/produto' },
 ];
 
 @Component({
@@ -32,42 +32,41 @@ export class SidebarComponent implements OnInit {
 
   ngOnInit() {
     this.getCurrentUser();
-    this.menuItems = ROUTES.filter(this.getRoutes);
+
     this.router.events.subscribe((event) => {
       this.isCollapsed = true;
-   });
+    });
   }
 
   private getCurrentUser() {
 
     let currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
 
-    if(currentUser.user == undefined){ 
-      
-      this.service.getByEmail(currentUser.email).subscribe((data: any) => {      
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+    if (currentUser.user === undefined) {
 
-        console.log(data);
+      this.service.getByEmail(currentUser.email).subscribe((data: any) => {
+        currentUser = JSON.parse(localStorage.getItem('currentUser'));
 
-        let user = {
+        const user = {
           user: data,
           token: currentUser.token
         };
 
-        localStorage.setItem('currentUser', JSON.stringify(user)); 
-        console.log(user);
-        
-        return user;
-      });    
+        localStorage.setItem('currentUser', JSON.stringify(user));
+
+        this.menuItems = ROUTES.filter(this.getRoutes);
+      });
+    } else  {
+      this.menuItems = ROUTES.filter(this.getRoutes);
     }
   }
 
-  getRoutes(route) {
+  getRoutes( route ) {
 
-    let user: any = JSON.parse(localStorage.getItem('currentUser'));    
-   
-    for (let val of user.perfil.permissoes) {
-      if(val.rota === route.route){
+    const user: any = JSON.parse(localStorage.getItem('currentUser'));
+
+    for (const val of user.user.perfil.permissoes) {
+      if (val.rota === route.route) {
         return true;
       }
     }

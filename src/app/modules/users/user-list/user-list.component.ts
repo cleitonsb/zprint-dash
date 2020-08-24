@@ -1,6 +1,6 @@
 import {Component, OnInit, ViewChild} from '@angular/core';
-import {PaginatorComponent} from "../../../components/paginator/paginator.component";
-import {UserService} from "../../../services/user.service";
+import {PaginatorComponent} from '../../../components/paginator/paginator.component';
+import {UserService} from '../../../services/user.service';
 import {NgxSpinnerService} from "ngx-spinner";
 import {first} from "rxjs/operators";
 
@@ -11,13 +11,14 @@ import {first} from "rxjs/operators";
 })
 export class UserListComponent implements OnInit {
   users: any;
-  titulo: string = 'Usuários';
-  subTitulo: string = '';
-  urlBreadcrumb: string = 'users'
+  titulo = 'Usuários';
+  subTitulo = '';
+  urlBreadcrumb = 'users';
+  total: Number;
 
   @ViewChild(PaginatorComponent)
   paginator: PaginatorComponent;
-  paramBusca: string = '';
+  paramBusca = '';
 
   constructor(private userService: UserService, private spinner: NgxSpinnerService) { }
 
@@ -25,15 +26,15 @@ export class UserListComponent implements OnInit {
     this.getRegistros();
   }
 
-  getRegistros(page : number = 1){
+  getRegistros(page: number = 1) {
 
-    let param = (this.paramBusca) ? '/' + this.paramBusca: '';
+    const param = (this.paramBusca) ? '/busca/' + this.paramBusca : '';
 
     this.spinner.show();
-    this.userService.getAll(param, page).pipe(first()).subscribe((users : any) => {
-      this.users = users.data;
-      this.paginator.getPaginator(users.meta);
+    this.userService.getAll(param, page).pipe(first()).subscribe((data: any) => {
+      this.users = data.content;
+      this.total = data.totalElements;
       this.spinner.hide();
-    })
+    });
   }
 }

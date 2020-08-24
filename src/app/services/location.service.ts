@@ -10,11 +10,11 @@ export class LocationService {
   constructor(private http: HttpClient) { }
 
   getEstates() {
-    return this.http.get(environment.apiUrl + '/estados');
+    return this.http.get(environment.apiUrl + '/estado');
   }
 
   getCities(estate_id: number = null) {
-    if(estate_id == null) return;
-    return this.http.get(environment.apiUrl + '/cidades/' + estate_id);
+    if (estate_id === 0 || estate_id === null) { return; }
+    return this.http.get(environment.apiUrl + '/cidade/estado/' + estate_id);
   }
 }

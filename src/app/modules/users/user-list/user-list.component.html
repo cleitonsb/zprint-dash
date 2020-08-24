@@ -37,7 +37,7 @@
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let user of users" >
+            <tr *ngFor="let user of users | paginate:{itemsPerPage: 5, currentPage: p, totalItems: total }" >
               <th scope="row">{{user.id}}</th>
               <td>{{user.nome}}</td>
               <td>{{user.email}}</td>
@@ -51,7 +51,9 @@
           </table>
         </div>
 
-        <app-paginator (clickPage)="getRegistros($event)"></app-paginator>
+        <div class="text-center paginacao">
+          <pagination-controls (pageChange)="getRegistros(p = $event);" previousLabel="Anterior" nextLabel="Próximo" responsive="true"></pagination-controls>
+        </div>
 
       </div>
     </div>

@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from "../../../services/user.service";
-import {ActivatedRoute, Router} from "@angular/router";
-import {LocationService} from "../../../services/location.service";
-import {NotificationService} from "../../../services/notification.service";
-import {User} from "../../../models/user";
-import {NgxSpinnerService} from "ngx-spinner";
-import {msg} from "../../../variables/msg";
+import {UserService} from '../../../services/user.service';
+import {ActivatedRoute, Router} from '@angular/router';
+import {LocationService} from '../../../services/location.service';
+import {NotificationService} from '../../../services/notification.service';
+import {User} from '../../../models/user';
+import {NgxSpinnerService} from 'ngx-spinner';
+import {msg} from '../../../variables/msg';
 
 @Component({
   selector: 'app-user-create',
@@ -14,14 +14,14 @@ import {msg} from "../../../variables/msg";
 })
 
 export class UserCreateComponent implements OnInit {
-  titulo: string = 'Usuários';
-  subTitulo: string = 'Cadastro'
-  urlBreadcrumb: string = 'users'
+  titulo = 'Usuários';
+  subTitulo = 'Cadastro';
+  urlBreadcrumb = 'users';
 
   estates: any;
   cities: any;
   avatar: any;
-  formEdit: boolean = false;
+  formEdit = false;
 
   user = new User();
 
@@ -30,7 +30,7 @@ export class UserCreateComponent implements OnInit {
     private location: LocationService,
     private route: ActivatedRoute,
     private router: Router,
-    private msg: NotificationService,
+    private notify: NotificationService,
     private spinner: NgxSpinnerService
   ) { }
 
@@ -43,31 +43,39 @@ export class UserCreateComponent implements OnInit {
     });
 
     this.user.avatar = '/assets/img/theme/profile2.png';
+
+    this.getCities(1);
+
   }
 
   view(id){
-    if(id) {
+    if (id) {
       this.service.get(id).subscribe((data: any) => {
         this.user = data.data;
         this.getCities(this.user.endereco.cidade.estado_id);
       });
-    }else{
+    } else {
       this.formEdit = true;
     }
   }
 
   getCities(estate_id) {
     this.spinner.show();
-    this.location.getCities(estate_id).subscribe((data: any) => this.cities = data);
+    this.location.getCities(estate_id).subscribe((data: any) => {
+      this.cities = data;
+
+      console.log(this.cities);
+    });
+
     this.spinner.hide();
   }
 
   save() {
     this.spinner.show();
     this.service.store(this.user, this.avatar).subscribe((response: any) => {
-      if(response.status == 200) {
-        this.msg.sucess(msg.createSucesso);
-        if(response.body.id) {
+      if (response.status === 200) {
+        this.notify.sucess(msg.S001);
+        if (response.body.id) {
           this.router.navigate(['/user/' + response.body.id]);
         }
       }
@@ -77,7 +85,7 @@ export class UserCreateComponent implements OnInit {
   }
 
   fileEvent(event) {
-    if(event.target.files && event.target.files[0]) {
+    if (event.target.files && event.target.files[0]) {
       this.avatar = event.target.files[0];
     }
   }
@@ -89,7 +97,7 @@ export class UserCreateComponent implements OnInit {
   deleteUser() {
     this.spinner.show();
     this.service.delete(this.user.id).subscribe((response: any) => {
-      this.msg.sucess(msg.deleteSucesso);
+      this.notify.sucess(msg.S002);
       this.router.navigate(['/users']);
       this.spinner.hide();
     });

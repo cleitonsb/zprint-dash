@@ -21,9 +21,9 @@ export class LoginComponent implements OnInit, OnDestroy {
   remember: any;
 
   constructor(
-      private formBuilder: FormBuilder, 
-      private route: ActivatedRoute, 
-      private router: Router, 
+      private formBuilder: FormBuilder,
+      private route: ActivatedRoute,
+      private router: Router,
       private authenticationService: AuthenticationService,
       private msg: NotificationService
     ) {
@@ -60,7 +60,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       localStorage.setItem('password', this.f.password.value);
       localStorage.setItem('remember', this.f.remember.value);
     }else{ console.log('note');
-    
+
       localStorage.removeItem('email');
       localStorage.removeItem('password');
       localStorage.removeItem('remember');
@@ -74,14 +74,12 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.authenticationService.login(this.f.email.value, this.f.password.value)
       .pipe(first())
       .subscribe(
-        data => { console.log(data);
-        
+        data => {
           this.router.navigate([this.returnUrl]);
         },
         error => {
+         // this.msg.error("Usuário ou senha inválida", 'Erro 401');
 
-          this.msg.error("Usuário ou senha inválida", 'Erro 401');
-          
           this.error = error;
           this.loading = false;
         }
