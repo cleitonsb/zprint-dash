@@ -43,9 +43,6 @@ export class UserCreateComponent implements OnInit {
     });
 
     this.user.avatar = '/assets/img/theme/profile2.png';
-
-    this.getCities(1);
-
   }
 
   view(id){
@@ -72,6 +69,9 @@ export class UserCreateComponent implements OnInit {
 
   save() {
     this.spinner.show();
+
+    this.user.enderecos[0] = this.user.endereco;
+
     this.service.store(this.user, this.avatar).subscribe((response: any) => {
       if (response.status === 200) {
         this.notify.sucess(msg.S001);

@@ -1,4 +1,4 @@
-import {Endereco} from "./endereco";
+import {Endereco} from './endereco';
 
 export class User {
   id: number;
@@ -12,5 +12,6 @@ export class User {
   token?: string;
   avatar?: any;
   endereco = new Endereco();
+  enderecos = new Array();
 }
 

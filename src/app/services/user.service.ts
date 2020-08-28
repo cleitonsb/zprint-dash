@@ -19,8 +19,7 @@ export class UserService {
   ) { }
 
   public getAll(param, page: number = 1) {
-
-    return this.http.get(environment.apiUrl + '/usuario/page/' + page + param); //  + '?page=' + page
+    return this.http.get(environment.apiUrl + '/usuario/page/' + page + param);
   }
 
   public get(id: number = null) {
@@ -34,36 +33,7 @@ export class UserService {
   }
 
   public store(data, arquivo) {
-    const headers = new HttpHeaders();
-    headers.append('Content-Type', 'multipart/form-data');
-    headers.append('Accept', 'application/json');
-
-    const formData = new FormData();
-    if (arquivo) {
-      formData.append('avatar', arquivo);
-    }
-
-    if (data['dt_nasc']) {
-      data['dt_nasc'] = this.date.formatByString(data['dt_nasc']);
-    }
-
-    if (data.id) {
-      formData.append('_method', 'put');
-    }
-
-    formData.append('usuario', data);
-
-    // return this.http.post(environment.apiUrl + '/usuario', data, {
-    //     observe: 'response',
-    //     headers: headers
-    //   });
-
-    return this.http.post(environment.apiUrl + '/usuario', formData, {
-      observe: 'response',
-      headers: headers
-    });
-
-
+    return this.http.post(environment.apiUrl + '/usuario', data, {observe: 'response'});
   }
 
   private formData(formData, data, objectIndex?) {
@@ -84,6 +54,40 @@ export class UserService {
 
     return formData;
   }
+
+  // public store(data, arquivo) {
+  //   const headers = new HttpHeaders();
+  //   headers.append('Content-Type', 'multipart/form-data');
+  //   headers.append('Accept', 'application/json');
+
+  //   const formData = new FormData();
+  //   if (arquivo) {
+  //     formData.append('avatar', arquivo);
+  //   }
+
+  //   if (data['dt_nasc']) {
+  //     data['dt_nasc'] = this.date.formatByString(data['dt_nasc']);
+  //   }
+
+  //   if (data.id) {
+  //     formData.append('_method', 'put');
+  //   }
+
+  //   formData.append('usuario', data);
+
+  //   // return this.http.post(environment.apiUrl + '/usuario', data, {
+  //   //     observe: 'response',
+  //   //     headers: headers
+  //   //   });
+
+  //   return this.http.post(environment.apiUrl + '/usuario', formData, {
+  //     observe: 'response',
+  //     headers: headers
+  //   });
+
+
+  // }
+
 
   public delete(id) {
     if (id === null) { return; }
