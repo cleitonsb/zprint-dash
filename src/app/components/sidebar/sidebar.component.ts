@@ -11,10 +11,12 @@ declare interface RouteInfo {
     route: string;
 }
 export const ROUTES: RouteInfo[] = [
-  { path: '/services', title: 'Serviços',  icon: 'ni-tv-2 text-primary', class: '', route: '/servico' },
   { path: '/users', title: 'Usuários',  icon: 'ni-single-02 text-green', class: '', route: '/usuario' },
   { path: '/roles', title: 'Perfis',  icon: 'ni-bullet-list-67 text-red', class: '', route: '/perfil' },
   { path: '/products', title: 'Produtos',  icon: 'ni-key-25 text-black', class: '', route: '/produto' },
+  { path: '/front/sale-list', title: 'Vendas',  icon: 'ni-key-25 text-black', class: '', route: '/venda' },
+  { path: '/front/service-list', title: 'Serviços',  icon: 'ni-tv-2 text-primary', class: '', route: '/servico' },
+  { path: '/front/cashier', title: 'Caixa',  icon: 'ni-key-25 text-black', class: '', route: '/caixa' },
 ];
 
 @Component({
@@ -26,7 +28,7 @@ export class SidebarComponent implements OnInit {
 
   menuItems: any[];
   isCollapsed = true;
-  version = '0.1-beta';
+  version = '0.1';
 
   constructor(private router: Router, private authenticationService: AuthenticationService, private service: UserService ) { }
 

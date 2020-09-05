@@ -11,7 +11,6 @@ export class User {
   perfil?: number;
   token?: string;
   avatar?: any;
-  endereco = new Endereco();
-  enderecos = new Array();
+  enderecos = new Array<Endereco>();
 }
 

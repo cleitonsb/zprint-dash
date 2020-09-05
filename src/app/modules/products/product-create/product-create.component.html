@@ -1,1 +1,88 @@
-<p>product-create works!</p>
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-2">
+      <div class="card card-profile shadow">
+        <div class="row justify-content-center">
+          <div class="col-lg-3 order-lg-2">
+
+          </div>
+        </div>
+        <div class="card-body" >
+          <div class="text-center" *ngIf="product.id">
+
+            <button *ngIf="product.id" class="btn btn-danger btn-sm"
+                    [swal]="{ title: 'Confirme', text: 'Deseja remover o produto?', icon: 'question', showCancelButton: true, focusCancel: true }"
+                    (confirm)="delete()"
+                    >Remover produto</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <form (submit)="save()" class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Cadastro do produto</h3>
+            </div>
+            <div class="col-4">
+              <button *ngIf="product.id" class="btn btn-primary btn-sm float-right" type="button" (click)="edit()">Editar</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+
+          <div >
+            <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label" >Nome</label>
+                  <input type="text" [(ngModel)]="product.nome" [disabled]="!formEdit" required="required" name="nome" class="form-control form-control-alternative" placeholder="Nome do produto" value="{{product.nome}}">
+                </div>
+              </div>
+              <div class="col-lg-6">
+                <div class="form-group">
+                  <label class="form-control-label" >Código EAN</label>
+                  <input type="email" [(ngModel)]="product.ean" [disabled]="!formEdit" name="ean" class="form-control form-control-alternative" placeholder="Código EAN" value="{{product.ean}}">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">Preço</label>
+                  <input type="text" [(ngModel)]="product.preco" [disabled]="!formEdit" name="preco" class="form-control form-control-alternative"  mask="0*,00" placeholder="Preço de venda" value="{{product.preco | mask: '0*,00'}}">
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" >Dias para entrega</label>
+                  <input type="text" [(ngModel)]="product.prazo" [disabled]="!formEdit" name="prazo"  class="form-control form-control-alternative" mask="0*" placeholder="Dias para entrega" value="{{product.prazo | mask: '0*'}}">
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" >Tipo</label>
+                  <select [(ngModel)]="product.tipo" [disabled]="!formEdit" name="tipo" class="form-control form-control-alternative" #tipo>
+                    <option value="0">Produto</option>
+                    <option value="1">Serviço</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+          </div>
+          <hr class="my-4" />
+
+          <div class="row">
+            <button class="btn btn-info" *ngIf="formEdit">Salvar</button>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>

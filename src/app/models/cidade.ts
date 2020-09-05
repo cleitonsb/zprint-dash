@@ -1,4 +1,6 @@
+import { Estado } from './estado';
+
 export class Cidade {
   id?: number;
-  estado_id?: any;
+  estado = new Estado();
 }

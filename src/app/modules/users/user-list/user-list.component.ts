@@ -1,8 +1,7 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {PaginatorComponent} from '../../../components/paginator/paginator.component';
+import {Component, OnInit} from '@angular/core';
 import {UserService} from '../../../services/user.service';
-import {NgxSpinnerService} from "ngx-spinner";
-import {first} from "rxjs/operators";
+import {NgxSpinnerService} from 'ngx-spinner';
+import {first} from 'rxjs/operators';
 
 @Component({
   selector: 'app-user-list',
@@ -16,8 +15,6 @@ export class UserListComponent implements OnInit {
   urlBreadcrumb = 'users';
   total: Number;
 
-  @ViewChild(PaginatorComponent)
-  paginator: PaginatorComponent;
   paramBusca = '';
 
   constructor(private userService: UserService, private spinner: NgxSpinnerService) { }

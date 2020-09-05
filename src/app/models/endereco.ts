@@ -1,4 +1,4 @@
-import {Cidade} from "./cidade";
+import {Cidade} from './cidade';
 
 export class Endereco {
   id?: number;
@@ -8,5 +8,4 @@ export class Endereco {
   numero?: any;
   cep?: any;
   cidade = new Cidade();
-  cidade_id?: any;
 }
