@@ -1,0 +1,77 @@
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<div class="container-fluid mt--7">
+  <div class="row" >
+
+    <div class="col-xl-8 mb-5 mb-xl-2">
+      <div class="card shadow table-produtos" [style.height.px]="innerHeight">
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center table-flush ">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Nome do produto</th>
+              <th scope="col">Qtde</th>
+              <th scope="col">Preço</th>
+              <th scope="col">Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of venda.itensVenda" >
+                <td class="prod-name">{{item.produto.nome}}</td>
+                <td>{{item.qt}}</td>
+                <td class="text-right">{{item.preco.toFixed(2)}}</td>
+                <td class="text-right">{{(item.preco * item.qt).toFixed(2)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col-lg-2 pl-lg-12 " >
+          <label class="form-control-label text-prod" >Subtotal</label>
+          <h1>{{subtotal.toFixed(2)}}</h1>
+        </div>
+        <div class="col col-lg-2 pl-lg-12 " >
+          <label class="form-control-label text-prod" >Desconto</label>
+          <h1>{{venda.desconto.toFixed(2)}}</h1>
+        </div>
+        <div class="col col-lg-2 pl-lg-12 " >
+            <label class="form-control-label text-prod" >Total</label>
+            <h1>{{venda.total.toFixed(2)}}</h1>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-xl-4 mb-5 " >
+      <div class="card bg-secondary shadow table-responsive" [style.height.px]="innerHeight">
+        <div class="card-body ">
+
+          <div class="table-responsive" style="overflow: hidden; height: calc(100% - 67px);">
+            <table class="table table-hover align-items-center table-flush ">
+              <tbody>
+                <tr *ngFor="let pagamento of venda.pagamentos">
+                  <td class="pl-0">{{pagamento.tipoPagamento}}</td>
+                  <td class="text-right">{{pagamento.valor.toFixed(2)}}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row" style="overflow: hidden; background-color: #f2f2f2;">
+            <div class="col col-lg-6 pt-2"><h3>Total pago</h3></div>
+            <div class="col col-lg-6 pt-2 text-right"><h3>{{totalPago.toFixed(2)}}</h3></div>
+          </div>
+          <div class="row" style="overflow: hidden; background-color: #f2f2f2;">
+            <div class="col col-lg-6 pt-2" ><b>Troco</b></div>
+            <div class="col col-lg-6 pt-2 pb-2 text-right" ><b>{{venda.troco.toFixed(2)}}</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+

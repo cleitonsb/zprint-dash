@@ -11,12 +11,12 @@ declare interface RouteInfo {
     route: string;
 }
 export const ROUTES: RouteInfo[] = [
-  { path: '/users', title: 'Usuários',  icon: 'ni-single-02 text-green', class: '', route: '/usuario' },
-  { path: '/roles', title: 'Perfis',  icon: 'ni-bullet-list-67 text-red', class: '', route: '/perfil' },
-  { path: '/products', title: 'Produtos',  icon: 'ni-key-25 text-black', class: '', route: '/produto' },
-  { path: '/front/sale-list', title: 'Vendas',  icon: 'ni-key-25 text-black', class: '', route: '/venda' },
-  { path: '/front/service-list', title: 'Serviços',  icon: 'ni-tv-2 text-primary', class: '', route: '/servico' },
-  { path: '/front/cashier', title: 'Caixa',  icon: 'ni-key-25 text-black', class: '', route: '/caixa' },
+  { path: '/front/sales', title: 'Vendas',  icon: 'fa-shopping-cart text-black', class: '', route: '/venda' },
+  { path: '/users', title: 'Usuários',  icon: 'fa-user-friends text-green', class: '', route: '/usuario' },
+  { path: '/roles', title: 'Perfis',  icon: 'fa-key text-red', class: '', route: '/perfil' },
+  { path: '/products', title: 'Produtos',  icon: 'fa-boxes text-black', class: '', route: '/produto' },
+  { path: '/front/services', title: 'Serviços',  icon: 'ni-tv-2 text-primary', class: '', route: '/servico' },
+  { path: '/front/cashiers', title: 'Caixa',  icon: 'fa-cash-register text-blue', class: '', route: '/caixa' },
 ];
 
 @Component({

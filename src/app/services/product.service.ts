@@ -13,6 +13,14 @@ export class ProductService {
     return this.http.get(environment.apiUrl + '/produto/page/' + page + param);
   }
 
+  public getByParam(param?) {
+    let busca = '';
+    if (param) {
+      busca = '/busca/' + param;
+    }
+    return this.http.get(environment.apiUrl + '/produto' + busca);
+  }
+
   public get(id: number = null) {
     if (id === null) { return; }
     return this.http.get(environment.apiUrl + '/produto/' + id);

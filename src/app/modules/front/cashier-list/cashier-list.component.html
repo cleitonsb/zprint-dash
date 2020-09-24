@@ -1,0 +1,64 @@
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary mb-3" [routerLink]="['/front/cashier']">Abrir caixa</button>
+    </div>
+    <div class="col col-lg-4">
+      <div class="form-group">
+        <div class=" input-group input-group-merge">
+          <div class=" input-group-prepend">
+            <span class=" input-group-text"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control" [(ngModel)]="paramBusca" (keyup.enter)="getRegistros()" placeholder="Buscar" type="text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Vendas</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center table-flush ">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Data abertura</th>
+              <th scope="col">Data Fechamento</th>
+              <th scope="col">Usuário</th>
+              <th scope="col">Fundo</th>
+              <th scope="col">Total</th>
+              <th scope="col">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let caixa of caixas | paginate:{itemsPerPage: 5, currentPage: p, totalItems: total }" >
+              <th scope="row"> {{caixa[0].id}}</th>
+              <td>{{caixa[0].dataAbertura | date:'dd/MM/yyyy HH:mm'}}</td>
+              <td>{{caixa[0].dataFechamento | date:'dd/MM/yyyy HH:mm'}}</td>
+              <td>{{caixa[0].usuario.nome}}</td>
+              <td class="text-right">{{(+caixa[0].fundo).toFixed(2)}}</td>
+              <td class="text-right">{{(+caixa[1]).toFixed(2)}}</td>
+              <td>
+                <a [routerLink]="['/front/cashier-show/' + caixa[0].id]"><i class="fas fa-search"></i></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="text-center paginacao">
+          <pagination-controls (pageChange)="getRegistros(p = $event);" previousLabel="Anterior" nextLabel="Próximo" responsive="true"></pagination-controls>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

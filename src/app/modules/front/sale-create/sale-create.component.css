@@ -1,3 +1,21 @@
 .img-produto {
   width: 100%;
 }
+
+.text-prod {
+  color: #999;
+}
+
+.table {
+  width: 100% !important;
+}
+
+.prod-name {
+  overflow: hidden !important;
+  text-overflow: ellipsis !important;
+  white-space: unset !important;
+  flex: 0 0 50% !important;
+  width: 50% !important;
+}
+
+

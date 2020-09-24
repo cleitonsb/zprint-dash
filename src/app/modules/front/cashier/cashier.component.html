@@ -1,1 +1,228 @@
-<p>cashier works!</p>
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<div class="container-fluid mt--7">
+  <div class="row" >
+
+    <div class="col-xl-3 mb-5 mb-xl-2" >
+      <div >
+        <div class="card bg-secondary shadow table-responsive" [style.height.px]="innerHeight">
+          <div class="list-group">
+            <a *ngFor="let venda of vendas" (click)="getVenda(venda.id)" class="list-group-item list-group-item-action mouse-link">
+              V{{(venda.id.toString()).padStart(5,0)}} - {{venda.nome}}
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <div class="d-flex pt-4" >
+        <button #btnEncerrar (click)=fecharCaixa() class="btn btn-primary mr-2 mb-2" > <i class="fas fa-cash-register"></i> Fechar caixa</button>
+      </div>
+
+    </div>
+
+    <div class="col-xl-6 mb-5 mb-xl-2">
+      <div class="card shadow table-produtos" [style.height.px]="innerHeight">
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center table-flush ">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Nome do produto</th>
+              <th scope="col">Qtde</th>
+              <th scope="col">Preço</th>
+              <th scope="col">Subtotal</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of venda.itensVenda" >
+                <td class="prod-name">{{item.produto.nome}}</td>
+                <td>{{item.qt}}</td>
+                <td class="text-right">{{+item.preco.toFixed(2)}}</td>
+                <td class="text-right">{{(+item.preco * item.qt).toFixed(2)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="row">
+        <div class="col col-lg-2 pl-lg-12 " >
+          <label class="form-control-label text-prod" >Subtotal</label>
+          <h1>{{subtotal.toFixed(2)}}</h1>
+        </div>
+        <div class="col col-lg-2 pl-lg-12 " >
+          <label class="form-control-label text-prod" >Desconto</label>
+          <h1>{{venda.desconto.toFixed(2)}}</h1>
+        </div>
+        <div class="col col-lg-2 pl-lg-12 " >
+            <label class="form-control-label text-prod" >Total</label>
+            <h1>{{venda.total.toFixed(2)}}</h1>
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="col-xl-3 mb-5 mb-xl-2" >
+      <div class="card bg-secondary shadow table-responsive" [style.height.px]="innerHeight">
+        <div class="card-body ">
+
+          <button class="btn btn-info mr-2 mb-2" [swal]="tpPagamentoSwal" [disabled]="venda.total == 0 || totalPago >= venda.total" > Novo Pagamento</button>
+
+          <div class="table-responsive" style="overflow: hidden; height: calc(100% - 130px);">
+            <table class="table table-hover align-items-center table-flush ">
+              <tbody>
+                <tr *ngFor="let pagamento of venda.pagamentos">
+                  <td class="pl-0">{{pagamento.tipoPagamento}}</td>
+                  <td class="text-right">{{pagamento.valor.toFixed(2)}}</td>
+                  <td class="pl-0 pr-0"><a (click)=removeItem(pagamento) class="mouse-link"><i class="fas fa-trash text-danger"></i></a></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row" style="overflow: hidden; background-color: #f2f2f2;">
+            <div class="col col-lg-6 pt-2"><h3>Total pago</h3></div>
+            <div class="col col-lg-6 pt-2 text-right"><h3>{{totalPago.toFixed(2)}}</h3></div>
+          </div>
+          <div class="row" style="overflow: hidden; background-color: #f2f2f2;">
+            <div class="col col-lg-6 pt-2" [class.text-danger]="venda.troco < 0" [class.text-primary]="venda.troco > 0"><b>{{textResultado}}</b></div>
+            <div class="col col-lg-6 pt-2 pb-2 text-right" [class.text-danger]="venda.troco < 0" [class.text-primary]="venda.troco > 0"><b>{{venda.troco.toFixed(2)}}</b></div>
+          </div>
+        </div>
+      </div>
+
+      <swal #tpPagamentoSwal title="Selecione o pagamento" [showConfirmButton]=false>
+        <div *swalPortal class="tp-pagamento" >
+
+          <div class="col-lg-12">
+            <div class="form-check text-left">
+              <input class="form-check-input" [(ngModel)]="pagamento.tipoPagamento" type="radio" name="tpPagamento" id="tpD" value="DINHEIRO" [disabled]="disableDinheiro">
+              <label class="form-check-label" for="tpD">
+                Dinheiro
+              </label>
+            </div>
+            <div class="form-check text-left">
+              <input class="form-check-input" [(ngModel)]="pagamento.tipoPagamento" type="radio" name="tpPagamento" id="tpCc" value="CARTAOCREDITO" >
+              <label class="form-check-label" for="tpCc">
+                Cartão de crédito
+              </label>
+            </div>
+            <div class="form-check text-left">
+              <input class="form-check-input" [(ngModel)]="pagamento.tipoPagamento" type="radio" name="tpPagamento" id="tpCd" value="CARTAODEBITO" >
+              <label class="form-check-label" for="tpCd">
+                Cartão de débito
+              </label>
+            </div>
+            <div class="form-check text-left">
+              <input class="form-check-input" [(ngModel)]="pagamento.tipoPagamento" type="radio" name="tpPagamento" id="tpT" value="TRANSFERENCIA" >
+              <label class="form-check-label" for="tpT">
+                Transferência
+              </label>
+            </div>
+            <div class="form-check text-left">
+              <input class="form-check-input" [(ngModel)]="pagamento.tipoPagamento" type="radio" name="tpPagamento" id="tpO" value="OUTRO" >
+              <label class="form-check-label" for="tpO">
+                Outro
+              </label>
+            </div>
+          </div>
+
+          <hr class="my-4" />
+          <p class="text-danger"><b>{{vPagamento}}</b></p>
+
+          <div class="row justify-content-md-center">
+            <div class="col col-md-auto">
+              <div class="form-group text-left">
+                <input type="text" name="valor" #valor (keyup.enter)=addPagamento() [(ngModel)]="pagamento.valor"  class="form-control" placeholder="Valor" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+              </div>
+            </div>
+
+            <div class="col col-lg-3">
+              <button type="button" class="btn btn-info" (click)=addPagamento()> <i class="fas fa-save"></i> Salvar</button>
+            </div>
+          </div>
+
+
+        </div>
+      </swal>
+
+      <div class="d-flex flex-row-reverse pt-4" >
+        <button #btnFinalizar [disabled]="venda.total > totalPago" [swal]="{ title: 'Concluir', text: 'Confirma a finalização desta venda?', icon: 'question', showCancelButton: true }"
+        (confirm)="finalizaVenda()"  class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Concluir (F9)</button>
+      </div>
+
+    </div>
+
+  </div>
+
+  <swal #abreCaixaSwal title="Abertura de caixa" [showConfirmButton]=false (cancel)=cancelCaixa()>
+    <div *swalPortal >
+      <div class="row">
+        <div class="col col-md-12">
+          <div class="form-group text-left">
+            <label class="form-control-label text-prod" >Usuário</label>
+            <h2>{{usuario.nome}}</h2>
+          </div>
+        </div>
+        <div class="col col-md-12">
+          <div class="form-group text-left">
+            <div class="form-group text-left">
+              <label class="form-control-label text-prod" >Data abertura</label>
+              <h2>{{caixa.dataAbertura | date: 'dd/MM/yyy HH:mm'}}</h2>
+            </div>
+          </div>
+        </div>
+
+        <div class="col col-md-6">
+          <div class="form-group text-left">
+            <label class="form-control-label text-prod" >Fundo de caixa</label>
+            <input type="text" name="valor" id="inputFundo" #inputFundo [(ngModel)]=caixa.fundo class="form-control" placeholder="Valor" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+          </div>
+        </div>
+
+        <div class="col col-md-6">
+          <div class="form-group text-left">
+            <label class="form-control-label" >&nbsp;</label>
+            <button type="button" class="btn btn-info btn-block" (click)=abrirCaixa(); > <i class="fas fa-cash-register"></i> Abrir caixa</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </swal>
+
+  <swal #fechaCaixaSwal title="Fechamento de caixa" [showConfirmButton]=false>
+    <div *swalPortal >
+      <div class="card-body ">
+        <div class="table-responsive" >
+          <table class="table table-hover align-items-center table-flush ">
+            <tbody>
+              <tr>
+                <td class="pl-0 text-left">Fundo</td>
+                <td class="text-right">{{ caixa.fundo.toFixed(2) }}</td>
+              </tr>
+              <tr *ngFor="let resultado of resPagamentos">
+                <td class="pl-0 text-left">{{eTipoPagamento[resultado[0]]}}</td>
+                <td class="text-right">{{resultado[1].toFixed(2)}}</td>
+              </tr>
+              <tr>
+                <td class="pl-0 text-left">Contagem</td>
+                <td class="text-right">
+                  <input type="text" name="valor" #valor (keyup.enter)=addPagamento() [(ngModel)]="fContagem"  class="form-control" placeholder="Valor" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                </td>
+              </tr>
+              <tr>
+                <td class="pl-0 text-left">Quebra de caixa</td>
+                <td class="text-right">{{ (fTotal - fContagem).toFixed(2) }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="d-flex flex-row-reverse pt-4" >
+          <button #btnSalvarFechamento (click)="confirmFechamento()"  class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Salvar</button>
+        </div>
+      </div>
+    </div>
+  </swal>
+
+</div>
+
+

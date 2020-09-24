@@ -1,0 +1,65 @@
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<div class="container-fluid mt--7">
+  <div class="row" >
+
+    <div class="col-xl-8 mb-5 mb-xl-2">
+      <div class="card shadow table-produtos" [style.min-height.px]="innerHeight">
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center table-flush ">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Data</th>
+              <th scope="col">Vendedor</th>
+              <th scope="col">total</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let venda of vendas" >
+                <th scope="row"> V{{(venda.id.toString()).padStart(5,0)}}</th>
+                <td>{{venda.data | date:'dd/MM/yyyy HH:mm'}}</td>
+                <td>{{venda.usuario.nome}}</td>
+                <td class="text-right">{{venda.total.toFixed(2)}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="col-xl-4 mb-5 " >
+      <div class="card bg-secondary shadow table-responsive" >
+        <div class="card-body ">
+
+          <div class="table-responsive" style="overflow: hidden; ">
+            <table class="table table-hover align-items-center table-flush ">
+              <tbody>
+                <tr>
+                  <td class="pl-0 text-left">Fundo</td>
+                  <td class="text-right">{{ caixa.fundo.toFixed(2) }}</td>
+                </tr>
+                <tr *ngFor="let resultado of resPagamentos">
+                  <td class="pl-0 text-left">{{eTpPagamento[resultado[0]]}}</td>
+                  <td class="text-right">{{resultado[1].toFixed(2)}}</td>
+                </tr>
+                <tr>
+                  <td class="pl-0 text-left">Quebra de caixa</td>
+                  <td class="text-right">- {{ caixa.quebra.toFixed(2) }}</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="row" style="overflow: hidden; background-color: #f2f2f2;">
+            <div class="col col-lg-6 pt-2"><h3>Total do caixa</h3></div>
+            <div class="col col-lg-6 pt-2 text-right"><h3>{{fTotal.toFixed(2)}}</h3></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
