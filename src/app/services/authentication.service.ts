@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import {BehaviorSubject, Observable} from "rxjs";
-import {User} from "../models/user";
-import {HttpClient} from "@angular/common/http";
-import {environment} from "../../environments/environment";
-import {map} from "rxjs/operators";
+import {BehaviorSubject, Observable} from 'rxjs';
+import {User} from '../models/user';
+import {HttpClient} from '@angular/common/http';
+import {environment} from '../../environments/environment';
+import {map} from 'rxjs/operators';
 import { UserService } from './user.service';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class AuthenticationService {
         this.user = {
           token: token.Authorization,
           email: email
-        }
+        };
 
         localStorage.setItem('currentUser', JSON.stringify(this.user));
         this.currentUserSubject.next(this.user);

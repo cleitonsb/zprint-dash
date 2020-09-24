@@ -8,9 +8,8 @@
           <div class="col-lg-3 order-lg-2">
             <div class="card-profile-image">
               <a href="javascript:void(0)" (click)="fileSelect.click()">
-                <img src="{{user.avatar}}" class="rounded-circle" alt="Avatar">
+                <img [attr.src]="user.avatar" class="rounded-circle" alt="Avatar">
               </a>
-
             </div>
           </div>
         </div>
@@ -109,18 +108,18 @@
           <hr class="my-4" />
           <!-- Address -->
           <h6 class="heading-small text-muted mb-4">Endereço</h6>
-          <div class="pl-lg-4" >
+          <div class="pl-lg-4" *ngFor="let endereco of user.enderecos;" >
             <div class="row">
               <div class="col-lg-4">
                 <div class="form-group">
                   <label class="form-control-label" >CEP</label>
-                  <input [(ngModel)]="user.endereco.cep" [disabled]="!formEdit" value="{{user.endereco.cep}}" name="cep" type="text" mask="00.000-000" class="form-control form-control-alternative" placeholder="CEP">
+                  <input [(ngModel)]="endereco.cep" [disabled]="!formEdit" value="{{endereco.cep}}" name="cep" type="text" mask="00.000-000" class="form-control form-control-alternative" placeholder="CEP">
                 </div>
               </div>
               <div class="col-lg-4">
                 <div class="form-group">
                   <label class="form-control-label" >Estado</label>
-                  <select [(ngModel)]="user.endereco.cidade.estado_id" [disabled]="!formEdit" name="estado_id" class="form-control form-control-alternative" #estate (change)="getCities(estate.value)">
+                  <select [(ngModel)]="endereco.cidade.estado.id" [disabled]="!formEdit" name="estado_id" class="form-control form-control-alternative" #estate (change)="getCities(estate.value)">
                     <option value="0">Selecione</option>
                     <option *ngFor="let estate of estates; let i = index" value="{{estate.id}}">{{ estate.nome }}</option>
                   </select>
@@ -129,7 +128,7 @@
               <div class="col-lg-4">
                 <div class="form-group">
                   <label class="form-control-label" >Cidade</label>
-                  <select [(ngModel)]="user.endereco.cidade.id" [disabled]="!formEdit" name="cidade_id" class="form-control form-control-alternative">
+                  <select [(ngModel)]="endereco.cidade.id" [disabled]="!formEdit" name="cidade_id" class="form-control form-control-alternative">
                     <option>Selecione</option>
                     <option *ngFor="let city of cities; let i = index" value="{{city.id}}">{{ city.nome }}</option>
                   </select>
@@ -140,7 +139,7 @@
               <div class="col-md-12">
                 <div class="form-group">
                   <label class="form-control-label" >Logradouro</label>
-                  <input [(ngModel)]="user.endereco.logradouro" [disabled]="!formEdit" name="logradouro" class="form-control form-control-alternative" placeholder="Endereço" value="" type="text">
+                  <input [(ngModel)]="endereco.logradouro" [disabled]="!formEdit" name="logradouro" class="form-control form-control-alternative" placeholder="Endereço" value="" type="text">
                 </div>
               </div>
             </div>
@@ -148,13 +147,13 @@
               <div class="col-md-8">
                 <div class="form-group">
                   <label class="form-control-label" >Bairro</label>
-                  <input [(ngModel)]="user.endereco.bairro" [disabled]="!formEdit" name="bairro" class="form-control form-control-alternative" placeholder="Bairro" value="" type="text">
+                  <input [(ngModel)]="endereco.bairro" [disabled]="!formEdit" name="bairro" class="form-control form-control-alternative" placeholder="Bairro" value="" type="text">
                 </div>
               </div>
               <div class="col-md-4">
                 <div class="form-group">
                   <label class="form-control-label" >Número</label>
-                  <input [(ngModel)]="user.endereco.numero" [disabled]="!formEdit" name="numero" class="form-control form-control-alternative" placeholder="Número" value="" type="text">
+                  <input [(ngModel)]="endereco.numero" [disabled]="!formEdit" name="numero" class="form-control form-control-alternative" placeholder="Número" value="" type="text">
                 </div>
               </div>
             </div>

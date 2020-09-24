@@ -12,13 +12,13 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 import { AppRoutingModule } from './app.routing';
 import { ComponentsModule } from './components/components.module';
-import { JwtInterceptor } from "./helpers/jwt.interceptor";
-import { ErrorInterceptor } from "./helpers/error.interceptor";
-import { NgxMaskModule } from "ngx-mask";
-import { NgxSpinnerModule } from "ngx-spinner";
-import { NgxPaginationModule } from "ngx-pagination";
-import { ToastrModule } from "ngx-toastr";
-import { SweetAlert2Module } from "@sweetalert2/ngx-sweetalert2";
+import { JwtInterceptor } from './helpers/jwt.interceptor';
+import { ErrorInterceptor } from './helpers/error.interceptor';
+import { NgxMaskModule } from 'ngx-mask';
+import { NgxSpinnerModule } from 'ngx-spinner';
+import { NgxPaginationModule } from 'ngx-pagination';
+import { ToastrModule } from 'ngx-toastr';
+import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 
 @NgModule({
   imports: [

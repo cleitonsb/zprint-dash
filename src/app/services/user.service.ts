@@ -19,8 +19,7 @@ export class UserService {
   ) { }
 
   public getAll(param, page: number = 1) {
-
-    return this.http.get(environment.apiUrl + '/usuario/page/' + page + param); //  + '?page=' + page
+    return this.http.get(environment.apiUrl + '/usuario/page/' + page + param);
   }
 
   public get(id: number = null) {
@@ -33,60 +32,31 @@ export class UserService {
     return this.http.get(environment.apiUrl + '/usuario/' + email + '/email');
   }
 
-  public store(data, arquivo) {
+  public store(data) {
+    return this.http.post(environment.apiUrl + '/usuario', data, {observe: 'response'});
+  }
+
+  public upload(avatar, usuarioid) {
     const headers = new HttpHeaders();
     headers.append('Content-Type', 'multipart/form-data');
     headers.append('Accept', 'application/json');
 
     const formData = new FormData();
-    if (arquivo) {
-      formData.append('avatar', arquivo);
+
+    if (avatar) {
+      formData.append('avatar', avatar);
+      formData.append('usuarioid', usuarioid);
     }
 
-    if (data['dt_nasc']) {
-      data['dt_nasc'] = this.date.formatByString(data['dt_nasc']);
-    }
-
-    if (data.id) {
-      formData.append('_method', 'put');
-    }
-
-    formData.append('usuario', data);
-
-    // return this.http.post(environment.apiUrl + '/usuario', data, {
-    //     observe: 'response',
-    //     headers: headers
-    //   });
-
-    return this.http.post(environment.apiUrl + '/usuario', formData, {
+    return this.http.post(environment.apiUrl + '/usuario/upload', formData, {
       observe: 'response',
       headers: headers
     });
 
-
-  }
-
-  private formData(formData, data, objectIndex?) {
-    for (const index in data) {
-
-      formData.append(index, data[index]);
-
-      // if (typeof data[index] === 'object' && index !== 'avatar') {
-      //   this.formData(formData, data[index], index);
-      // } else {
-      //   let campo = 'usuario[' + index + ']';
-      //   if (objectIndex) {
-      //     campo = objectIndex + '[' + index + ']';
-      //   }
-      //   formData.append(campo, data[index]);
-      // }
-    }
-
-    return formData;
   }
 
   public delete(id) {
     if (id === null) { return; }
-    return this.http.delete(environment.apiUrl + '/usuario/' + id, {observe: 'response'});
+    return this.http.get(environment.apiUrl + '/usuario/remove/' + id, {observe: 'response'});
   }
 }

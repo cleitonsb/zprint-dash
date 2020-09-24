@@ -1,6 +1,6 @@
+import { Estado } from './estado';
+
 export class Cidade {
   id?: number;
-  nome?: any;
-  estado_id?: any;
-  ibge?: any;
+  estado = new Estado();
 }

@@ -1,8 +1,8 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import {FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AuthenticationService} from "../../services/authentication.service";
-import {first} from "rxjs/operators";
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {ActivatedRoute, Router} from '@angular/router';
+import {AuthenticationService} from '../../services/authentication.service';
+import {first} from 'rxjs/operators';
 import { NotificationService } from 'src/app/services/notification.service';
 
 @Component({
@@ -27,8 +27,8 @@ export class LoginComponent implements OnInit, OnDestroy {
       private authenticationService: AuthenticationService,
       private msg: NotificationService
     ) {
-    if(this.authenticationService.currentUserValue){
-      this.router.navigate(['/services']);
+    if (this.authenticationService.currentUserValue) {
+      this.router.navigate(['/front']);
     }
   }
 
@@ -39,7 +39,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       remember: [false],
     });
 
-    if(localStorage.getItem('remember') == 'true'){
+    if (localStorage.getItem('remember') === 'true') {
       this.userPass = localStorage.getItem('password');
       this.userEmail = localStorage.getItem('email');
       this.remember = localStorage.getItem('remember');
@@ -48,25 +48,25 @@ export class LoginComponent implements OnInit, OnDestroy {
     this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/services';
   }
 
-  get f(){
+  get f() {
     return this.loginForm.controls;
   }
 
   onSubmit() {
     this.submitted = true;
 
-    if(this.f.remember.value){
+    if (this.f.remember.value) {
       localStorage.setItem('email', this.f.email.value);
       localStorage.setItem('password', this.f.password.value);
       localStorage.setItem('remember', this.f.remember.value);
-    }else{ console.log('note');
+    } else { console.log('note');
 
       localStorage.removeItem('email');
       localStorage.removeItem('password');
       localStorage.removeItem('remember');
     }
 
-    if(this.loginForm.invalid){
+    if (this.loginForm.invalid) {
       return;
     }
 

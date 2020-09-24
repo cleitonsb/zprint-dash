@@ -1,11 +1,12 @@
 import { Component, OnInit } from '@angular/core';
-import {UserService} from '../../../services/user.service';
-import {ActivatedRoute, Router} from '@angular/router';
-import {LocationService} from '../../../services/location.service';
-import {NotificationService} from '../../../services/notification.service';
-import {User} from '../../../models/user';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {msg} from '../../../variables/msg';
+import { UserService } from '../../../services/user.service';
+import { ActivatedRoute, Router } from '@angular/router';
+import { LocationService } from '../../../services/location.service';
+import { NotificationService } from '../../../services/notification.service';
+import { User } from '../../../models/user';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { msg } from '../../../variables/msg';
+import { Endereco } from 'src/app/models/endereco';
 
 @Component({
   selector: 'app-user-create',
@@ -43,18 +44,21 @@ export class UserCreateComponent implements OnInit {
     });
 
     this.user.avatar = '/assets/img/theme/profile2.png';
-
-    this.getCities(1);
-
   }
 
-  view(id){
+  view(id) {
     if (id) {
       this.service.get(id).subscribe((data: any) => {
-        this.user = data.data;
-        this.getCities(this.user.endereco.cidade.estado_id);
+        this.user = data;
+
+        if (data.enderecos.length > 0){
+          this.getCities(this.user.enderecos[0].cidade.estado.id);
+        } else {
+          this.user.enderecos[0] = new Endereco();
+        }
       });
     } else {
+      this.user.enderecos[0] = new Endereco();
       this.formEdit = true;
     }
   }
@@ -63,8 +67,6 @@ export class UserCreateComponent implements OnInit {
     this.spinner.show();
     this.location.getCities(estate_id).subscribe((data: any) => {
       this.cities = data;
-
-      console.log(this.cities);
     });
 
     this.spinner.hide();
@@ -72,16 +74,28 @@ export class UserCreateComponent implements OnInit {
 
   save() {
     this.spinner.show();
-    this.service.store(this.user, this.avatar).subscribe((response: any) => {
+
+    this.service.store(this.user).subscribe((response: any) => {
       if (response.status === 200) {
-        this.notify.sucess(msg.S001);
-        if (response.body.id) {
-          this.router.navigate(['/user/' + response.body.id]);
+
+        if (this.avatar != null) {
+          this.service.upload(this.avatar, response.body.id).subscribe((res: any) => {
+            this.saveSuccess(response.body.id);
+          });
+        } else {
+          this.saveSuccess(response.body.id);
         }
       }
-
-      this.spinner.hide();
     });
+  }
+
+  saveSuccess(id) {
+    this.notify.sucess(msg.S001);
+    if (id) {
+      this.router.navigate(['/user/' + id]);
+    }
+
+    this.spinner.hide();
   }
 
   fileEvent(event) {

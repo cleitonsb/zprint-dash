@@ -1,0 +1,80 @@
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <form (submit)="save()" class="col-xl-5">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+
+          <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-lg-9">
+                <div class="form-group">
+                  <label class="form-control-label" >Produto/Item</label>
+                  <input type="text" [(ngModel)]="produto" name="produto" class="form-control form-control-alternative" placeholder="Digite o nome produto ou código EAN">
+                </div>
+              </div>
+
+              <div class="col-lg-3">
+                <div class="form-group">
+                  <label class="form-control-label" >Qtde</label>
+                  <input type="text" [(ngModel)]="qt" name="qt" class="form-control form-control-alternative" placeholder="QT">
+                </div>
+              </div>
+            </div>
+        </div>
+
+          <hr class="my-4" />
+          <div class="pl-lg-4" >
+            <div class="row">
+              <div class="col-lg-8">
+                <div><h2>Impressão de segunda via</h2></div>
+                <div><h1>2,55</h1></div>
+              </div>
+              <div class="col-lg-4">
+                <img class="border img-produto" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAXVBMVEXl5eUAAADq6uqUlJTo6Oju7u7Z2dne3t66urrDw8OJiYmioqJ7e3upqanGxsZWVlYyMjJRUVFubm6Dg4NpaWl4eHhMTExAQEAtLS1dXV0KCgqxsbEXFxchISGQkJDcfo/pAAADDklEQVR4nO3c6XKCMBiFYRMTQFHctbXL/V9mxyrgUgLqWJIv7/NXxskhAbLBYAAAAAAAAAAAAAAAAAAAAAAAAAAAkEa79V2859l86JLbvgv4LPut3L4Dj2jzloBKhV2L9qM1oFIfAUfUWYeASmXB3m500SmgUkWgEXWy75hwnwQZ0aSfHQMq9Zmavot7PzP46hxQqa+B7xH/6Kzs7gio1M7r7o6xyfSms7K4K6BSi5t/mCbWk4q1xezONF3NCi8elXbyonwHEw8i2vcXBlTqvfeIL63Bg75r0XTttjyu6Pd2Y191k6nN+q3E5OUBlUr6DKin/5Bw2uejXw//IeGw14RtcxThJ5RfhyQkobSE88VyMpksF3ORCd9WWartkU6z1ZuwhOtC6/P+pdG6WAtKuP5rtG5s0i2j/wnno4bZCGNHXa5I7xNuTHMJtdmEn3DqHvzY9r675wmzttGdbV3b8DvhVUDzOw96eVW2RvQ64UUT1TbN8vF4nGepPS90W0P1OeHmLKAe5Nvqh20+OCu2dd9uPE44r5uj0fnVQlR+1liN86HhccJRVTSd3K5i7OolNT0KM+G6aqMNCeozYF29G38TJmUzbKyiKqJxzdl5m7CqQkfxq5PgqkRvE1Zz1Y6VxF1ViY65c18TvpXl0q4tNXl1VPN40deEq6pcjoBqX/3TKriE2amROquwrkTT3HfzNWF6OsRuGw852Jb3ozS0hPOyWM0lvzwTurFf42nCxaluHK3vqGzNtnFrg6cJl6eELZdhfSHaZWAJy8VpPW5JOC4TNi6X+5rwVCzBCcXXofzrUP69VP7zUH6fJoJ+abexhSoPsuGNLeSPD+WP8SOYp5E/1xbBfKn8Oe+rdYvL3/Yi1i3krz1FsH4YwRpwBOv4EezFiGA/TQR7opT8fW2/GYXvTTwo95dqoftLj2TvEX4cCUlIQhJKTyj+/UP575BG8B6w/He55b+PH8E3FSL4LkYE3zZp+D7N8/z5Ps1By8cRH9N3KAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAvH4AHoU0VY5sEU4AAAAASUVORK5CYII=" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+
+    <div class="col-xl-7 mb-5 mb-xl-2">
+      <div class="card shadow">
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center table-flush ">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Nome do produto</th>
+              <th scope="col">Qtde</th>
+              <th scope="col">Preço</th>
+              <th scope="col">Subtotal</th>
+              <th scope="col">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let produto of itensVenda" >
+                <td>{{produto.produto.nome}}</td>
+                <td>{{produto.qt}}</td>
+                <td>{{produto.preco}}</td>
+                <td></td>
+                <td></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="row">
+          <div class="col col-lg-12 pl-lg-12 d-flex flex-row-reverse" >
+            <button class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Finalizar</button>
+          </div>
+        </div>
+
+      </div>
+
+
+    </div>
+
+  </div>
+</div>

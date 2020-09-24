@@ -2,8 +2,8 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { ROUTES } from '../sidebar/sidebar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { Router } from '@angular/router';
-import {AuthenticationService} from "../../services/authentication.service";
-import {User} from "../../models/user";
+import {AuthenticationService} from '../../services/authentication.service';
+import {User} from '../../models/user';
 
 @Component({
   selector: 'app-navbar',
@@ -17,7 +17,11 @@ export class NavbarComponent implements OnInit {
   public currentUser: User;
   public subTitle: string;
 
-  constructor(location: Location,  private element: ElementRef, private router: Router, private authenticationService: AuthenticationService) {
+  constructor(
+    location: Location,
+    private element: ElementRef,
+    private router: Router,
+    private authenticationService: AuthenticationService) {
     this.location = location;
   }
 
