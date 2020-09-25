@@ -1,3 +1,5 @@
+import { PurchasesModule } from './../../modules/purchases/purchases.module';
+import { PaymentsModule } from './../../modules/payments/payments.module';
 import { FrontModule } from './../../modules/front/front.module';
 import { NgModule } from '@angular/core';
 import { HttpClientModule } from '@angular/common/http';
@@ -23,6 +25,8 @@ import {ProductsModule} from '../../modules/products/products.module';
     RolesModule,
     ProductsModule,
     FrontModule,
+    PaymentsModule,
+    PurchasesModule,
     NgxMaskModule.forRoot(),
   ],
 })

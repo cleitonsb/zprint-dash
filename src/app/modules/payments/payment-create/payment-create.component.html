@@ -1,0 +1,78 @@
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col-xl-4 order-xl-2 mb-5 mb-xl-2">
+      <div class="card card-profile shadow">
+        <div class="row justify-content-center">
+
+        </div>
+        <div class="card-body" >
+
+        </div>
+      </div>
+    </div>
+    <form (submit)="save()" class="col-xl-8 order-xl-1">
+      <div class="card bg-secondary shadow">
+        <div class="card-header bg-white border-0">
+          <div class="row align-items-center">
+            <div class="col-8">
+              <h3 class="mb-0">Cadastro do contas</h3>
+            </div>
+            <div class="col-4">
+              <button *ngIf="payment.id" class="btn btn-primary btn-sm float-right" type="button" (click)="edit()">Editar</button>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <div >
+            <div class="pl-lg-4">
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" >Plano de conta</label>
+                  <select [(ngModel)]="payment.planoConta.id" [disabled]="!formEdit" name="planoConta" class="form-control form-control-alternative">
+                    <option value="0">Selecione</option>
+                    <option *ngFor="let chartBill  of chartBills" value="{{chartBill.id}}">{{ chartBill.nome }}</option>
+                  </select>
+                </div>
+              </div>
+              <div class="col-lg-8">
+                <div class="form-group">
+                  <label class="form-control-label" >Descrição</label>
+                  <input type="text" [(ngModel)]="payment.descricao" [disabled]="!formEdit" required="required" name="descricao" class="form-control form-control-alternative" placeholder="Descrição da conta" value="{{payment.descricao}}">
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" >Data do vencimento</label>
+                  <input type="text" [(ngModel)]="payment.dataVencimento" [disabled]="!formEdit" name="dataVencimento"  class="form-control form-control-alternative" mask="00/00/0000" placeholder="Dt vencimento" value="{{payment.dataVencimento | mask: '11/11/1111'}}">
+                </div>
+              </div>
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" >Data do pagamento</label>
+                  <input type="text" [(ngModel)]="payment.dataPagamento" [disabled]="!formEdit" name="dataPagamento"  class="form-control form-control-alternative" mask="00/00/0000" placeholder="Dt pagamento" value="{{payment.dataPagamento | mask: '11/11/1111'}}">
+                </div>
+              </div>
+
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label">Valor</label>
+                  <input type="text" [(ngModel)]="payment.valor" [disabled]="!formEdit" name="valor" class="form-control form-control-alternative"  placeholder="Valor" value="{{payment.valor.toFixed(2)}}" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col">
+                <button class="btn btn-info" *ngIf="formEdit">Salvar</button>
+              </div>
+            </div>
+          </div>
+          </div>
+
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
