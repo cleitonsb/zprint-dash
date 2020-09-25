@@ -45,7 +45,7 @@ export class LoginComponent implements OnInit, OnDestroy {
       this.remember = localStorage.getItem('remember');
     }
 
-    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/services';
+    this.returnUrl = this.route.snapshot.queryParams['returnUrl'] || '/front';
   }
 
   get f() {

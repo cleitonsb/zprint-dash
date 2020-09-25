@@ -1,47 +1,107 @@
 <app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
 
 <div class="container-fluid mt--7">
-  <div class="row">
-    <form (submit)="save()" class="col-xl-5">
-      <div class="card bg-secondary shadow">
-        <div class="card-body">
+  <div class="row" >
 
-          <div class="pl-lg-4">
-            <div class="row">
-              <div class="col-lg-9">
-                <div class="form-group">
-                  <label class="form-control-label" >Produto/Item</label>
-                  <input type="text" [(ngModel)]="produto" name="produto" class="form-control form-control-alternative" placeholder="Digite o nome produto ou código EAN">
+    <div class="col-xl-6 mb-5 mb-xl-2" >
+      <div [style.height.px]="innerHeight">
+        <div class="card bg-secondary shadow">
+          <div class="card-body">
+            <div class="pl-lg-4">
+              <div class="row">
+                <div class="col-lg-10">
+                  <div class="form-group">
+                    <label class="form-control-label" >Produto</label>
+                    <ng-select class="ng-custom" (change)=setProduto($event)
+                      [items]="products"
+                      bindLabel="nome"
+                      bindValue="produto"
+                      loadingText="Carregando..."
+                      notFoundText="Item não encontrado"
+                      placeholder="Digite o Nome/código/EAN do produto"
+                      [loading]="productsLoading"
+                      labelForId="buscaProduto"
+                      [searchFn]="buscaProduto"
+                    ></ng-select>
+                  </div>
                 </div>
-              </div>
 
-              <div class="col-lg-3">
-                <div class="form-group">
-                  <label class="form-control-label" >Qtde</label>
-                  <input type="text" [(ngModel)]="qt" name="qt" class="form-control form-control-alternative" placeholder="QT">
+                <div class="col-lg-2">
+                  <div class="form-group">
+                    <label class="form-control-label" >Qtde</label>
+                    <input type="text" [(ngModel)]="qt" #qtProduto (keyup.enter)=addProduto() name="qt" class="form-control" placeholder="QT">
+                  </div>
                 </div>
               </div>
             </div>
-        </div>
 
-          <hr class="my-4" />
-          <div class="pl-lg-4" >
-            <div class="row">
-              <div class="col-lg-8">
-                <div><h2>Impressão de segunda via</h2></div>
-                <div><h1>2,55</h1></div>
-              </div>
-              <div class="col-lg-4">
-                <img class="border img-produto" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAXVBMVEXl5eUAAADq6uqUlJTo6Oju7u7Z2dne3t66urrDw8OJiYmioqJ7e3upqanGxsZWVlYyMjJRUVFubm6Dg4NpaWl4eHhMTExAQEAtLS1dXV0KCgqxsbEXFxchISGQkJDcfo/pAAADDklEQVR4nO3c6XKCMBiFYRMTQFHctbXL/V9mxyrgUgLqWJIv7/NXxskhAbLBYAAAAAAAAAAAAAAAAAAAAAAAAAAAkEa79V2859l86JLbvgv4LPut3L4Dj2jzloBKhV2L9qM1oFIfAUfUWYeASmXB3m500SmgUkWgEXWy75hwnwQZ0aSfHQMq9Zmavot7PzP46hxQqa+B7xH/6Kzs7gio1M7r7o6xyfSms7K4K6BSi5t/mCbWk4q1xezONF3NCi8elXbyonwHEw8i2vcXBlTqvfeIL63Bg75r0XTttjyu6Pd2Y191k6nN+q3E5OUBlUr6DKin/5Bw2uejXw//IeGw14RtcxThJ5RfhyQkobSE88VyMpksF3ORCd9WWartkU6z1ZuwhOtC6/P+pdG6WAtKuP5rtG5s0i2j/wnno4bZCGNHXa5I7xNuTHMJtdmEn3DqHvzY9r675wmzttGdbV3b8DvhVUDzOw96eVW2RvQ64UUT1TbN8vF4nGepPS90W0P1OeHmLKAe5Nvqh20+OCu2dd9uPE44r5uj0fnVQlR+1liN86HhccJRVTSd3K5i7OolNT0KM+G6aqMNCeozYF29G38TJmUzbKyiKqJxzdl5m7CqQkfxq5PgqkRvE1Zz1Y6VxF1ViY65c18TvpXl0q4tNXl1VPN40deEq6pcjoBqX/3TKriE2amROquwrkTT3HfzNWF6OsRuGw852Jb3ozS0hPOyWM0lvzwTurFf42nCxaluHK3vqGzNtnFrg6cJl6eELZdhfSHaZWAJy8VpPW5JOC4TNi6X+5rwVCzBCcXXofzrUP69VP7zUH6fJoJ+abexhSoPsuGNLeSPD+WP8SOYp5E/1xbBfKn8Oe+rdYvL3/Yi1i3krz1FsH4YwRpwBOv4EezFiGA/TQR7opT8fW2/GYXvTTwo95dqoftLj2TvEX4cCUlIQhJKTyj+/UP575BG8B6w/He55b+PH8E3FSL4LkYE3zZp+D7N8/z5Ps1By8cRH9N3KAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAvH4AHoU0VY5sEU4AAAAASUVORK5CYII=" />
+            <hr class="my-4" />
+            <div class="pl-lg-4" >
+              <div class="row">
+                <div class="col-lg-8">
+                  <div>
+                    <label class="form-control-label text-prod" >Descrição do produto</label>
+                    <h2>{{descProduto}}</h2>
+                  </div>
+                  <div>
+                    <label class="form-control-label text-prod" >Preço do produto</label>
+                    <h1>{{precoProduto.toFixed(2)}}</h1>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <img class="border img-produto" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAOEAAADhCAMAAAAJbSJIAAAAXVBMVEXl5eUAAADq6uqUlJTo6Oju7u7Z2dne3t66urrDw8OJiYmioqJ7e3upqanGxsZWVlYyMjJRUVFubm6Dg4NpaWl4eHhMTExAQEAtLS1dXV0KCgqxsbEXFxchISGQkJDcfo/pAAADDklEQVR4nO3c6XKCMBiFYRMTQFHctbXL/V9mxyrgUgLqWJIv7/NXxskhAbLBYAAAAAAAAAAAAAAAAAAAAAAAAAAAkEa79V2859l86JLbvgv4LPut3L4Dj2jzloBKhV2L9qM1oFIfAUfUWYeASmXB3m500SmgUkWgEXWy75hwnwQZ0aSfHQMq9Zmavot7PzP46hxQqa+B7xH/6Kzs7gio1M7r7o6xyfSms7K4K6BSi5t/mCbWk4q1xezONF3NCi8elXbyonwHEw8i2vcXBlTqvfeIL63Bg75r0XTttjyu6Pd2Y191k6nN+q3E5OUBlUr6DKin/5Bw2uejXw//IeGw14RtcxThJ5RfhyQkobSE88VyMpksF3ORCd9WWartkU6z1ZuwhOtC6/P+pdG6WAtKuP5rtG5s0i2j/wnno4bZCGNHXa5I7xNuTHMJtdmEn3DqHvzY9r675wmzttGdbV3b8DvhVUDzOw96eVW2RvQ64UUT1TbN8vF4nGepPS90W0P1OeHmLKAe5Nvqh20+OCu2dd9uPE44r5uj0fnVQlR+1liN86HhccJRVTSd3K5i7OolNT0KM+G6aqMNCeozYF29G38TJmUzbKyiKqJxzdl5m7CqQkfxq5PgqkRvE1Zz1Y6VxF1ViY65c18TvpXl0q4tNXl1VPN40deEq6pcjoBqX/3TKriE2amROquwrkTT3HfzNWF6OsRuGw852Jb3ozS0hPOyWM0lvzwTurFf42nCxaluHK3vqGzNtnFrg6cJl6eELZdhfSHaZWAJy8VpPW5JOC4TNi6X+5rwVCzBCcXXofzrUP69VP7zUH6fJoJ+abexhSoPsuGNLeSPD+WP8SOYp5E/1xbBfKn8Oe+rdYvL3/Yi1i3krz1FsH4YwRpwBOv4EezFiGA/TQR7opT8fW2/GYXvTTwo95dqoftLj2TvEX4cCUlIQhJKTyj+/UP575BG8B6w/He55b+PH8E3FSL4LkYE3zZp+D7N8/z5Ps1By8cRH9N3KAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAvH4AHoU0VY5sEU4AAAAASUVORK5CYII=" />
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </form>
 
-    <div class="col-xl-7 mb-5 mb-xl-2">
-      <div class="card shadow">
+      <div class="row">
+          <button #btnDesconto [disabled]="venda.total == 0" (click)=openDesconto() class="btn btn-info mr-2 mb-2" > <i class="fas fa-percent"></i> Desconto (F2)</button>
+          <button #btnPesquisar [swal]="deleteSwal" class="btn btn-info mr-2 mb-2" > <i class="fas fa-search"></i> Pesquisar (F7)</button>
+          <button #btnCancelar [disabled]="venda.total == 0" class="btn btn-danger mr-2 mb-2" [swal]="{ title: 'Confirme', text: 'Deseja cancelar esta venda?', icon: 'question', showCancelButton: true, focusCancel: true }"
+          (confirm)="cancelaVenda()" >  <i class="fas fa-ban"></i> Cancelar venda (F8)</button>
+      </div>
+
+      <swal #deleteSwal title="Busca de preços" [showConfirmButton]=false>
+        <div *swalPortal class="ng-busca-produto" >
+
+          <ng-select (change)=getPreco($event)
+            [items]="products"
+            bindLabel="nome"
+            loadingText="Carregando..."
+            notFoundText="Item não encontrado"
+            placeholder="Digite o Nome/código/EAN do produto"
+            [loading]="productsLoading"
+            [searchFn]="buscaProduto"
+          ></ng-select>
+
+          <div class="pt-4"><h1>R$ {{buscaPreco.toFixed(2)}}</h1></div>
+
+        </div>
+      </swal>
+
+      <swal #descontoSwal title="Desconto" [showConfirmButton]=false >
+        <div *swalPortal >
+          <div class="row justify-content-md-center">
+            <div class="col col-lg-9">
+              <div class="form-group text-left">
+                <input type="text" [(ngModel)]="vendaDesconto" #desconto id="vendaDesconto" (keyup.enter)=setDeconto() name="desconto" class="form-control" placeholder="Desconto" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+              </div>
+            </div>
+
+            <div class="col col-lg-3">
+              <button type="button" class="btn btn-info btn-block" (click)=setDeconto()> OK</button>
+            </div>
+          </div>
+        </div>
+      </swal>
+
+    </div>
+
+    <div class="col-xl-6 mb-5 mb-xl-2">
+      <div class="card shadow table-produtos" [style.height.px]="innerHeight">
         <div class="table-responsive">
           <table class="table table-hover align-items-center table-flush ">
             <thead class="thead-light">
@@ -50,31 +110,43 @@
               <th scope="col">Qtde</th>
               <th scope="col">Preço</th>
               <th scope="col">Subtotal</th>
-              <th scope="col">Ações</th>
+              <th scope="col">&nbsp;</th>
             </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let produto of itensVenda" >
-                <td>{{produto.produto.nome}}</td>
-                <td>{{produto.qt}}</td>
-                <td>{{produto.preco}}</td>
-                <td></td>
-                <td></td>
+              <tr *ngFor="let item of venda.itensVenda" >
+                <td class="prod-name">{{item.produto.nome}}</td>
+                <td>{{item.qt}}</td>
+                <td>{{ (+item.produto.preco).toFixed(2)}}</td>
+                <td>{{(item.qt * +item.produto.preco).toFixed(2)}}</td>
+                <td><a (click)=removeItem(item) class="mouse-link"><i class="fas fa-trash text-danger"></i></a></td>
               </tr>
             </tbody>
           </table>
         </div>
-
-        <div class="row">
-          <div class="col col-lg-12 pl-lg-12 d-flex flex-row-reverse" >
-            <button class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Finalizar</button>
-          </div>
-        </div>
-
       </div>
 
+      <div class="row">
+        <div class="col col-lg-2 pl-lg-12 text-right" >
+          <label class="form-control-label text-prod" >Subtotal</label>
+          <h1>{{subtotal.toFixed(2)}}</h1>
+        </div>
+        <div class="col col-lg-2 pl-lg-12 text-right" >
+          <label class="form-control-label text-prod" >Desconto</label>
+          <h1>{{venda.desconto.toFixed(2)}}</h1>
+        </div>
+        <div class="col col-lg-2 pl-lg-12 text-right" >
+            <label class="form-control-label text-prod" >Total</label>
+            <h1>{{venda.total.toFixed(2)}}</h1>
+        </div>
+
+        <div class="col col-lg-6 pl-lg-12 d-flex flex-row-reverse pt-4" >
+          <button #btnFinalizar [disabled]="venda.total == 0" [swal]="{ title: 'Nome do cliente:', input: 'text'}"
+          (confirm)="setNome($event)" class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Finalizar (F9)</button>
+        </div>
+      </div>
 
     </div>
-
   </div>
 </div>
+

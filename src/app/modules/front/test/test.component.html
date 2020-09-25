@@ -1,0 +1,25 @@
+<p>
+  By default ng-select will search using label text. You can also use <b>loading</b> input to set
+  loading state manually if <b>[typeahead]</b> is not used.
+</p>
+
+<div class="container-fluid mt--7" style="margin-top: 100px;">
+  <div class="row" style="height: 100px;">
+  aaa
+  </div>
+  <div class="row">
+    <form class="col-xl-5">
+      <div class="card bg-secondary shadow">
+        <div class="card-body">
+
+          <div class="pl-lg-4">
+              <ng-select (search)=loadPeople() [items]="people"
+                      bindLabel="nome"
+                      [loading]="peopleLoading">
+              </ng-select>
+          </div>
+        </div>
+    </div>
+    </form>
+  </div>
+</div>

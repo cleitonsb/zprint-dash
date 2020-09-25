@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { msg } from './../../../variables/msg';
+import { NotificationService } from './../../../services/notification.service';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 
 @Component({
   selector: 'app-attendance',
@@ -10,11 +12,8 @@ export class AttendanceComponent implements OnInit {
   subTitulo = '';
   urlBreadcrumb = 'front';
 
-  paramBusca = '';
+  constructor(private notify: NotificationService) { }
 
-  constructor() { }
-
-  ngOnInit(): void {
-  }
+  ngOnInit(): void {}
 
 }

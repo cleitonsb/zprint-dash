@@ -1,3 +1,4 @@
+import { NgxCurrencyModule } from 'ngx-currency';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
@@ -12,9 +13,14 @@ import { SaleCreateComponent } from './sale-create/sale-create.component';
 import { SaleListComponent } from './sale-list/sale-list.component';
 import { CashierComponent } from './cashier/cashier.component';
 import { AttendanceComponent } from './attendance/attendance.component';
+import { NgSelectModule } from '@ng-select/ng-select';
+import { TestComponent } from './test/test.component';
+import { SaleShowComponent } from './sale-show/sale-show.component';
+import { CashierListComponent } from './cashier-list/cashier-list.component';
+import { CashierShowComponent } from './cashier-show/cashier-show.component';
 
 @NgModule({
-  declarations: [SaleCreateComponent, SaleListComponent, CashierComponent, AttendanceComponent],
+  declarations: [SaleCreateComponent, SaleListComponent, CashierComponent, AttendanceComponent, TestComponent, SaleShowComponent, CashierListComponent, CashierShowComponent],
   imports: [
     CommonModule,
     RouterModule.forChild(FrontRoutes),
@@ -23,7 +29,9 @@ import { AttendanceComponent } from './attendance/attendance.component';
     ComponentsModule,
     NgbModule,
     SweetAlert2Module,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgSelectModule,
+    NgxCurrencyModule,
   ]
 })
 export class FrontModule { }
