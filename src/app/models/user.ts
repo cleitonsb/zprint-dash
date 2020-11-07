@@ -1,7 +1,7 @@
 import {Endereco} from './endereco';
 
 export class User {
-  id: number;
+  id = 0;
   dt_nasc?: string;
   email?: string;
   password?: string;

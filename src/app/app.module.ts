@@ -39,7 +39,7 @@ import { SweetAlert2Module } from '@sweetalert2/ngx-sweetalert2';
   declarations: [
     AppComponent,
     AdminLayoutComponent,
-    AuthLayoutComponent
+    AuthLayoutComponent,
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true },

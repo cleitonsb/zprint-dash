@@ -1,3 +1,5 @@
+import { PaymentBillService } from './../../../services/paymentBill.service';
+import { PaymentBill } from './../../../models/paymentBill';
 import { Router } from '@angular/router';
 import { PaymentService } from './../../../services/payment.service';
 import { Cashier } from './../../../models/cashier';
@@ -13,6 +15,8 @@ import { Venda } from './../../../models/venda';
 import { Component, OnInit, HostListener, ViewChild, ElementRef } from '@angular/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
+import { ChartBill } from 'src/app/models/chartBill';
+import { User } from 'src/app/models/user';
 
 @Component({
   selector: 'app-cashier',
@@ -34,7 +38,8 @@ export class CashierComponent implements OnInit {
   urlBreadcrumb = 'cashier';
 
   venda = new Venda();
-  vendas: Array<Venda>;
+  conta = new PaymentBill();
+  contas: Array<Venda>;
   pagamento = new Payment();
   resPagamentos: any;
 
@@ -55,6 +60,7 @@ export class CashierComponent implements OnInit {
     private salesService: SaleService,
     private cashierService: CashierService,
     private paymentService: PaymentService,
+    private paymentBill: PaymentBillService,
     private authenticationService: AuthenticationService,
     private notify: NotificationService,
     private spinner: NgxSpinnerService,
@@ -79,8 +85,8 @@ export class CashierComponent implements OnInit {
   }
 
   async getRegistros() {
-    this.salesService.getByParam('noCaixa').subscribe((data: any) => {
-      this.vendas = data;
+    this.paymentBill.getByParam('noCaixa').subscribe((data: any) => {
+      this.contas = data;
     });
 
     await this.delayCaixa();
@@ -94,6 +100,17 @@ export class CashierComponent implements OnInit {
       this.venda.itensVenda.forEach(element => {
         this.subtotal += +element.preco * element.qt;
       });
+
+      this.conta = this.venda.contas[this.venda.contas.length - 1];
+
+      delete this.venda.usuario;
+      this.venda.usuario = new User();
+      this.venda.usuario.id = this.usuario.id;
+
+      delete this.conta.usuario;
+      this.conta.usuario = new User();
+      this.conta.usuario.id = this.usuario.id;
+
     });
   }
 
@@ -107,7 +124,7 @@ export class CashierComponent implements OnInit {
   }
 
   checkCaixa() {
-    const currentUser: any = this.authenticationService.currentUserValue;
+    const currentUser: any = this.authenticationService.getUser();
     this.usuario = currentUser.user;
 
     this.cashierService.getOpen().subscribe((data: any) => {
@@ -156,7 +173,7 @@ export class CashierComponent implements OnInit {
     if (this.pagamento.tipoPagamento !== 'DINHEIRO') {
 
       let total = 0;
-      this.venda.pagamentos.forEach(element => {
+      this.conta.pagamentos.forEach(element => {
         total += element.valor;
       });
 
@@ -170,7 +187,7 @@ export class CashierComponent implements OnInit {
       this.disableDinheiro = true;
     }
 
-    this.venda.pagamentos = [...this.venda.pagamentos, this.pagamento];
+    this.conta.pagamentos = [...this.conta.pagamentos, this.pagamento];
     this.pagamento = new Payment();
 
     this.calcTotal();
@@ -180,19 +197,19 @@ export class CashierComponent implements OnInit {
 
   calcTotal() {
     this.totalPago = 0;
-    this.venda.pagamentos.forEach(element => {
+    this.conta.pagamentos.forEach(element => {
       this.totalPago += element.valor;
     });
 
-    this.venda.troco = this.totalPago - this.venda.total;
-    this.textResultado = (this.venda.troco >= 0) ? 'Troco' : 'Restante';
+    this.conta.troco = this.totalPago - this.venda.total;
+    this.textResultado = (this.conta.troco >= 0) ? 'Troco' : 'Restante';
   }
 
   removeItem(pag: Payment) {
-    const index: number = this.venda.pagamentos.indexOf(pag);
+    const index: number = this.conta.pagamentos.indexOf(pag);
 
     if (index !== -1) {
-      this.venda.pagamentos.splice(index, 1);
+      this.conta.pagamentos.splice(index, 1);
     }
 
     this.calcTotal();
@@ -208,32 +225,32 @@ export class CashierComponent implements OnInit {
     delete this.venda.usuario;
     delete this.venda.itensVenda;
 
-    this.venda.caixa = new Cashier();
-    this.venda.caixa.id = this.caixa.id;
+    this.conta.caixa = new Cashier();
+    this.conta.caixa.id = this.caixa.id;
 
     /** ajuste no valor do pagamento em dinheiro, quando tem troco */
-    if (this.venda.troco > 0) {
-      this.venda.pagamentos.forEach(element => {
+    if (this.conta.troco > 0) {
+      this.conta.pagamentos.forEach(element => {
         if (element.tipoPagamento === 'DINHEIRO') {
           /** faço copia do objeto pagamento */
           const nPag = {...element};
 
           /** removo da lista o objeto original */
-          const index: number = this.venda.pagamentos.indexOf(element);
+          const index: number = this.conta.pagamentos.indexOf(element);
           if (index !== -1) {
-            this.venda.pagamentos.splice(index, 1);
+            this.conta.pagamentos.splice(index, 1);
           }
 
           /** add o novo objeto */
-          if (this.venda.troco < nPag.valor) {
-            nPag.valor = nPag.valor - this.venda.troco;
-            this.venda.pagamentos = [...this.venda.pagamentos, nPag];
+          if (this.conta.troco < nPag.valor) {
+            nPag.valor = nPag.valor - this.conta.troco;
+            this.conta.pagamentos = [...this.conta.pagamentos, nPag];
           }
         }
       });
     }
 
-    this.salesService.update(this.venda).subscribe((response: any) => {
+    this.paymentBill.update(this.conta).subscribe((response: any) => {
       if (response.status === 200) {
           this.notify.sucess(msg.S001);
           if (response.body.id) {

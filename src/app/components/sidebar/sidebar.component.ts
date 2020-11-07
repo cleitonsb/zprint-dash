@@ -15,10 +15,11 @@ export const ROUTES: RouteInfo[] = [
   { path: '/users', title: 'Usuários',  icon: 'fa-user-friends text-green', class: '', route: '/usuario' },
   { path: '/roles', title: 'Perfis',  icon: 'fa-key text-red', class: '', route: '/perfil' },
   { path: '/products', title: 'Produtos',  icon: 'fa-boxes text-black', class: '', route: '/produto' },
-  { path: '/front/services', title: 'Serviços',  icon: 'ni-tv-2 text-primary', class: '', route: '/servico' },
+  { path: '/front/services', title: 'Serviços',  icon: 'fa-concierge-bell text-yellow', class: '', route: '/servico' },
   { path: '/front/cashiers', title: 'Caixa',  icon: 'fa-cash-register text-blue', class: '', route: '/caixa' },
   { path: '/purchases', title: 'Compras',  icon: 'fa-shopping-basket text-grey', class: '', route: '/compra' },
   { path: '/payments', title: 'Contas',  icon: 'fa-dollar-sign text-red', class: '', route: '/conta' },
+  { path: '/people', title: 'Pessoas',  icon: 'fa-users text-green', class: '', route: '/pessoa' },
 ];
 
 @Component({

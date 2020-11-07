@@ -4,30 +4,24 @@
 <div class="container-fluid mt--7">
   <div class="row ">
     <div class="big-button d-table">
-      <div class="card card-block d-table-cell align-middle bg-primary" [routerLink]="['/front/sale-create']">
-        <h2>Nova venda</h2>
-        <p>
-          Venda de produtos
-        </p>
+      <div class="card card-block d-table-cell align-middle bg-primary" #btnVenda [routerLink]="['/front/sale-create']">
+        <h2>Nova venda (F2)</h2>
+        <p>Venda de produtos</p>
       </div>
     </div>
 
     <div class="big-button d-table">
-      <div class="card card-block d-table-cell align-middle bg-primary" [routerLink]="['/front/service-create']">
-        <h2>Novo serviço</h2>
-        <p>
-          Ordem de serviço
-        </p>
+      <div class="card card-block d-table-cell align-middle bg-primary" #btnServico [routerLink]="['/front/service-create']">
+        <h2>Novo serviço (F7)</h2>
+        <p>Ordem de serviço</p>
       </div>
     </div>
   </div>
   <div class="row ">
     <div class="big-button  d-table">
-      <div class="card card-block d-table-cell align-middle bg-primary" [routerLink]="['/front/cashier']">
-        <h2>Caixa</h2>
-        <p>
-          Frente de caixa
-        </p>
+      <div class="card card-block d-table-cell align-middle bg-primary" #btnCaixa [routerLink]="['/front/cashier']">
+        <h2>Caixa (F8)</h2>
+        <p>Frente de caixa</p>
       </div>
     </div>
   </div>

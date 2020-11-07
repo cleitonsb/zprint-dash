@@ -47,12 +47,11 @@
 
     <div class="col-xl-4 mb-5 " >
       <div class="card bg-secondary shadow table-responsive" [style.height.px]="innerHeight">
-        <div class="card-body ">
-
+        <div class="card-body " *ngFor="let conta of venda.contas">
           <div class="table-responsive" style="overflow: hidden; height: calc(100% - 67px);">
-            <table class="table table-hover align-items-center table-flush ">
+            <table  class="table table-hover align-items-center table-flush ">
               <tbody>
-                <tr *ngFor="let pagamento of venda.pagamentos">
+                <tr *ngFor="let pagamento of conta.pagamentos">
                   <td class="pl-0">{{pagamento.tipoPagamento}}</td>
                   <td class="text-right">{{pagamento.valor.toFixed(2)}}</td>
                 </tr>
@@ -65,7 +64,7 @@
           </div>
           <div class="row" style="overflow: hidden; background-color: #f2f2f2;">
             <div class="col col-lg-6 pt-2" ><b>Troco</b></div>
-            <div class="col col-lg-6 pt-2 pb-2 text-right" ><b>{{venda.troco.toFixed(2)}}</b></div>
+            <div class="col col-lg-6 pt-2 pb-2 text-right" ><b>{{conta.troco.toFixed(2)}}</b></div>
           </div>
         </div>
       </div>

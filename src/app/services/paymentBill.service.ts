@@ -31,7 +31,7 @@ export class PaymentBillService {
   }
 
   public update(data) {
-    return this.http.post(environment.apiUrl + '/conta/update', data, {observe: 'response'});
+    return this.http.post(environment.apiUrl + '/conta', data, {observe: 'response'});
   }
 
   public delete(id) {

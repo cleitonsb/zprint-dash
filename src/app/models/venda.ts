@@ -1,5 +1,4 @@
-import { Cashier } from './cashier';
-import { Payment } from './payment';
+import { PaymentBill } from './paymentBill';
 import { ItemVenda } from './itemVenda';
 import { User } from './user';
 
@@ -11,9 +10,7 @@ export class Venda {
   desconto = 0;
   usuario: User;
   itensVenda = new Array<ItemVenda>();
-  pagamentos = new Array<Payment>();
-  caixa = new Cashier();
-  troco = 0;
   situacao: boolean;
+  contas = new Array<PaymentBill>();
 }
 

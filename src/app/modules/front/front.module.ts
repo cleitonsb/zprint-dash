@@ -18,6 +18,8 @@ import { TestComponent } from './test/test.component';
 import { SaleShowComponent } from './sale-show/sale-show.component';
 import { CashierListComponent } from './cashier-list/cashier-list.component';
 import { CashierShowComponent } from './cashier-show/cashier-show.component';
+import { ServiceListComponent } from './service-list/service-list.component';
+import { ServiceCreateComponent } from './service-create/service-create.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +30,9 @@ import { CashierShowComponent } from './cashier-show/cashier-show.component';
     TestComponent,
     SaleShowComponent,
     CashierListComponent,
-    CashierShowComponent
+    CashierShowComponent,
+    ServiceListComponent,
+    ServiceCreateComponent
   ],
   imports: [
     CommonModule,

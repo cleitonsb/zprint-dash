@@ -13,6 +13,7 @@ import {UsersModule} from '../../modules/users/users.module';
 import {NgxMaskModule} from 'ngx-mask';
 import {RolesModule} from '../../modules/roles/roles.module';
 import {ProductsModule} from '../../modules/products/products.module';
+import { PeopleModule } from 'src/app/modules/people/people.module';
 
 @NgModule({
   imports: [
@@ -27,6 +28,7 @@ import {ProductsModule} from '../../modules/products/products.module';
     FrontModule,
     PaymentsModule,
     PurchasesModule,
+    PeopleModule,
     NgxMaskModule.forRoot(),
   ],
 })

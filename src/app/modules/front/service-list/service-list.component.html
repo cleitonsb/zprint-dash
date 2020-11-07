@@ -4,7 +4,7 @@
 <div class="container-fluid mt--7">
   <div class="row">
     <div class="col">
-      <button class="btn btn-primary mb-3" [routerLink]="['/user/create']">Novo usuário</button>
+      <button class="btn btn-primary mb-3" [routerLink]="['/front/service-create']">Novo serviço</button>
     </div>
     <div class="col col-lg-4">
       <div class="form-group">
@@ -22,29 +22,30 @@
     <div class="col">
       <div class="card shadow">
         <div class="card-header border-0">
-          <h3 class="mb-0">Usuários</h3>
+          <h3 class="mb-0">Serviços</h3>
         </div>
         <div class="table-responsive">
           <table class="table table-hover align-items-center table-flush ">
             <thead class="thead-light">
             <tr>
               <th scope="col">Código</th>
-              <th scope="col">Nome</th>
-              <th scope="col">Email</th>
-              <th scope="col">Celular</th>
-              <th scope="col">Telefone</th>
+              <th scope="col">Data</th>
+              <th scope="col">Cliente</th>
+              <th scope="col">Vendedor</th>
+              <th scope="col">Valor</th>
               <th scope="col">Ações</th>
             </tr>
             </thead>
             <tbody>
-            <tr *ngFor="let user of users | paginate:{itemsPerPage: 5, currentPage: p, totalItems: total }" >
-              <th scope="row">{{user.id}}</th>
-              <td>{{user.nome}}</td>
-              <td>{{user.email}}</td>
-              <td>{{user.celular | mask: '(00) 00000-0000'}}</td>
-              <td>{{user.telefone | mask: '(00) 0000-0000'}}</td>
+            <tr *ngFor="let servico of servicos | paginate:{itemsPerPage: 5, currentPage: p, totalItems: total }" >
+              <th scope="row"> S{{(servico.id.toString()).padStart(5,0)}}</th>
+              <td>{{servico.data | date:'dd/MM/yyyy HH:mm'}}</td>
+              <td>{{servico.nome}}</td>
+              <td>{{servico.usuario.nome}}</td>
+              <td class="text-right">{{(+servico.total).toFixed(2)}}</td>
               <td>
-                <a [routerLink]="['/user/' + user.id]"><i class="fas fa-search"></i></a>
+                <a [routerLink]="['/front/service-create/' + servico.id]"><i class="fas fa-search"></i></a> &nbsp;
+                <a *ngIf=!servico.caixa (click)=edit(servico.id) ><i class="fas fa-edit"></i></a>
               </td>
             </tr>
             </tbody>
