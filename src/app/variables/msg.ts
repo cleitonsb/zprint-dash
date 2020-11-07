@@ -5,7 +5,7 @@ export const msg = {
   S003: 'Caixa fechado com sucesso!',
 
   /** Alertas */
-  A001: 'O desconto não pode ser maior que o valor da venda!',
+  A001: 'O desconto não pode ser maior que o valor da venda/serviço!',
   /** Erros */
   E001: 'Erro ao tentar se conectar com o servidor!',
   E002: 'Usuário e/ou senha incorreta!',

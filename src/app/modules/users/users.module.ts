@@ -23,7 +23,6 @@ registerLocaleData(localePT);
       RouterModule.forChild(UserRoutes),
       NgxMaskModule.forRoot(),
       FormsModule,
-      PaginatorModule,
       ComponentsModule,
       NgbModule,
       SweetAlert2Module,

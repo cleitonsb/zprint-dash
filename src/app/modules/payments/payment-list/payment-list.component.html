@@ -1,0 +1,62 @@
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary mb-3" [routerLink]="['/payment/create']">Novo pagamento</button>
+    </div>
+    <div class="col col-lg-4">
+      <div class="form-group">
+        <div class=" input-group input-group-merge">
+          <div class=" input-group-prepend">
+            <span class=" input-group-text"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control" [(ngModel)]="paramBusca" (keyup.enter)="getRegistros()" placeholder="Buscar" type="text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Contas</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center table-flush ">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Data</th>
+              <th scope="col">Data vencimento</th>
+              <th scope="col">Usuário</th>
+              <th scope="col">Valor</th>
+              <th scope="col">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let conta of contas | paginate:{itemsPerPage: 5, currentPage: p, totalItems: total }" >
+              <th scope="row"> {{conta.id}}</th>
+              <td>{{conta.data | date:'dd/MM/yyyy HH:mm'}}</td>
+              <td>{{conta.dataVencimento | date:'dd/MM/yyyy'}}</td>
+              <td>{{conta.usuario.nome}}</td>
+              <td class="text-right">{{(+conta.valor).toFixed(2)}}</td>
+              <td>
+                <a [routerLink]="['/payment/' + conta.id + '/edit']"><i class="fas fa-search"></i></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="text-center paginacao">
+          <pagination-controls (pageChange)="getRegistros(p = $event);" previousLabel="Anterior" nextLabel="Próximo" responsive="true"></pagination-controls>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>

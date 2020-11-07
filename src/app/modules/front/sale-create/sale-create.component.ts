@@ -1,3 +1,4 @@
+import { PaymentBill } from 'src/app/models/paymentBill';
 import { AuthenticationService } from './../../../services/authentication.service';
 import { User } from './../../../models/user';
 import { Venda } from './../../../models/venda';
@@ -11,6 +12,8 @@ import { ItemVenda } from './../../../models/itemVenda';
 import { Product } from './../../../models/product';
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
 import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
+import { TipoConta } from 'src/app/enums/tipo-conta';
+import Swal from 'sweetalert2';
 
 @Component({
   selector: 'app-sale-create',
@@ -40,14 +43,14 @@ export class SaleCreateComponent implements OnInit {
   descProduto: string;
   precoProduto = 0;
 
-  venda: Venda;
+  venda = new Venda();
   subtotal = 0;
 
   buscaPreco = 0;
   nomeCliente: string;
   vendaDesconto = 0;
 
-  usuario = new User();
+  usuario: User;
 
   constructor(
     private productService: ProductService,
@@ -59,7 +62,8 @@ export class SaleCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    const currentUser: any = this.authenticationService.currentUserValue;
+    const currentUser: any = this.authenticationService.getUser();
+    this.usuario = new User();
     this.usuario.id = currentUser.user.id;
 
     this.venda = new Venda();
@@ -102,19 +106,21 @@ export class SaleCreateComponent implements OnInit {
     }
   }
 
-  setNome(nome: string) {
-    if (nome === '') {
-      this.notify.error(msg.E003);
-    } else {
-      this.venda.nome = nome;
-      this.save();
-    }
-  }
-
   save() {
     this.spinner.show();
 
-    delete this.venda.caixa;
+    const conta = new PaymentBill();
+    conta.dataPagamento = new Date();
+    conta.dataVencimento = new Date();
+    conta.planoConta.id = 6; // -- venda
+    conta.tipoConta = 'RECEBIMENTO';
+    conta.usuario = this.usuario;
+    conta.valor = this.venda.total;
+
+    delete conta.caixa;
+
+    this.venda.contas[0] = conta;
+    this.venda.usuario = this.usuario;
 
     this.service.store(this.venda).subscribe((response: any) => {
       if (response.status === 200) {
@@ -269,6 +275,25 @@ export class SaleCreateComponent implements OnInit {
       this.vendaDesconto = this.venda.desconto;
       this.calcTotal();
     });
+  }
+
+  finalizarVenda() {
+    if (!this.venda.nome) {
+      Swal.fire({
+        title: 'Nome do cliente',
+        input: 'text',
+        preConfirm: (usuario) => {
+          if (usuario === '') {
+            this.notify.error(msg.E003);
+          } else {
+            this.venda.nome = usuario;
+            this.save();
+          }
+        }
+      });
+    } else {
+      this.save();
+    }
   }
 
 }

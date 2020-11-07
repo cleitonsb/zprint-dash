@@ -18,9 +18,22 @@ import { TestComponent } from './test/test.component';
 import { SaleShowComponent } from './sale-show/sale-show.component';
 import { CashierListComponent } from './cashier-list/cashier-list.component';
 import { CashierShowComponent } from './cashier-show/cashier-show.component';
+import { ServiceListComponent } from './service-list/service-list.component';
+import { ServiceCreateComponent } from './service-create/service-create.component';
 
 @NgModule({
-  declarations: [SaleCreateComponent, SaleListComponent, CashierComponent, AttendanceComponent, TestComponent, SaleShowComponent, CashierListComponent, CashierShowComponent],
+  declarations: [
+    SaleCreateComponent,
+    SaleListComponent,
+    CashierComponent,
+    AttendanceComponent,
+    TestComponent,
+    SaleShowComponent,
+    CashierListComponent,
+    CashierShowComponent,
+    ServiceListComponent,
+    ServiceCreateComponent
+  ],
   imports: [
     CommonModule,
     RouterModule.forChild(FrontRoutes),

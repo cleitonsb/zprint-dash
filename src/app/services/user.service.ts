@@ -27,6 +27,14 @@ export class UserService {
     return this.http.get(environment.apiUrl + '/usuario/' + id);
   }
 
+  public getByParam(param?) {
+    let busca = '';
+    if (param !== undefined) {
+      busca = '/busca/' + param;
+    }
+    return this.http.get(environment.apiUrl + '/usuario' + busca);
+  }
+
   public getByEmail(email: string = null) {
     if (email === null) { return; }
     return this.http.get(environment.apiUrl + '/usuario/' + email + '/email');

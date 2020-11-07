@@ -47,8 +47,10 @@ export class SaleShowComponent implements OnInit {
           this.subtotal += +element.preco * element.qt;
         });
 
-        this.venda.pagamentos.forEach(element => {
-          this.totalPago += +element.valor;
+        this.venda.contas.forEach(contaElement => {
+          contaElement.pagamentos.forEach(element => {
+            this.totalPago += +element.valor;
+          });
         });
 
         this.spinner.hide();

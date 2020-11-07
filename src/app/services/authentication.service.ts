@@ -21,7 +21,7 @@ export class AuthenticationService {
     this.currentUser = this.currentUserSubject.asObservable();
   }
 
-  public get currentUserValue(): User{
+  public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
 
@@ -50,5 +50,10 @@ export class AuthenticationService {
 
   getEmail() {
     return this.email;
+  }
+
+  public getUser() {
+    const currentUser: any = JSON.parse(localStorage.getItem('currentUser'));
+    return currentUser;
   }
 }

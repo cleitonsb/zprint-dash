@@ -141,8 +141,7 @@
         </div>
 
         <div class="col col-lg-6 pl-lg-12 d-flex flex-row-reverse pt-4" >
-          <button #btnFinalizar [disabled]="venda.total == 0" [swal]="{ title: 'Nome do cliente:', input: 'text'}"
-          (confirm)="setNome($event)" class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Finalizar (F9)</button>
+          <button #btnFinalizar [disabled]="venda.total == 0" (click)=finalizarVenda() class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Finalizar (F9)</button>
         </div>
       </div>
 

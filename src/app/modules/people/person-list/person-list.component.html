@@ -1,0 +1,62 @@
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<!-- Page content -->
+<div class="container-fluid mt--7">
+  <div class="row">
+    <div class="col">
+      <button class="btn btn-primary mb-3" [routerLink]="['/person/create']">Nova pessoa</button>
+    </div>
+    <div class="col col-lg-4">
+      <div class="form-group">
+        <div class=" input-group input-group-merge">
+          <div class=" input-group-prepend">
+            <span class=" input-group-text"><i class="fas fa-search"></i></span>
+          </div>
+          <input class="form-control" [(ngModel)]="paramBusca" (keyup.enter)="getRegistros()" placeholder="Buscar" type="text"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Pessoas</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center table-flush ">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Nome</th>
+              <th scope="col">Email</th>
+              <th scope="col">Celular</th>
+              <th scope="col">Telefone</th>
+              <th scope="col">Ações</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let person of people | paginate:{itemsPerPage: 5, currentPage: p, totalItems: total }" >
+              <th scope="row">{{person.id}}</th>
+              <td>{{person.nome}}</td>
+              <td>{{person.email}}</td>
+              <td>{{person.celular | mask: '(00) 00000-0000'}}</td>
+              <td>{{person.telefone | mask: '(00) 0000-0000'}}</td>
+              <td>
+                <a [routerLink]="['/person/' + person.id + '/edit']"><i class="fas fa-search"></i></a>
+              </td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="text-center paginacao">
+          <pagination-controls (pageChange)="getRegistros(p = $event);" previousLabel="Anterior" nextLabel="Próximo" responsive="true"></pagination-controls>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div>
