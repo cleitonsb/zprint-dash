@@ -21,6 +21,15 @@ export class ProductService {
     return this.http.get(environment.apiUrl + '/produto' + busca);
   }
 
+  public getProdServiceByParam(param?) {
+    let busca = '/servico';
+    if (param) {
+      busca = '/busca/' + param;
+    }
+
+    return this.http.get(environment.apiUrl + '/produto' + busca);
+  }
+
   public get(id: number = null) {
     if (id === null) { return; }
     return this.http.get(environment.apiUrl + '/produto/' + id);

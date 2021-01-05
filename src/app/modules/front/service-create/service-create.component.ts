@@ -97,7 +97,7 @@ export class ServiceCreateComponent implements OnInit {
     });
 
     /** produtos */
-    this.productService.getByParam().subscribe((response: any) => {
+    this.productService.getProdServiceByParam().subscribe((response: any) => {
       this.products = response;
     });
 

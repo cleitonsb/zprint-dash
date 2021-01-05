@@ -1,3 +1,4 @@
+import { EmitterService } from './../../../services/emitter.service';
 import { msg } from './../../../variables/msg';
 import { NotificationService } from './../../../services/notification.service';
 import { Component, OnInit, ViewChild, ElementRef, HostListener } from '@angular/core';
@@ -17,9 +18,30 @@ export class AttendanceComponent implements OnInit {
   subTitulo = '';
   urlBreadcrumb = 'front';
 
-  constructor(private notify: NotificationService) { }
+  caixa: any;
+  servico: any;
+  currentUser: any;
 
-  ngOnInit(): void {}
+  constructor(private notify: NotificationService, private emitterService: EmitterService) { }
+
+  ngOnInit(): void {
+
+    const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+    if(currentUser.user){
+      this.currentUser = currentUser;
+      this.getRoutes();
+    }else{
+      this.emitterService.msgEmitter.subscribe(msg => {
+        const currentUser = JSON.parse(localStorage.getItem('currentUser'));
+
+        if(currentUser){
+          this.currentUser = currentUser;
+          this.getRoutes();
+        }
+      });
+    }
+  }
 
   @HostListener('document:keydown', ['$event'])
   detectKey(e: KeyboardEvent) {
@@ -35,5 +57,19 @@ export class AttendanceComponent implements OnInit {
       this.btnCaixa.nativeElement.click();
     }
   }
+
+  getRoutes( ) {
+
+    for (const val of this.currentUser.user.perfil.permissoes) {
+     if(val.rota == '/caixa') {
+      this.caixa = true;
+     }
+
+     if(val.rota == '/servico') {
+      this.servico = true;
+     }
+    }
+  }
+
 
 }

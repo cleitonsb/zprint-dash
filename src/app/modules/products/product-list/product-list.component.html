@@ -40,9 +40,9 @@
               <th scope="row">{{product.id}}</th>
               <td>{{product.nome}}</td>
               <td>{{product.ean}}</td>
-              <td>{{product.preco}}</td>
+              <td>{{(+product.preco).toFixed(2)}}</td>
               <td>
-                <a [routerLink]="['/product/' + product.id]"><span class="material-icons text-primary">search</span></a>
+                <a [routerLink]="['/product/' + product.id]"><i class="fas fa-search"></i></a>
               </td>
             </tr>
             </tbody>

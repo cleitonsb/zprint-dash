@@ -264,7 +264,7 @@ export class CashierComponent implements OnInit {
   }
 
   delayCaixa() {
-    return new Promise(resolve => setTimeout(resolve, 1000000));
+    return new Promise(resolve => setTimeout(resolve, 3000));
   }
 
   fecharCaixa() {

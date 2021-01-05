@@ -1,3 +1,4 @@
+import { CashierRelComponent } from './cashier-rel/cashier-rel.component';
 import { ServiceCreateComponent } from './service-create/service-create.component';
 import { ServiceListComponent } from './service-list/service-list.component';
 import { SaleShowComponent } from './sale-show/sale-show.component';
@@ -20,7 +21,8 @@ export const FrontRoutes: Routes = [
     { path: 'front/cashier',          component: CashierComponent, canActivate: [AuthGuard] },
     { path: 'front/cashiers',         component: CashierListComponent, canActivate: [AuthGuard] },
     { path: 'front/cashier-show/:id', component: CashierShowComponent, canActivate: [AuthGuard] },
+    { path: 'front/cashier-rel',      component: CashierRelComponent, canActivate: [AuthGuard] },
     { path: 'front/service-create/:id',  component: ServiceCreateComponent, canActivate: [AuthGuard] },
-    { path: 'front/service-create',  component: ServiceCreateComponent, canActivate: [AuthGuard] },
+    { path: 'front/service-create',   component: ServiceCreateComponent, canActivate: [AuthGuard] },
     { path: 'front/services',         component: ServiceListComponent, canActivate: [AuthGuard] },
 ];

@@ -61,14 +61,12 @@ export class RoleCreateComponent implements OnInit {
       if(id) {
         this.service.get(id).subscribe((data: any) => {
           this.role = data.data;
-          this.role._method = 'put';
 
           this.setPermissions();
           this.spinner.hide();
         });
       }else{
         this.formEdit = true;
-        this.role._method = 'post';
         this.spinner.hide();
       }
     });

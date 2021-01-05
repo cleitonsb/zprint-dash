@@ -1,4 +1,5 @@
 import {Endereco} from './endereco';
+import { Role } from './role';
 
 export class User {
   id = 0;
@@ -8,7 +9,7 @@ export class User {
   telefone?: string;
   nome?: string;
   celular?: string;
-  perfil?: number;
+  perfil = new Role();
   token?: string;
   avatar?: any;
   enderecos = new Array<Endereco>();

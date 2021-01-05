@@ -241,17 +241,17 @@ export class SaleCreateComponent implements OnInit {
     if (term !== '') {
     term = term.toLocaleLowerCase();
 
-    if (produto.codigo !== undefined) {
+    if (produto.codigo !== undefined && produto.codigo != null) {
         const codigo = produto.codigo.toLocaleLowerCase() ;
         bolCodigo = codigo.indexOf(term) !== -1;
       }
 
-      if (produto.ean !== undefined) {
+      if (produto.ean !== undefined && produto.ean != null) {
         const ean = produto.ean.toLocaleLowerCase();
         bolEan = ean.indexOf(term) !== -1;
       }
 
-      if (produto.nome !== undefined) {
+      if (produto.nome !== undefined && produto.nome != null) {
         const nome = produto.nome.toLocaleLowerCase();
         bolNome = nome.indexOf(term) !== -1;
       }

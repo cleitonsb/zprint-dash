@@ -1,3 +1,4 @@
+import { NgxCurrencyModule } from 'ngx-currency';
 import { NgxPaginationModule } from 'ngx-pagination';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -23,7 +24,8 @@ import {ProductRoutes} from './products.routing';
     ComponentsModule,
     NgbModule,
     SweetAlert2Module,
-    NgxPaginationModule
+    NgxPaginationModule,
+    NgxCurrencyModule
   ],
   declarations: [ProductListComponent, ProductShowComponent, ProductCreateComponent]
 })

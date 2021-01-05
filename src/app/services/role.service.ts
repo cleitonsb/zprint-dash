@@ -11,7 +11,7 @@ export class RoleService {
   constructor(private http: HttpClient, private permissionService: PermissionService) { }
 
   public getAll() {
-    return this.http.get(environment.apiUrl + '/perfis');
+    return this.http.get(environment.apiUrl + '/perfil');
   }
 
   public getPermissions() {

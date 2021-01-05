@@ -20,6 +20,8 @@ import { CashierListComponent } from './cashier-list/cashier-list.component';
 import { CashierShowComponent } from './cashier-show/cashier-show.component';
 import { ServiceListComponent } from './service-list/service-list.component';
 import { ServiceCreateComponent } from './service-create/service-create.component';
+import { CashierRelComponent } from './cashier-rel/cashier-rel.component';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,8 @@ import { ServiceCreateComponent } from './service-create/service-create.componen
     CashierListComponent,
     CashierShowComponent,
     ServiceListComponent,
-    ServiceCreateComponent
+    ServiceCreateComponent,
+    CashierRelComponent
   ],
   imports: [
     CommonModule,
@@ -45,6 +48,7 @@ import { ServiceCreateComponent } from './service-create/service-create.componen
     NgxPaginationModule,
     NgSelectModule,
     NgxCurrencyModule,
+    NgApexchartsModule,
   ]
 })
 export class FrontModule { }

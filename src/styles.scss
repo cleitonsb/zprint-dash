@@ -3,6 +3,7 @@
 .breadcrumb {
   background-color: rgba(0, 0, 0, 0.1) !important;
   color: #fff !important;
+  z-index: 999 !important;
 }
 
 .breadcrumb-item {
@@ -58,3 +59,4 @@
 #sidenav-main {
   overflow: hidden;
 }
+
