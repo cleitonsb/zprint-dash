@@ -1,6 +1,6 @@
 export class Equipment {
   id = 0;
-  nome?: string;
+  descricao?: string;
   marca?: string;
   modelo?: string;
   serie?: string;

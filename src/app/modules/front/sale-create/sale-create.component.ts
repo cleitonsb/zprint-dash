@@ -26,6 +26,7 @@ export class SaleCreateComponent implements OnInit {
   @ViewChild('btnCancelar') btnCancelar: ElementRef;
   @ViewChild('btnFinalizar') btnFinalizar: ElementRef;
   @ViewChild('descontoSwal') private descontoSwal: SwalComponent;
+  @ViewChild('cancelarSwal') private cancelarSwal: SwalComponent;
 
   innerHeight: number;
 
@@ -51,6 +52,9 @@ export class SaleCreateComponent implements OnInit {
   vendaDesconto = 0;
 
   usuario: User;
+
+  usuarioCanc: string;
+  senhaCanc: string;
 
   constructor(
     private productService: ProductService,
@@ -229,7 +233,30 @@ export class SaleCreateComponent implements OnInit {
     this.precoProduto = 0;
     this.subtotal = 0;
     this.nomeCliente = '';
-    this.vendaDesconto = 0;
+    this.vendaDesconto = 0;    
+  }
+
+  checkCancelarVenda() {
+    if (this.venda.id) {
+      this.cancelarSwal.fire();
+    }else{
+      this.cancelaVenda();
+    }
+  }
+
+  execCancelar() {      
+    this.service.delete(this.venda.id, this.usuarioCanc, this.senhaCanc).subscribe((response: any) => {
+      console.log(response)
+      if (response.status === 200) {
+          this.notify.sucess(msg.S002);
+          this.cancelaVenda();
+          this.descontoSwal.dismiss();
+          this.usuarioCanc = '';
+          this.senhaCanc = '';
+
+          this.spinner.hide();
+      }
+    });
   }
 
   buscaProduto(term: string, produto: Product) {

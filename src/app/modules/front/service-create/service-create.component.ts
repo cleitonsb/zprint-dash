@@ -24,13 +24,7 @@ import { Person } from 'src/app/models/person';
 })
 export class ServiceCreateComponent implements OnInit {
 
-  @ViewChild('btnDesconto') btnDesconto: ElementRef;
-  @ViewChild('btnPesquisar') btnPesquisar: ElementRef;
-  @ViewChild('btnCancelar') btnCancelar: ElementRef;
-  @ViewChild('btnFinalizar') btnFinalizar: ElementRef;
-  @ViewChild('clienteSelect') clienteSelect: ElementRef;
-  @ViewChild('clienteInput') clienteInput: ElementRef;
-  @ViewChild('descontoSwal') private descontoSwal: SwalComponent;
+  @ViewChild('btnFinalizar') btnFinalizar: ElementRef;  
   @ViewChild('clienteSwal') private clienteSwal: SwalComponent;
 
 

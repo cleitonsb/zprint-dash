@@ -9,4 +9,5 @@ export const UserRoutes: Routes = [
     { path: 'user/create',   component: UserCreateComponent, canActivate: [AuthGuard] },
     { path: 'user/:id',      component: UserCreateComponent,   canActivate: [AuthGuard] },
     { path: 'user/:id/edit', component: UserCreateComponent, canActivate: [AuthGuard] },
+    { path: 'user/change-pass', component: UserCreateComponent, canActivate: [AuthGuard] },
 ];

@@ -61,7 +61,7 @@
           <button #btnDesconto [disabled]="venda.total == 0" (click)=openDesconto() class="btn btn-info mr-2 mb-2" > <i class="fas fa-percent"></i> Desconto (F2)</button>
           <button #btnPesquisar [swal]="deleteSwal" class="btn btn-info mr-2 mb-2" > <i class="fas fa-search"></i> Pesquisar (F7)</button>
           <button #btnCancelar [disabled]="venda.total == 0" class="btn btn-danger mr-2 mb-2" [swal]="{ title: 'Confirme', text: 'Deseja cancelar esta venda?', icon: 'question', showCancelButton: true, focusCancel: true }"
-          (confirm)="cancelaVenda()" >  <i class="fas fa-ban"></i> Cancelar venda (F8)</button>
+          (confirm)="checkCancelarVenda()" >  <i class="fas fa-ban"></i> Cancelar venda (F8)</button>
       </div>
 
       <swal #deleteSwal title="Busca de preços" [showConfirmButton]=false>
@@ -149,3 +149,24 @@
   </div>
 </div>
 
+<swal #cancelarSwal title="Cancelar venda" [showConfirmButton]=false >
+  <div *swalPortal >
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-12">
+        <div class="form-group text-left">
+          <label class="form-control-label" >Usuário administrador</label>
+          <input type="text" [(ngModel)]="usuarioCanc" id="usuarioCanc" (keyup.enter)=execCancelar() name="usuarioCanc" class="form-control" >
+        </div>
+
+        <div class="form-group text-left">
+          <label class="form-control-label" >Senha</label>
+          <input type="password" [(ngModel)]="senhaCanc" id="senhaCanc" (keyup.enter)=execCancelar() name="senhaCanc" class="form-control" >
+        </div>
+      </div>
+
+      <div class="col col-lg-12">
+        <button type="button" class="btn btn-info btn-block" (click)=execCancelar()> OK</button>
+      </div>
+    </div>
+  </div>
+</swal>

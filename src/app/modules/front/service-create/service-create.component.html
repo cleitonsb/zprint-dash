@@ -173,6 +173,7 @@
     </form>
   </div>
 
+  <!-- Modal cliente ------------------------------------------------------->
   <swal #clienteSwal title="Novo Cliente" [showConfirmButton]=false >
     <div *swalPortal >
       <div class="row">
@@ -192,9 +193,35 @@
       </div>
       <div class="row">
         <div class="col-lg-12 text-right">
-          <button class="btn btn-info" (click)=addCliente() >Salvar</button>
+          <button class="btn btn-info" #btnFinalizar (click)=addCliente() >Salvar</button>
         </div>
       </div>
     </div>
   </swal>
+
+<!-- Modal equipamento --------------------------------------------->
+<swal #clienteSwal title="Novo Cliente" [showConfirmButton]=false >
+  <div *swalPortal >
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group text-left">
+          <label class="form-control-label" >Nome</label>
+          <input type="text" [(ngModel)]="servico.pessoa.nome" [disabled]="!formEdit" required="required" name="nome" class="form-control form-control-alternative" placeholder="Nome" value="{{servico.pessoa.nome}}">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group text-left">
+          <label class="form-control-label">Celular</label>
+          <input type="tel" [(ngModel)]="servico.pessoa.celular" [disabled]="!formEdit" name="celular" class="form-control form-control-alternative"  mask="(00) 00000-0000" placeholder="Número do celular" value="{{servico.pessoa.celular | mask: '(00) 00000-0000'}}">
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-right">
+        <button class="btn btn-info" #btnFinalizar (click)=addCliente() >Salvar</button>
+      </div>
+    </div>
+  </div>
+</swal>
 
