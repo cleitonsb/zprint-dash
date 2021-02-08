@@ -40,7 +40,7 @@
             <tr *ngFor="let servico of servicos | paginate:{itemsPerPage: 5, currentPage: p, totalItems: total }" >
               <th scope="row"> S{{(servico.id.toString()).padStart(5,0)}}</th>
               <td>{{servico.data | date:'dd/MM/yyyy HH:mm'}}</td>
-              <td>{{servico.nome}}</td>
+              <td>{{servico.pessoa.nome}}</td>
               <td>{{servico.usuario.nome}}</td>
               <td class="text-right">{{(+servico.total).toFixed(2)}}</td>
               <td>

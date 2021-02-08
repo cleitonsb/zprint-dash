@@ -12,6 +12,7 @@ import { Routes } from '@angular/router';
 
 import {AuthGuard} from '../../helpers/auth.guard';
 import { CashierListComponent } from './cashier-list/cashier-list.component';
+import { ServicePrintComponent } from './service-print/service-print.component';
 
 export const FrontRoutes: Routes = [
     { path: 'front',                  component: AttendanceComponent, canActivate: [AuthGuard] },
@@ -25,4 +26,5 @@ export const FrontRoutes: Routes = [
     { path: 'front/service-create/:id',  component: ServiceCreateComponent, canActivate: [AuthGuard] },
     { path: 'front/service-create',   component: ServiceCreateComponent, canActivate: [AuthGuard] },
     { path: 'front/services',         component: ServiceListComponent, canActivate: [AuthGuard] },
+    
 ];

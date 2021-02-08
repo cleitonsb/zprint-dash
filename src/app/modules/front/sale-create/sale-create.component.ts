@@ -246,11 +246,11 @@ export class SaleCreateComponent implements OnInit {
 
   execCancelar() {      
     this.service.delete(this.venda.id, this.usuarioCanc, this.senhaCanc).subscribe((response: any) => {
-      console.log(response)
+      
       if (response.status === 200) {
           this.notify.sucess(msg.S002);
           this.cancelaVenda();
-          this.descontoSwal.dismiss();
+          this.cancelarSwal.dismiss();
           this.usuarioCanc = '';
           this.senhaCanc = '';
 

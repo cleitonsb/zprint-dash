@@ -22,6 +22,7 @@ import { ServiceListComponent } from './service-list/service-list.component';
 import { ServiceCreateComponent } from './service-create/service-create.component';
 import { CashierRelComponent } from './cashier-rel/cashier-rel.component';
 import { NgApexchartsModule } from 'ng-apexcharts';
+import { ServicePrintComponent } from './service-print/service-print.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { NgApexchartsModule } from 'ng-apexcharts';
     CashierShowComponent,
     ServiceListComponent,
     ServiceCreateComponent,
-    CashierRelComponent
+    CashierRelComponent,
+    ServicePrintComponent
   ],
   imports: [
     CommonModule,

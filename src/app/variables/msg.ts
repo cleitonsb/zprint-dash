@@ -12,8 +12,14 @@ export const msg = {
   E003: 'O nome é obrigatório!',
   E004: 'Valor não permitido',
   E005: 'Selecione um produto!',
+  E006: 'O campo $$ é obrigatório!',
+  E007: 'Valor $$ não permitido.',
   E400: 'Requisição inválida',
   E401: 'Recurso não autorizado',
   E403: 'Recurso não autorizado',
   E404: 'Recurso não encontrado',
+
+  custom: function(msg, valor) {
+    return msg.replace("$$", valor);
+  }
 };

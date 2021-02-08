@@ -35,8 +35,14 @@ export class ServiceService {
     return this.http.post(environment.apiUrl + '/servico/update', data, {observe: 'response'});
   }
 
-  public delete(id) {
-    if (id === null) { return; }
-    return this.http.get(environment.apiUrl + '/servico/remove/' + id, {observe: 'response'});
+  public delete(id, usuario, senha) {
+
+    const formData = new FormData();
+    
+    formData.append('id', id);
+    formData.append('usuario', usuario);
+    formData.append('senha', senha);
+
+    return this.http.post(environment.apiUrl + '/servico/remove', formData, {observe: 'response'});
   }
 }
