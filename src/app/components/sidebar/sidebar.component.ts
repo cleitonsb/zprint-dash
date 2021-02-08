@@ -1,7 +1,9 @@
+import { EmitterService } from './../../services/emitter.service';
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import {AuthenticationService} from '../../services/authentication.service';
 import { UserService } from 'src/app/services/user.service';
+import { EventManager } from '@angular/platform-browser';
 
 declare interface RouteInfo {
     path: string;
@@ -31,9 +33,9 @@ export class SidebarComponent implements OnInit {
 
   menuItems: any[];
   isCollapsed = true;
-  version = '0.1';
+  version = '0.2';
 
-  constructor(private router: Router, private authenticationService: AuthenticationService, private service: UserService ) { }
+  constructor(private router: Router, private service: UserService, private emitterService: EmitterService ) { }
 
   ngOnInit() {
     this.getCurrentUser();
@@ -60,6 +62,8 @@ export class SidebarComponent implements OnInit {
         localStorage.setItem('currentUser', JSON.stringify(user));
 
         this.menuItems = ROUTES.filter(this.getRoutes);
+
+        this.emitterService.msgEmitter.emit('userCarregado');
       });
     } else  {
       this.menuItems = ROUTES.filter(this.getRoutes);

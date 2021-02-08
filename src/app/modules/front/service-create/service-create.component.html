@@ -1,7 +1,7 @@
 <app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
 
 <div class="container-fluid mt--7">
-  <form (submit)="save()">
+  <form >
     <div class="row">
       <div class="col-xl-6">
           <div class="card bg-secondary shadow">
@@ -22,7 +22,8 @@
                       <label class="form-control-label" >Cliente</label>
                       <div class="form-control-label float-right" ><a [swal]="clienteSwal" class="mouse-link"><i class="fas fa-plus-circle"></i> Novo cliente</a></div>
 
-                      <select [(ngModel)]="servico.pessoa.id" [disabled]="!formEdit" name="cliente" class="form-control form-control-alternative">
+                      <select [(ngModel)]="servico.pessoa.id" [disabled]="!formEdit" (change)=setCliente() name="cliente" class="form-control form-control-alternative">
+                        <option value="">Selecione</option>
                         <option *ngFor="let cliente of clientes" value="{{cliente.id}}">{{ cliente.nome }}</option>
                       </select>
 
@@ -32,7 +33,7 @@
                   <div class="form-group col-md-6">
                     <div class="form-group">
                       <label class="form-control-label" >Responsável</label>
-                      <select [(ngModel)]="servico.responsavel.id" [disabled]="!formEdit" name="usuario" class="form-control form-control-alternative">
+                      <select [(ngModel)]="responsavel" [disabled]="!formEdit" name="usuario" class="form-control form-control-alternative">
                         <option value="0">Selecione</option>
                         <option *ngFor="let usuario of usuarios" value="{{usuario.id}}">{{ usuario.nome }}</option>
                       </select>
@@ -42,14 +43,13 @@
                   <div class="form-group col-md-12">
                     <div class="form-group">
                       <label class="form-control-label" >Equipamento</label>
-                      <div class="form-control-label float-right mouse-link" ><i class="fas fa-plus-circle"></i> Novo equipamento</div>
+                      <div class="form-control-label float-right" ><a (click)=openEquipamento() class="mouse-link"><i class="fas fa-plus-circle"></i> Novo equipamento</a></div>
                       <select [(ngModel)]="servico.equipamento.id" [disabled]="!formEdit" name="equipamento" class="form-control form-control-alternative">
                         <option value="0">Selecione</option>
-                        <option *ngFor="let equipamento  of equipamentos" value="{{equipamento.id}}">{{ equipamento.nome }}</option>
+                        <option *ngFor="let equipamento  of equipamentos" value="{{equipamento.id}}">{{ equipamento.marca }} - {{ equipamento.modelo }}</option>
                       </select>
                     </div>
                   </div>
-
 
                   <div class="col-lg-12">
                     <div class="form-group">
@@ -160,11 +160,14 @@
                 </div>
                 <div class="col col-lg-2 pl-lg-12 text-right" >
                     <label class="form-control-label text-prod" >Total</label>
-                    <h1>{{servico.total.toFixed(2)}}</h1>
+                    <h1>{{(servico.total - servico.desconto).toFixed(2)}}</h1>
                 </div>
 
                 <div class="col col-lg-6 pl-lg-12 d-flex flex-row-reverse pt-4" >
-                  <button #btnFinalizar [disabled]="servico.total == 0" (click)=finalizar() class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Salvar (F9)</button>
+                  <button style="display: none;" >Workaroud</button>
+                  <button #btnFinalizar [disabled]="servico.total == 0 || servico.pessoa.id == 0" (keydown.enter)="onKeydown($event)" [swal]="{ title: 'Confirme', text: 'Confirma o registro deste serviço?', icon: 'question', showCancelButton: true, focusCancel: true }" (confirm)=finalizar() class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Salvar (F9)</button>
+                  <button #btnCancelar [disabled]="servico.total == 0" class="btn btn-danger mr-2 mb-2" [swal]="{ title: 'Confirme', text: 'Deseja cancelar este serviço?', icon: 'question', showCancelButton: true, focusCancel: true }"
+                  (confirm)="checkCancelar()" >  <i class="fas fa-ban"></i> Cancelar (F8)</button>
                 </div>
               </div>
             </div>
@@ -173,6 +176,7 @@
     </form>
   </div>
 
+  <!-- Modal cliente ------------------------------------------------------->
   <swal #clienteSwal title="Novo Cliente" [showConfirmButton]=false >
     <div *swalPortal >
       <div class="row">
@@ -198,3 +202,64 @@
     </div>
   </swal>
 
+<!-- Modal equipamento --------------------------------------------->
+<swal #equipamentoSwal title="Novo equipamento" [showConfirmButton]=false >
+  <div *swalPortal >
+    <div class="row">
+      <div class="col-lg-6">
+        <div class="form-group text-left">
+          <label class="form-control-label" >Marca</label>
+          <input type="text" [(ngModel)]="servico.equipamento.marca" [disabled]="!formEdit" required="required" name="marca" class="form-control form-control-alternative" value="{{servico.equipamento.marca}}">
+        </div>
+      </div>
+      <div class="col-lg-6">
+        <div class="form-group text-left">
+          <label class="form-control-label" >Nº série</label>
+          <input type="text" [(ngModel)]="servico.equipamento.serie" [disabled]="!formEdit" required="required" name="serie" class="form-control form-control-alternative" value="{{servico.equipamento.serie}}">
+        </div>
+      </div>
+      <div class="col-lg-12">
+        <div class="form-group text-left">
+          <label class="form-control-label" >Modelo</label>
+          <input type="text" [(ngModel)]="servico.equipamento.modelo" [disabled]="!formEdit" required="required" name="modelo" class="form-control form-control-alternative" value="{{servico.equipamento.modelo}}">
+        </div>
+      </div>
+
+      <div class="col-lg-12">
+        <div class="form-group text-left">
+          <label class="form-control-label" >Detalhes</label>
+          <textarea [(ngModel)]="servico.equipamento.descricao" name="descricao" class="form-control">{{ servico.equipamento.descricao }}</textarea>
+        </div>
+      </div>
+
+    </div>
+    <div class="row">
+      <div class="col-lg-12 text-right">
+        <button class="btn btn-info" (click)=addEquipamento() >Salvar</button>
+      </div>
+    </div>
+  </div>
+</swal>
+
+<!-- Modal cancelamento ------------------------------------->
+<swal #cancelarSwal title="Cancelar venda" [showConfirmButton]=false >
+  <div *swalPortal >
+    <div class="row justify-content-md-center">
+      <div class="col col-lg-12">
+        <div class="form-group text-left">
+          <label class="form-control-label" >Usuário administrador</label>
+          <input type="text" [(ngModel)]="usuarioCanc" id="usuarioCanc" (keyup.enter)=execCancelar() name="usuarioCanc" class="form-control" >
+        </div>
+
+        <div class="form-group text-left">
+          <label class="form-control-label" >Senha</label>
+          <input type="password" [(ngModel)]="senhaCanc" id="senhaCanc" (keyup.enter)=execCancelar() name="senhaCanc" class="form-control" >
+        </div>
+      </div>
+
+      <div class="col col-lg-12">
+        <button type="button" class="btn btn-info btn-block" (click)=execCancelar()> OK</button>
+      </div>
+    </div>
+  </div>
+</swal>

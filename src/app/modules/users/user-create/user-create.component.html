@@ -31,7 +31,7 @@
             <div class="h5">
               <i class="ni business_briefcase-24 mr-2"></i>{{user.celular | mask: '(00) 00000-0000'}}
             </div>
-            <a href="javascript:void(0)"> Serviços</a>
+
             <hr class="my-4" />
             <button *ngIf="user.id" class="btn btn-danger btn-sm"
                     [swal]="{ title: 'Confirme', text: 'Deseja remover o usuário?', icon: 'question', showCancelButton: true, focusCancel: true }"
@@ -100,6 +100,17 @@
 
                   <input type="text" [(ngModel)]="user.dt_nasc" [disabled]="!formEdit" name="dt_nasc"  class="form-control form-control-alternative" mask="00/00/0000" placeholder="Dt Nascimento" value="{{user.dt_nasc | mask: '11/11/1111'}}">
 
+                </div>
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-lg-4">
+                <div class="form-group">
+                  <label class="form-control-label" >Perfil</label>
+                  <select [(ngModel)]="user.perfil.id" [disabled]="!formEdit" name="perfil" class="form-control form-control-alternative" #perfil>
+                    <option value="0">Selecione</option>
+                    <option *ngFor="let perfil of roles; let i = index" value="{{perfil.id}}">{{ perfil.nome }}</option>
+                  </select>
                 </div>
               </div>
             </div>

@@ -54,7 +54,7 @@
               <div class="col-lg-4">
                 <div class="form-group">
                   <label class="form-control-label">Preço</label>
-                  <input type="text" [(ngModel)]="product.preco" [disabled]="!formEdit" name="preco" class="form-control form-control-alternative"  mask="0*,00" placeholder="Preço de venda" value="{{product.preco | mask: '0*,00'}}">
+                  <input type="text" [(ngModel)]="product.preco" [disabled]="!formEdit" name="preco" class="form-control form-control-alternative" currencyMask [options]="{ prefix: '', thousands: '.', decimal: ',' }">
                 </div>
               </div>
               <div class="col-lg-4">

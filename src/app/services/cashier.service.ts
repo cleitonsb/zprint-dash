@@ -1,3 +1,4 @@
+import { DateFunctions } from './../helpers/date.functions';
 import { Injectable } from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
@@ -22,6 +23,11 @@ export class CashierService {
     return this.http.get(environment.apiUrl + '/caixa/' + id);
   }
 
+  public getItems(id: number = null) {
+    if (id === null) { return; }
+    return this.http.get(environment.apiUrl + '/caixa/items/' + id);
+  }
+
   public getOpen() {
     return this.http.get(environment.apiUrl + '/caixa/aberto');
   }
@@ -37,5 +43,25 @@ export class CashierService {
   public delete(id) {
     if (id === null) { return; }
     return this.http.get(environment.apiUrl + '/caixa/remove/' + id, {observe: 'response'});
+  }
+
+  // public getRel(dataIni: String = '', dataFim: String = '') { console.log(dataIni);
+
+
+
+  //   const d = new Date();
+
+  //   let df = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+  //   d.setDate(d.getMonth() - 1);
+  //   let di = d.getDate() + '-' + (d.getMonth() + 1) + '-' + d.getFullYear();
+
+  //   let param = '/' + ((dataIni !== '') ? dataIni : di);
+  //       param = param + '/' + ((dataFim !== '') ? dataFim : df);
+
+  //   return this.http.get(environment.apiUrl + '/caixa/rel' + param);
+  // }
+
+  public getRel(dataIni: String, dataFim: String) { console.log(dataIni);
+    return this.http.get(environment.apiUrl + '/caixa/relatorio/dataini/' + dataIni + '/datafim/' + dataFim);
   }
 }

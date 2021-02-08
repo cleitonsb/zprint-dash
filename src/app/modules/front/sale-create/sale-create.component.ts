@@ -26,6 +26,7 @@ export class SaleCreateComponent implements OnInit {
   @ViewChild('btnCancelar') btnCancelar: ElementRef;
   @ViewChild('btnFinalizar') btnFinalizar: ElementRef;
   @ViewChild('descontoSwal') private descontoSwal: SwalComponent;
+  @ViewChild('cancelarSwal') private cancelarSwal: SwalComponent;
 
   innerHeight: number;
 
@@ -51,6 +52,9 @@ export class SaleCreateComponent implements OnInit {
   vendaDesconto = 0;
 
   usuario: User;
+
+  usuarioCanc: string;
+  senhaCanc: string;
 
   constructor(
     private productService: ProductService,
@@ -229,7 +233,30 @@ export class SaleCreateComponent implements OnInit {
     this.precoProduto = 0;
     this.subtotal = 0;
     this.nomeCliente = '';
-    this.vendaDesconto = 0;
+    this.vendaDesconto = 0;    
+  }
+
+  checkCancelarVenda() {
+    if (this.venda.id) {
+      this.cancelarSwal.fire();
+    }else{
+      this.cancelaVenda();
+    }
+  }
+
+  execCancelar() {      
+    this.service.delete(this.venda.id, this.usuarioCanc, this.senhaCanc).subscribe((response: any) => {
+      
+      if (response.status === 200) {
+          this.notify.sucess(msg.S002);
+          this.cancelaVenda();
+          this.cancelarSwal.dismiss();
+          this.usuarioCanc = '';
+          this.senhaCanc = '';
+
+          this.spinner.hide();
+      }
+    });
   }
 
   buscaProduto(term: string, produto: Product) {
@@ -241,17 +268,17 @@ export class SaleCreateComponent implements OnInit {
     if (term !== '') {
     term = term.toLocaleLowerCase();
 
-    if (produto.codigo !== undefined) {
+    if (produto.codigo !== undefined && produto.codigo != null) {
         const codigo = produto.codigo.toLocaleLowerCase() ;
         bolCodigo = codigo.indexOf(term) !== -1;
       }
 
-      if (produto.ean !== undefined) {
+      if (produto.ean !== undefined && produto.ean != null) {
         const ean = produto.ean.toLocaleLowerCase();
         bolEan = ean.indexOf(term) !== -1;
       }
 
-      if (produto.nome !== undefined) {
+      if (produto.nome !== undefined && produto.nome != null) {
         const nome = produto.nome.toLocaleLowerCase();
         bolNome = nome.indexOf(term) !== -1;
       }

@@ -22,7 +22,7 @@ export class CashierShowComponent implements OnInit {
   urlBreadcrumb = 'front/cashiers';
 
   caixa = new Cashier();
-  vendas: Array<Venda>;
+  vendas: any;
   resPagamentos: any;
   fContagem = 0;
   fTotal = 0;
@@ -56,7 +56,7 @@ export class CashierShowComponent implements OnInit {
         this.caixa = data;
 
         /** busco as vendas */
-        this.salesService.getByCaixa(id).subscribe((dataV: any) => {
+        this.service.getItems(id).subscribe((dataV: any) => {
           this.vendas = dataV;
 
           /** busco os pagamentos */

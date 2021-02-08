@@ -45,7 +45,7 @@
               <td class="text-right">{{(+venda.total).toFixed(2)}}</td>
               <td>
                 <a [routerLink]="['/front/sale-show/' + venda.id]"><i class="fas fa-search"></i></a> &nbsp;
-                <a *ngIf=!venda.caixa (click)=editVenda(venda.id) ><i class="fas fa-edit"></i></a>
+                <a *ngIf=!venda.contas[0].caixa (click)=editVenda(venda.id) ><i class="fas fa-edit"></i></a>
               </td>
             </tr>
             </tbody>
