@@ -26,5 +26,6 @@ export const FrontRoutes: Routes = [
     { path: 'front/service-create/:id',  component: ServiceCreateComponent, canActivate: [AuthGuard] },
     { path: 'front/service-create',   component: ServiceCreateComponent, canActivate: [AuthGuard] },
     { path: 'front/services',         component: ServiceListComponent, canActivate: [AuthGuard] },
+    { path: 'front/service-print/:id', component: ServicePrintComponent, canActivate: [AuthGuard]},
     
 ];

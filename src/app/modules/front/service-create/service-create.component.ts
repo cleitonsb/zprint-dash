@@ -18,6 +18,8 @@ import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular
 import { Person } from 'src/app/models/person';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { PaymentBill } from 'src/app/models/paymentBill';
+import { environment  } from "../../../../environments/environment";
+
 import Swal from 'sweetalert2';
 
 @Component({
@@ -44,7 +46,7 @@ export class ServiceCreateComponent implements OnInit {
 
   usuarios: any;
   usuario: User;
-  responsavel: number;
+  responsavel: User;
   clientes: any;
   cliente: Person;
   products: any;
@@ -74,9 +76,6 @@ export class ServiceCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-
-    this.checkImpressao();
-
     this.innerHeight = window.innerHeight;
 
     /** usuarios */
@@ -118,6 +117,17 @@ export class ServiceCreateComponent implements OnInit {
     /** pessoas */
     this.personService.getByParam().subscribe((response: any) => {
       this.clientes = response;
+    });
+
+    this.route.params.subscribe((params) => this.getServico(params.id));
+  }
+
+  getServico(id) {
+    if(!id) return;
+    this.service.get(id).subscribe((data: Service) => {
+      this.servico = data;
+      this.calcTotal();
+      this.spinner.hide();           
     });
   }
 
@@ -253,6 +263,16 @@ export class ServiceCreateComponent implements OnInit {
       return;
     }
 
+    if(!this.servico.pessoa.id || this.servico.pessoa.id == 0) {
+      this.notify.warning(msg.custom(msg.E006, 'Cliente'));
+      return;
+    }
+
+    if(!this.servico.responsavel.id || this.servico.responsavel.id == 0) {
+      this.notify.warning(msg.custom(msg.E006, 'Responsável'));
+      return;
+    }
+
     /** gera a primeira conta, caso o serviço tenha entrada */
     if(this.valorEntrada != 0 && this.valorEntrada != null) {
       const conta = new PaymentBill();
@@ -275,7 +295,7 @@ export class ServiceCreateComponent implements OnInit {
     contaR.planoConta.id = 7; // -- serviço
     contaR.tipoConta = 'RECEBIMENTO';
     contaR.usuario = this.usuario;
-    contaR.valor = this.servico.total - this.valorEntrada;
+    contaR.valor = this.servico.total - this.valorEntrada - this.servico.desconto;
 
     delete contaR.caixa;
 
@@ -289,10 +309,6 @@ export class ServiceCreateComponent implements OnInit {
     if(this.servico.equipamento.id == -1) {
       delete this.servico.equipamento.id;
     }
-
-    const respServico = new User();
-    respServico.id = this.responsavel;
-    this.servico.responsavel = respServico;
 
     this.service.store(this.servico).subscribe((response: any) => {
       if (response.status === 200) {
@@ -308,8 +324,7 @@ export class ServiceCreateComponent implements OnInit {
               icon: 'question'
             }).then((result) => {
               if (result.isConfirmed) {
-                console.log(1);
-                
+                window.open(environment.frontUrl + '/#/front/service-print/' + response.body.id, '_blank')                
               }
             });
           }

@@ -1,1 +1,116 @@
-<p>service-print works!</p>
+<div class="os-container">
+    <!-- Header -->
+    <header>
+        <div class="row align-items-center">
+            <div class="col-sm-4 text-center text-sm-left mb-3 mb-sm-0 col-3" >
+                <img id="logo" src="./assets/img/brand/pontonet.png" title="Koice" alt="Koice" />
+            </div>
+            <div class="col-sm-4 text-center  mb-3 mb-sm-0 col-3" >
+                <i class="fas fa-address-book"></i>
+                <h4 class="mb-0">   
+                    mensagensdf@gmail.com<br >
+                    (61) 9992-3844
+                </h4>
+            </div>
+            <div class="col-sm-4 text-center  mb-3 mb-sm-0 col-3" >
+                <i class="fas fa-map-marker-alt"></i>
+                <h4 class="mb-0">                    
+                    Qd 03 Cj 01 Lote 01 Loja 03<br >Setor Oeste
+                </h4>
+            </div>
+        </div>
+    <hr class="hr-red">
+    </header>
+    
+    <!-- Main Content -->
+    <main>
+        <div class="row align-items-left mt-4" >
+            <div class="col-4" >
+                Cliente:
+                <h2 class="mb-0">{{servico.pessoa.nome}}</h2>
+                <h3 class="mb-0">{{servico.pessoa.celular}}</h3>
+            </div>
+            <!-- | date:'dd/MM/yyyy' -->
+            <div class="col-8 text-right" >
+                <h1 class="print-red">ORDEM DE SERVIÇO</h1>
+                <h3 class="mb-0">Número: S{{servico.id}}</h3>
+                <h3 class="mb-0">Data: {{servico.data | date:'dd/MM/yyyy'}}</h3>
+                <h3 class="mb-0">Previsão: {{servico.previsao | date:'dd/MM/yyyy'}}</h3>
+            </div>
+        </div>
+
+        <div *ngIf=servico.equipamento>
+            <div class="row align-items-left mt-3" >
+                <div class="col-12" >
+                    <h2 class="mb-0">Equipamento</h2>
+                </div>
+                <div class="col-12 text-area" >
+                    {{servico.equipamento.marca}} - {{servico.equipamento.modelo}} - {{servico.equipamento.serie}}
+                </div>
+            </div>
+
+            <div class="row align-items-left mt-3" >
+                <div class="col-12" >
+                    <h2 class="mb-0">Reclamação</h2>
+                </div>
+                <div class="col-12 text-area" >
+                    {{servico.relato}}
+                </div>
+            </div>
+
+            <div class="row align-items-left mt-3" >
+                <div class="col-12" >
+                    <h2 class="mb-0">Acessórios</h2>
+                </div>
+                <div class="col-12 text-area" >
+                    {{servico.acessorios}}
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-left mt-3" >
+            <div class="col-12" >
+                <div class="table-responsive">
+                    <table class="table table-hover align-items-center table-flush ">
+                      <thead class="thead-light">
+                      <tr>
+                        <th scope="col">Nome do produto</th>
+                        <th scope="col">Preço Unit</th>
+                        <th scope="col">Qtde</th>
+                        <th scope="col">Total</th>
+                      </tr>
+                      </thead>
+                      <tbody>
+                        <tr *ngFor="let item of servico.itensServico" >
+                          <td class="prod-name" title="{{item.produto.nome}}">{{item.produto.nome.substring(0, 20)}}</td>
+                          <td class="text-right">{{ (+item.produto.preco).toFixed(2)}}</td>
+                          <td class="text-right">{{item.qt}}</td>
+                          <td class="text-right">{{ (item.qt * (+item.produto.preco)).toFixed(2)}}</td>  
+                        </tr>
+                      </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <div class="row align-items-left mt-3" >
+            <div class="col-6" >
+                Caso o equipamento não seja retirado em até 90 (trinta) dias corrido após o prazo final de entrega, o mesmo será vendido para custear eventuais despesas, sem possilididade de posterior reclamação por parte do cliente.
+            </div>
+            <div class="col-4 text-right" >
+                <h3 class="mb-0">Subtotal:</h3>
+                <h3 class="mb-0">Desconto:</h3>
+                <h1 class="print-red mb-0">Total:</h1>
+                <h3 class="mb-0">Entrada:</h3>
+                <h3 class="mb-0">Restante:</h3>
+            </div>
+            <div class="col-2 text-right" >
+                <h3 class="mb-0">{{ servico.total }}</h3>
+                <h3 class="mb-0">{{ servico.desconto }}</h3>
+                <h1 class="print-red mb-0">{{ servico.total - servico.desconto }}</h1>
+                <h3 class="mb-0">{{ entrada }}</h3>
+                <h3 class="mb-0">{{ servico.total - servico.desconto - entrada}}</h3>
+            </div>
+        </div>
+    </main>
+</div>

@@ -33,7 +33,7 @@
                   <div class="form-group col-md-6">
                     <div class="form-group">
                       <label class="form-control-label" >Responsável</label>
-                      <select [(ngModel)]="responsavel" [disabled]="!formEdit" name="usuario" class="form-control form-control-alternative">
+                      <select [(ngModel)]="servico.responsavel.id" [disabled]="!formEdit" name="usuario" class="form-control form-control-alternative">
                         <option value="0">Selecione</option>
                         <option *ngFor="let usuario of usuarios" value="{{usuario.id}}">{{ usuario.nome }}</option>
                       </select>
@@ -139,7 +139,7 @@
                     </div>
                     <div class="col-lg-4">
                       <div class="form-group">
-                        <label class="form-control-label">Valor entrada</label>
+                        <label class="form-control-label">Pagamento</label>
                         <input type="text" [(ngModel)]="valorEntrada" [disabled]="!formEdit" name="entrada" class="form-control form-control-alternative"  value="{{valorEntrada.toFixed(2)}}" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
                       </div>
                     </div>
@@ -150,7 +150,7 @@
 
             <div class="col-xl-12 mt-4">
               <div class="row">
-                <div class="col col-lg-2 pl-lg-12 text-right" >
+                <div class="col col-lg-4 pl-lg-12 text-right" >
                   <label class="form-control-label text-prod" >Subtotal</label>
                   <h1>{{subtotal.toFixed(2)}}</h1>
                 </div>
@@ -163,10 +163,26 @@
                     <h1>{{(servico.total - servico.desconto).toFixed(2)}}</h1>
                 </div>
 
+                <div class="col col-lg-2 pl-lg-12 text-right" >
+                  <label class="form-control-label text-prod" >Valor pago</label>
+                  <h1>{{servico.desconto.toFixed(2)}}</h1>
+                </div>
+                <div class="col col-lg-2 pl-lg-12 text-right" >
+                    <label class="form-control-label text-prod" >Restante</label>
+                    <h1>{{(servico.total - servico.desconto).toFixed(2)}}</h1>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col col-lg-6 pl-lg-6 text-right" >
+                  
+                </div>
+
                 <div class="col col-lg-6 pl-lg-12 d-flex flex-row-reverse pt-4" >
                   <button style="display: none;" >Workaroud</button>
-                  <button #btnFinalizar [disabled]="servico.total == 0 || servico.pessoa.id == 0" (keydown.enter)="onKeydown($event)" [swal]="{ title: 'Confirme', text: 'Confirma o registro deste serviço?', icon: 'question', showCancelButton: true, focusCancel: true }" (confirm)=finalizar() class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Salvar (F9)</button>
-                  <button #btnCancelar [disabled]="servico.total == 0" class="btn btn-danger mr-2 mb-2" [swal]="{ title: 'Confirme', text: 'Deseja cancelar este serviço?', icon: 'question', showCancelButton: true, focusCancel: true }"
+                  <button #btnFinalizar (keydown.enter)="onKeydown($event)" [swal]="{ title: 'Confirme', text: 'Confirma o registro deste serviço?', icon: 'question', showCancelButton: true, focusCancel: true }" (confirm)=finalizar() class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Salvar (F9)</button>
+                  <button #btnCancelar class="btn btn-danger mr-2 mb-2" [swal]="{ title: 'Confirme', text: 'Deseja cancelar este serviço?', icon: 'question', showCancelButton: true, focusCancel: true }"
                   (confirm)="checkCancelar()" >  <i class="fas fa-ban"></i> Cancelar (F8)</button>
                 </div>
               </div>

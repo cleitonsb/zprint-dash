@@ -10,7 +10,6 @@ import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes =[
   { path: '', redirectTo: 'login', pathMatch: 'full'}, 
-  { path: 'front/service-print/:id', component: ServicePrintComponent, canActivate: [AuthGuard]},
   {
     path: '',
     component: AdminLayoutComponent,

@@ -12,10 +12,10 @@ export class Service {
   situacao: boolean;
   usuario: User;
   responsavel = new User();
-  pessoa: Person;
+  pessoa = new Person();
   itensServico = new Array<ItemServico>();
   contas = new Array<PaymentBill>();
-  equipamento?: Equipment;
+  equipamento = new Equipment();
   acessorios?: string;
   relato?: string;
 }
