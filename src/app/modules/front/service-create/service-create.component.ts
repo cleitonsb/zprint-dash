@@ -56,7 +56,8 @@ export class ServiceCreateComponent implements OnInit {
   qt = 1;
   subtotal = 0;
   servicoDesconto = 0;
-  valorEntrada = 0;
+  valorPagamento = 0;
+  totalPago = 0;
 
   usuarioCanc: string;
   senhaCanc: string;
@@ -112,7 +113,7 @@ export class ServiceCreateComponent implements OnInit {
     this.qt = 1;
     this.subtotal = 0;
     this.servicoDesconto = 0;
-    this.valorEntrada = 0;
+    this.valorPagamento = 0;
 
     /** pessoas */
     this.personService.getByParam().subscribe((response: any) => {
@@ -236,6 +237,12 @@ export class ServiceCreateComponent implements OnInit {
       this.servico.desconto = 0;
       this.notify.warning(msg.A001);
     }
+
+
+    this.servico.contas.forEach(element => {
+      this.totalPago += element.valor;
+    });
+
   }
 
   removeItem(prod: ItemServico) {
@@ -258,8 +265,8 @@ export class ServiceCreateComponent implements OnInit {
       return;
     }
 
-    if (this.valorEntrada > this.servico.total) {
-      this.notify.error(msg.custom(msg.E007, 'da entrada'));
+    if (this.valorPagamento > this.servico.total) {
+      this.notify.error(msg.custom(msg.E007, 'do pagamento'));
       return;
     }
 
@@ -274,32 +281,20 @@ export class ServiceCreateComponent implements OnInit {
     }
 
     /** gera a primeira conta, caso o serviço tenha entrada */
-    if(this.valorEntrada != 0 && this.valorEntrada != null) {
+    if(this.valorPagamento != 0 && this.valorPagamento != null) {
       const conta = new PaymentBill();
       conta.dataPagamento = new Date();
       conta.dataVencimento = new Date();
       conta.planoConta.id = 7; // -- serviço
       conta.tipoConta = 'RECEBIMENTO';
       conta.usuario = this.usuario;
-      conta.valor = this.valorEntrada;
+      conta.valor = this.valorPagamento;
 
       delete conta.caixa;
 
       this.servico.contas.push(conta);
     }
 
-    /** gera a conta do valor restante */
-    const contaR = new PaymentBill();
-    contaR.dataPagamento = new Date();
-    contaR.dataVencimento = new Date();
-    contaR.planoConta.id = 7; // -- serviço
-    contaR.tipoConta = 'RECEBIMENTO';
-    contaR.usuario = this.usuario;
-    contaR.valor = this.servico.total - this.valorEntrada - this.servico.desconto;
-
-    delete contaR.caixa;
-
-    this.servico.contas.push(contaR); 
 
     /** limpa IDs registros novos */
     if(this.servico.pessoa.id == -1) {

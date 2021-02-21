@@ -130,49 +130,55 @@
             <div class="col-xl-12 mt-4">
               <div class="card shadow table-produtos" >
                 <div class="card-body">
-                  <div class="row">
-                    <div class="col-lg-4">
+                  <div class="row">                    
+                    <div class="col col-lg-6 pl-lg-12 text-right" >
+                      <label class="form-control-label text-prod" >Subtotal</label>
+                      <h2>{{subtotal.toFixed(2)}}</h2>
+                    </div>
+                    <div class="col-lg-3 text-right">
                       <div class="form-group">
                         <label class="form-control-label">Desconto</label>
                         <input type="text" [(ngModel)]="servico.desconto" [disabled]="!formEdit" name="desconto" class="form-control form-control-alternative"  value="{{servico.desconto.toFixed(2)}}" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
                       </div>
                     </div>
-                    <div class="col-lg-4">
-                      <div class="form-group">
-                        <label class="form-control-label">Pagamento</label>
-                        <input type="text" [(ngModel)]="valorEntrada" [disabled]="!formEdit" name="entrada" class="form-control form-control-alternative"  value="{{valorEntrada.toFixed(2)}}" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
-                      </div>
+                    <div class="col col-lg-3 pl-lg-12 text-right" >
+                        <label class="form-control-label text-prod" >Total</label>
+                        <h2>{{(servico.total - servico.desconto).toFixed(2)}}</h2>
                     </div>
+    
+
                   </div>
                 </div>
               </div>
             </div>
 
             <div class="col-xl-12 mt-4">
-              <div class="row">
-                <div class="col col-lg-4 pl-lg-12 text-right" >
-                  <label class="form-control-label text-prod" >Subtotal</label>
-                  <h1>{{subtotal.toFixed(2)}}</h1>
-                </div>
-                <div class="col col-lg-2 pl-lg-12 text-right" >
-                  <label class="form-control-label text-prod" >Desconto</label>
-                  <h1>{{servico.desconto.toFixed(2)}}</h1>
-                </div>
-                <div class="col col-lg-2 pl-lg-12 text-right" >
-                    <label class="form-control-label text-prod" >Total</label>
-                    <h1>{{(servico.total - servico.desconto).toFixed(2)}}</h1>
-                </div>
+              <div class="card shadow table-produtos" >
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="form-control-label">Pagamento</label>
+                        <input type="text" [(ngModel)]="valorPagamento" [disabled]="!formEdit" name="pagamento" class="form-control form-control-alternative" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                      </div>
+                    </div>
 
-                <div class="col col-lg-2 pl-lg-12 text-right" >
-                  <label class="form-control-label text-prod" >Valor pago</label>
-                  <h1>{{servico.desconto.toFixed(2)}}</h1>
-                </div>
-                <div class="col col-lg-2 pl-lg-12 text-right" >
-                    <label class="form-control-label text-prod" >Restante</label>
-                    <h1>{{(servico.total - servico.desconto).toFixed(2)}}</h1>
-                </div>
+                    <div class="col col-lg-5 pl-lg-12 " >
+                      <label class="form-control-label text-prod" >Valor pago</label>
+                      <h2 *ngFor="let conta of servico.contas; let i = index" >{{conta.valor.toFixed(2)}} ({{i+1}}º pagamento)</h2>
+                      <h2 >{{valorPagamento.toFixed(2)}}</h2>
+                    </div>
+                    <div class="col col-lg-3 pl-lg-12 text-right" >
+                        <label class="form-control-label text-prod" >Restante</label>
+                        <h2>{{(servico.total - servico.desconto - totalPago - valorPagamento).toFixed(2)}}</h2>
+                    </div>
 
+                  </div>
+                </div>
               </div>
+            </div>
+
+            <div class="col-xl-12 mt-4">             
 
               <div class="row">
                 <div class="col col-lg-6 pl-lg-6 text-right" >
