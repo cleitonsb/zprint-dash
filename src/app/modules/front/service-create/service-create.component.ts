@@ -127,6 +127,9 @@ export class ServiceCreateComponent implements OnInit {
     if(!id) return;
     this.service.get(id).subscribe((data: Service) => {
       this.servico = data;
+
+      this.equipamentos = this.servico.pessoa.equipamentos;
+
       this.calcTotal();
       this.spinner.hide();           
     });

@@ -1,3 +1,4 @@
+import { EquipmentService } from '../services/equipment.service';
 import {Endereco} from './endereco';
 
 export class Person {
@@ -12,5 +13,6 @@ export class Person {
   enderecos = new Array<Endereco>();
   cliente?: boolean;
   fornecedor?: boolean;
+  equipamentos = new Array<EquipmentService>();
 }
 
