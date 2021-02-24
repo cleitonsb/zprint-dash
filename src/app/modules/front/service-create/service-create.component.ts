@@ -62,6 +62,8 @@ export class ServiceCreateComponent implements OnInit {
   usuarioCanc: string;
   senhaCanc: string;
 
+  previsao: Date;
+
   constructor(
     private service: ServiceService,
     private userService: UserService,
@@ -165,11 +167,7 @@ export class ServiceCreateComponent implements OnInit {
     }
   }
 
-  setCliente() {
-    this.equipmentService.getByPerson(1).subscribe((response: any) => {
-      this.equipamentos = response;
-    });
-
+  setCliente() {    
     if(this.servico.pessoa.id != null) {
       this.equipmentService.getByPerson(this.servico.pessoa.id).subscribe((response: any) => {
         this.equipamentos = response;
@@ -308,11 +306,25 @@ export class ServiceCreateComponent implements OnInit {
       delete this.servico.equipamento.id;
     }
 
+    if(this.servico.equipamento.id == 0) {
+      delete this.servico.equipamento;
+    }
+
+    if(this.previsao != null) {
+      let str = this.previsao;
+
+      let dd = String(str).substr(0,2);
+      let mm = String(str).substr(2,2);
+      let yy = String(str).substr(4,4);
+
+      this.servico.previsao = new Date(parseInt(yy), parseInt(mm)-1, parseInt(dd));
+    }
+
     this.service.store(this.servico).subscribe((response: any) => {
       if (response.status === 200) {
           this.notify.sucess(msg.S001);
           if (response.body.id) {
-            this.montaTela();
+            window.location.href = environment.frontUrl + '/#/front/service-create';                
 
             Swal.fire({
               title: 'Impressão',

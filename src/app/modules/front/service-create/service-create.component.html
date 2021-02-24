@@ -178,6 +178,27 @@
               </div>
             </div>
 
+            <div class="col-xl-12 mt-4">
+              <div class="card shadow table-produtos" >
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <label class="form-control-label">Previsão de entrega</label>
+                        <input type="text" [(ngModel)]="previsao" [disabled]="!formEdit" name="previsao" class="form-control form-control-alternative" mask="00/00/0000" >
+                      </div>
+                    </div> 
+                    <div class="col-lg-4">
+                      <div class="form-group">
+                        <br><br>
+                        <h2>{{servico.previsao | date:'dd/MM/yyyy'}}</h2>
+                      </div>
+                    </div> 
+                  </div>
+                </div>
+              </div>
+            </div>
+
             <div class="col-xl-12 mt-4">             
 
               <div class="row">

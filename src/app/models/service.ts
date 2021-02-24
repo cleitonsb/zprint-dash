@@ -7,6 +7,7 @@ import { User } from './user';
 export class Service {
   id?: number;
   data: Date;
+  previsao: Date;
   total = 0;
   desconto = 0;
   situacao: boolean;

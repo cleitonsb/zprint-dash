@@ -101,15 +101,15 @@
                 <h3 class="mb-0">Subtotal:</h3>
                 <h3 class="mb-0">Desconto:</h3>
                 <h1 class="print-red mb-0">Total:</h1>
-                <h3 class="mb-0">Entrada:</h3>
+                <h3 class="mb-0">Pagamentos:</h3>
                 <h3 class="mb-0">Restante:</h3>
             </div>
             <div class="col-2 text-right" >
-                <h3 class="mb-0">{{ servico.total }}</h3>
-                <h3 class="mb-0">{{ servico.desconto }}</h3>
-                <h1 class="print-red mb-0">{{ servico.total - servico.desconto }}</h1>
-                <h3 class="mb-0">{{ entrada }}</h3>
-                <h3 class="mb-0">{{ servico.total - servico.desconto - entrada}}</h3>
+                <h3 class="mb-0">{{ servico.total.toFixed(2) }}</h3>
+                <h3 class="mb-0">{{ servico.desconto.toFixed(2) }}</h3>
+                <h1 class="print-red mb-0">{{ (servico.total - servico.desconto).toFixed(2) }}</h1>
+                <h3 class="mb-0">{{ entrada.toFixed(2) }}</h3>
+                <h3 class="mb-0">{{ (servico.total - servico.desconto - entrada).toFixed(2)}}</h3>
             </div>
         </div>
     </main>
