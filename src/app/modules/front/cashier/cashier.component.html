@@ -46,16 +46,16 @@
       </div>
 
       <div class="row">
-        <div class="col col-lg-2 pl-lg-12 " >
+        <div *ngIf="tipoConta==1" class="col col-lg-2 pl-lg-12 " >
           <label class="form-control-label text-prod" >Subtotal</label>
           <h1>{{subtotal.toFixed(2)}}</h1>
         </div>
-        <div class="col col-lg-2 pl-lg-12 " >
+        <div *ngIf="tipoConta==1" class="col col-lg-2 pl-lg-12 " >
           <label class="form-control-label text-prod" >Desconto</label>
           <h1>{{detDesconto.toFixed(2)}}</h1>
         </div>
         <div class="col col-lg-2 pl-lg-12 " >
-            <label class="form-control-label text-prod" >Total</label>
+            <label class="form-control-label text-prod" >Total a pagar</label>
             <h1>{{detTotal.toFixed(2)}}</h1>
         </div>
 
@@ -67,7 +67,7 @@
       <div class="card bg-secondary shadow table-responsive" [style.height.px]="innerHeight">
         <div class="card-body ">
 
-          <button class="btn btn-info mr-2 mb-2" [swal]="tpPagamentoSwal" [disabled]="venda.total == 0 || totalPago >= venda.total" > Novo Pagamento</button>
+          <button class="btn btn-info mr-2 mb-2" [swal]="tpPagamentoSwal" [disabled]="detTotal == 0 || totalPago >= detTotal" > Novo Pagamento</button>
 
           <div class="table-responsive" style="overflow: hidden; height: calc(100% - 130px);">
             <table class="table table-hover align-items-center table-flush ">
@@ -147,8 +147,8 @@
       </swal>
 
       <div class="d-flex flex-row-reverse pt-4" >
-        <button #btnFinalizar [disabled]="venda.total > totalPago" [swal]="{ title: 'Concluir', text: 'Confirma a finalização desta venda?', icon: 'question', showCancelButton: true }"
-        (confirm)="finalizaVenda()"  class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Concluir (F9)</button>
+        <button #btnFinalizar [disabled]="detTotal > totalPago" [swal]="{ title: 'Concluir', text: 'Confirma o recebimento desta conta?', icon: 'question', showCancelButton: true }"
+        (confirm)="finalizaConta()"  class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Concluir (F9)</button>
       </div>
 
     </div>

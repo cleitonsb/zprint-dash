@@ -15,4 +15,5 @@ export class PaymentBill {
   pagamentos = new Array<Payment>();
   caixa: Cashier;
   troco = 0;
+  pago = false;
 }

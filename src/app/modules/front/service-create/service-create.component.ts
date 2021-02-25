@@ -64,6 +64,8 @@ export class ServiceCreateComponent implements OnInit {
 
   previsao: Date;
 
+  blockPag: boolean = false;
+
   constructor(
     private service: ServiceService,
     private userService: UserService,
@@ -128,7 +130,8 @@ export class ServiceCreateComponent implements OnInit {
   getServico(id) {
     if(!id) return;
     this.service.get(id).subscribe((data: Service) => {
-      this.servico = data;
+      this.servico = data; console.log(this.servico);
+      
 
       this.equipamentos = this.servico.pessoa.equipamentos;
 
@@ -239,10 +242,19 @@ export class ServiceCreateComponent implements OnInit {
       this.notify.warning(msg.A001);
     }
 
-
     this.servico.contas.forEach(element => {
       this.totalPago += element.valor;
+
+      if(element.pago == false) {
+        this.blockPag = true;
+      }
     });
+
+    let restante = this.servico.total - this.servico.desconto - this.totalPago;
+
+    if(restante <= 0) {
+      this.blockPag = true;
+    }
 
   }
 
@@ -267,6 +279,13 @@ export class ServiceCreateComponent implements OnInit {
     }
 
     if (this.valorPagamento > this.servico.total) {
+      this.notify.error(msg.custom(msg.E007, 'do pagamento'));
+      return;
+    }
+
+    let restante = this.servico.total - this.servico.desconto - this.totalPago;
+
+    if(this.valorPagamento > restante) {
       this.notify.error(msg.custom(msg.E007, 'do pagamento'));
       return;
     }

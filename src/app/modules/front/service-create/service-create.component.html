@@ -11,7 +11,7 @@
                   <h3 class="mb-0">Cadastro de serviços</h3>
                 </div>
                 <div class="col-4">
-                  <button *ngIf="servico.id" class="btn btn-primary btn-sm float-right" type="button" (click)="edit()">Editar</button>
+                  
                 </div>
               </div>
             </div>
@@ -22,7 +22,7 @@
                       <label class="form-control-label" >Cliente</label>
                       <div class="form-control-label float-right" ><a [swal]="clienteSwal" class="mouse-link"><i class="fas fa-plus-circle"></i> Novo cliente</a></div>
 
-                      <select [(ngModel)]="servico.pessoa.id" [disabled]="!formEdit" (change)=setCliente() name="cliente" class="form-control form-control-alternative">
+                      <select [(ngModel)]="servico.pessoa.id" (change)=setCliente() name="cliente" class="form-control form-control-alternative">
                         <option value="">Selecione</option>
                         <option *ngFor="let cliente of clientes" value="{{cliente.id}}">{{ cliente.nome }}</option>
                       </select>
@@ -33,7 +33,7 @@
                   <div class="form-group col-md-6">
                     <div class="form-group">
                       <label class="form-control-label" >Responsável</label>
-                      <select [(ngModel)]="servico.responsavel.id" [disabled]="!formEdit" name="usuario" class="form-control form-control-alternative">
+                      <select [(ngModel)]="servico.responsavel.id" name="usuario" class="form-control form-control-alternative">
                         <option value="0">Selecione</option>
                         <option *ngFor="let usuario of usuarios" value="{{usuario.id}}">{{ usuario.nome }}</option>
                       </select>
@@ -44,7 +44,7 @@
                     <div class="form-group">
                       <label class="form-control-label" >Equipamento</label>
                       <div class="form-control-label float-right" ><a (click)=openEquipamento() class="mouse-link"><i class="fas fa-plus-circle"></i> Novo equipamento</a></div>
-                      <select [(ngModel)]="servico.equipamento.id" [disabled]="!formEdit" name="equipamento" class="form-control form-control-alternative">
+                      <select [(ngModel)]="servico.equipamento.id"  name="equipamento" class="form-control form-control-alternative">
                         <option value="0">Selecione</option>
                         <option *ngFor="let equipamento  of equipamentos" value="{{equipamento.id}}">{{ equipamento.marca }} - {{ equipamento.modelo }}</option>
                       </select>
@@ -138,7 +138,7 @@
                     <div class="col-lg-3 text-right">
                       <div class="form-group">
                         <label class="form-control-label">Desconto</label>
-                        <input type="text" [(ngModel)]="servico.desconto" [disabled]="!formEdit" name="desconto" class="form-control form-control-alternative"  value="{{servico.desconto.toFixed(2)}}" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                        <input type="text" [(ngModel)]="servico.desconto" name="desconto" class="form-control form-control-alternative"  value="{{servico.desconto.toFixed(2)}}" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
                       </div>
                     </div>
                     <div class="col col-lg-3 pl-lg-12 text-right" >
@@ -159,20 +159,19 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label">Pagamento</label>
-                        <input type="text" [(ngModel)]="valorPagamento" [disabled]="!formEdit" name="pagamento" class="form-control form-control-alternative" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                        <input type="text" [(ngModel)]="valorPagamento" [disabled]="blockPag" name="pagamento" class="form-control form-control-alternative" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
                       </div>
                     </div>
 
                     <div class="col col-lg-5 pl-lg-12 " >
                       <label class="form-control-label text-prod" >Valor pago</label>
-                      <h2 *ngFor="let conta of servico.contas; let i = index" >{{conta.valor.toFixed(2)}} ({{i+1}}º pagamento)</h2>
-                      <h2 >{{valorPagamento.toFixed(2)}}</h2>
+                      <h2 *ngFor="let conta of servico.contas; let i = index" >{{i+1}}º - {{conta.valor.toFixed(2)}}<span *ngIf=conta.pago> (Pago)</span></h2>
+                      <h2 *ngIf="!blockPag">{{valorPagamento.toFixed(2)}}</h2>
                     </div>
                     <div class="col col-lg-3 pl-lg-12 text-right" >
                         <label class="form-control-label text-prod" >Restante</label>
                         <h2>{{(servico.total - servico.desconto - totalPago - valorPagamento).toFixed(2)}}</h2>
                     </div>
-
                   </div>
                 </div>
               </div>
@@ -185,7 +184,7 @@
                     <div class="col-lg-4">
                       <div class="form-group">
                         <label class="form-control-label">Previsão de entrega</label>
-                        <input type="text" [(ngModel)]="previsao" [disabled]="!formEdit" name="previsao" class="form-control form-control-alternative" mask="00/00/0000" >
+                        <input type="text" [(ngModel)]="previsao" name="previsao" class="form-control form-control-alternative" mask="00/00/0000" >
                       </div>
                     </div> 
                     <div class="col-lg-4">
@@ -226,13 +225,13 @@
         <div class="col-lg-6">
           <div class="form-group text-left">
             <label class="form-control-label" >Nome/Nome fantasia</label>
-            <input type="text" [(ngModel)]="servico.pessoa.nome" [disabled]="!formEdit" required="required" name="nome" class="form-control form-control-alternative" placeholder="Nome" value="{{servico.pessoa.nome}}">
+            <input type="text" [(ngModel)]="servico.pessoa.nome" required="required" name="nome" class="form-control form-control-alternative" placeholder="Nome" value="{{servico.pessoa.nome}}">
           </div>
         </div>
         <div class="col-lg-6">
           <div class="form-group text-left">
             <label class="form-control-label">Celular</label>
-            <input type="tel" [(ngModel)]="servico.pessoa.celular" [disabled]="!formEdit" name="celular" class="form-control form-control-alternative"  mask="(00) 00000-0000" placeholder="Número do celular" value="{{servico.pessoa.celular | mask: '(00) 00000-0000'}}">
+            <input type="tel" [(ngModel)]="servico.pessoa.celular" name="celular" class="form-control form-control-alternative"  mask="(00) 00000-0000" placeholder="Número do celular" value="{{servico.pessoa.celular | mask: '(00) 00000-0000'}}">
           </div>
         </div>
 
@@ -252,19 +251,19 @@
       <div class="col-lg-6">
         <div class="form-group text-left">
           <label class="form-control-label" >Marca</label>
-          <input type="text" [(ngModel)]="servico.equipamento.marca" [disabled]="!formEdit" required="required" name="marca" class="form-control form-control-alternative" value="{{servico.equipamento.marca}}">
+          <input type="text" [(ngModel)]="servico.equipamento.marca" required="required" name="marca" class="form-control form-control-alternative" value="{{servico.equipamento.marca}}">
         </div>
       </div>
       <div class="col-lg-6">
         <div class="form-group text-left">
           <label class="form-control-label" >Nº série</label>
-          <input type="text" [(ngModel)]="servico.equipamento.serie" [disabled]="!formEdit" required="required" name="serie" class="form-control form-control-alternative" value="{{servico.equipamento.serie}}">
+          <input type="text" [(ngModel)]="servico.equipamento.serie" required="required" name="serie" class="form-control form-control-alternative" value="{{servico.equipamento.serie}}">
         </div>
       </div>
       <div class="col-lg-12">
         <div class="form-group text-left">
           <label class="form-control-label" >Modelo</label>
-          <input type="text" [(ngModel)]="servico.equipamento.modelo" [disabled]="!formEdit" required="required" name="modelo" class="form-control form-control-alternative" value="{{servico.equipamento.modelo}}">
+          <input type="text" [(ngModel)]="servico.equipamento.modelo" required="required" name="modelo" class="form-control form-control-alternative" value="{{servico.equipamento.modelo}}">
         </div>
       </div>
 

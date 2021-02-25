@@ -58,10 +58,11 @@ export class CashierComponent implements OnInit {
   fContagem = 0;
   fTotal = 0;
 
-
   detItens: Array<any>;
   detTotal = 0;
   detDesconto = 0;
+
+  tipoConta = null;
 
   constructor(
     private salesService: SaleService,
@@ -101,8 +102,7 @@ export class CashierComponent implements OnInit {
     this.getRegistros();
   }
 
-  getConta(vendaId?: number, serviceId?: number) {
-  
+  getConta(vendaId?: number, serviceId?: number) { 
   
     if(vendaId != null) {
       this.getVenda(vendaId);
@@ -128,6 +128,8 @@ export class CashierComponent implements OnInit {
 
       this.conta = data.contas[data.contas.length - 1];
 
+      this.tipoConta = 1;
+
       // delete this.venda.usuario;
       // this.venda.usuario = new User();
       // this.venda.usuario.id = this.usuario.id;
@@ -142,15 +144,24 @@ export class CashierComponent implements OnInit {
   getServico(serviceId?: number) {
     this.serviceService.get(serviceId).subscribe((data: Service) => {
       this.clear();
-      
+
+      for(let el of data.contas) {
+        if(el.pago == false) {
+          this.conta = el;
+          break;
+        }
+      }
+
+      this.conta.pagamentos = new Array();
+                  
       this.detItens = data.itensServico;
-      this.detTotal = data.total;
+      this.detTotal = this.conta.valor;
 
       data.itensServico.forEach(element => {
         this.subtotal += +element.preco * element.qt;
-      });
+      });      
 
-      this.conta = data.contas[data.contas.length - 1];
+      this.tipoConta = 2;
 
     });
   }
@@ -162,6 +173,10 @@ export class CashierComponent implements OnInit {
     this.subtotal = 0;
     this.resultado = 0;
     this.textResultado = 'Troco';
+    this.detItens = new Array();
+    this.detTotal = 0;
+    this.conta = new PaymentBill();
+    this.disableDinheiro = false;
   }
 
   checkCaixa() {
@@ -212,7 +227,6 @@ export class CashierComponent implements OnInit {
     }
 
     if (this.pagamento.tipoPagamento !== 'DINHEIRO') {
-
       let total = 0;
       this.conta.pagamentos.forEach(element => {
         total += element.valor;
@@ -220,7 +234,7 @@ export class CashierComponent implements OnInit {
 
       total += this.pagamento.valor;
 
-      if (total > this.venda.total) {
+      if (total > this.detTotal) {
         this.vPagamento = msg.E004;
         return false;
       }
@@ -242,7 +256,7 @@ export class CashierComponent implements OnInit {
       this.totalPago += element.valor;
     });
 
-    this.conta.troco = this.totalPago - this.venda.total;
+    this.conta.troco = this.totalPago - this.detTotal;
     this.textResultado = (this.conta.troco >= 0) ? 'Troco' : 'Restante';
   }
 
@@ -260,14 +274,14 @@ export class CashierComponent implements OnInit {
     }
   }
 
-  finalizaVenda() {
+  finalizaConta() {
     this.spinner.show();
-
-    delete this.venda.usuario;
-    delete this.venda.itensVenda;
 
     this.conta.caixa = new Cashier();
     this.conta.caixa.id = this.caixa.id;
+
+    this.conta.usuario = new User();
+    this.conta.usuario.id = this.usuario.id;
 
     /** ajuste no valor do pagamento em dinheiro, quando tem troco */
     if (this.conta.troco > 0) {

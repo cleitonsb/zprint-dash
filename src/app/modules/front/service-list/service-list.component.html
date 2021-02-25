@@ -44,8 +44,7 @@
               <td>{{servico.usuario.nome}}</td>
               <td class="text-right">{{(+servico.total).toFixed(2)}}</td>
               <td>
-                <a [routerLink]="['/front/service-create/' + servico.id]"><i class="fas fa-search"></i></a> &nbsp;
-                <a *ngIf=!servico.caixa (click)=edit(servico.id) ><i class="fas fa-edit"></i></a>
+                <a [routerLink]="['/front/service-create/' + servico.id]"><i class="fas fa-search"></i></a> &nbsp;                
               </td>
             </tr>
             </tbody>
