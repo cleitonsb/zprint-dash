@@ -7,8 +7,9 @@
       <div >
         <div class="card bg-secondary shadow table-responsive" [style.height.px]="innerHeight">
           <div class="list-group">
-            <a *ngFor="let conta of contas" (click)="getVenda(conta[0])" class="list-group-item list-group-item-action mouse-link">
-              C{{(conta[0].toString()).padStart(5,0)}} - {{conta[1]}}
+            <a *ngFor="let conta of contas" (click)="getConta(conta[0], conta[4])" class="list-group-item list-group-item-action mouse-link">
+              <span *ngIf="conta[0] != null">V{{(conta[0].toString()).padStart(5,0)}} - {{conta[1]}}</span>
+              <span *ngIf="conta[4] != null">S{{(conta[4].toString()).padStart(5,0)}} - {{conta[5]}}</span>
             </a>
           </div>
         </div>
@@ -33,7 +34,7 @@
             </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of venda.itensVenda" >
+              <tr *ngFor="let item of detItens" >
                 <td class="prod-name">{{item.produto.nome}}</td>
                 <td>{{item.qt}}</td>
                 <td class="text-right">{{+item.preco.toFixed(2)}}</td>
@@ -51,11 +52,11 @@
         </div>
         <div class="col col-lg-2 pl-lg-12 " >
           <label class="form-control-label text-prod" >Desconto</label>
-          <h1>{{venda.desconto.toFixed(2)}}</h1>
+          <h1>{{detDesconto.toFixed(2)}}</h1>
         </div>
         <div class="col col-lg-2 pl-lg-12 " >
             <label class="form-control-label text-prod" >Total</label>
-            <h1>{{venda.total.toFixed(2)}}</h1>
+            <h1>{{detTotal.toFixed(2)}}</h1>
         </div>
 
       </div>

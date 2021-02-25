@@ -17,6 +17,8 @@ import { SwalComponent } from '@sweetalert2/ngx-sweetalert2';
 import Swal from 'sweetalert2';
 import { ChartBill } from 'src/app/models/chartBill';
 import { User } from 'src/app/models/user';
+import { ServiceService } from 'src/app/services/service.service';
+import { Service } from 'src/app/models/service';
 
 @Component({
   selector: 'app-cashier',
@@ -56,8 +58,14 @@ export class CashierComponent implements OnInit {
   fContagem = 0;
   fTotal = 0;
 
+
+  detItens: Array<any>;
+  detTotal = 0;
+  detDesconto = 0;
+
   constructor(
     private salesService: SaleService,
+    private serviceService: ServiceService,
     private cashierService: CashierService,
     private paymentService: PaymentService,
     private paymentBill: PaymentBillService,
@@ -93,23 +101,56 @@ export class CashierComponent implements OnInit {
     this.getRegistros();
   }
 
-  getVenda(id: number) {
-    this.salesService.get(id).subscribe((data: Venda) => {
+  getConta(vendaId?: number, serviceId?: number) {
+  
+  
+    if(vendaId != null) {
+      this.getVenda(vendaId);
+    }
+
+    if(serviceId != null) {
+      this.getServico(serviceId);
+    }
+  }
+
+  getVenda(vendaId?: number) {
+    this.salesService.get(vendaId).subscribe((data: Venda) => {
       this.clear();
-      this.venda = data;
-      this.venda.itensVenda.forEach(element => {
+      //this.venda = data;
+
+      this.detItens = data.itensVenda;
+      this.detTotal = data.total;
+      this.detDesconto = data.desconto;
+
+      data.itensVenda.forEach(element => {
         this.subtotal += +element.preco * element.qt;
       });
 
-      this.conta = this.venda.contas[this.venda.contas.length - 1];
+      this.conta = data.contas[data.contas.length - 1];
 
-      delete this.venda.usuario;
-      this.venda.usuario = new User();
-      this.venda.usuario.id = this.usuario.id;
+      // delete this.venda.usuario;
+      // this.venda.usuario = new User();
+      // this.venda.usuario.id = this.usuario.id;
 
-      delete this.conta.usuario;
-      this.conta.usuario = new User();
-      this.conta.usuario.id = this.usuario.id;
+      // delete this.conta.usuario;
+      // this.conta.usuario = new User();
+      // this.conta.usuario.id = this.usuario.id;
+
+    });
+  }
+
+  getServico(serviceId?: number) {
+    this.serviceService.get(serviceId).subscribe((data: Service) => {
+      this.clear();
+      
+      this.detItens = data.itensServico;
+      this.detTotal = data.total;
+
+      data.itensServico.forEach(element => {
+        this.subtotal += +element.preco * element.qt;
+      });
+
+      this.conta = data.contas[data.contas.length - 1];
 
     });
   }
