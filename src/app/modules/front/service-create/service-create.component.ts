@@ -4,7 +4,6 @@ import { ItemServico } from './../../../models/itemServico';
 import { msg } from './../../../variables/msg';
 import { Product } from './../../../models/product';
 import { Equipment } from './../../../models/equipment';
-import { ChartBillService } from './../../../services/chartBill.service';
 import { PersonService } from './../../../services/person.service';
 import { UserService } from './../../../services/user.service';
 import { User } from './../../../models/user';
@@ -65,6 +64,7 @@ export class ServiceCreateComponent implements OnInit {
   previsao: Date;
 
   blockPag: boolean = false;
+  blockCanc: boolean = false;
 
   constructor(
     private service: ServiceService,
@@ -81,6 +81,8 @@ export class ServiceCreateComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.spinner.show();
+
     this.innerHeight = window.innerHeight;
 
     /** usuarios */
@@ -100,7 +102,7 @@ export class ServiceCreateComponent implements OnInit {
   }
 
   montaTela() {
-    const currentUser: any = this.authenticationService.currentUserValue;
+    const currentUser: any = this.authenticationService.getUser();
     this.usuario = currentUser.user;
 
     this.servico = new Service();
@@ -122,18 +124,23 @@ export class ServiceCreateComponent implements OnInit {
     /** pessoas */
     this.personService.getByParam().subscribe((response: any) => {
       this.clientes = response;
-    });
 
-    this.route.params.subscribe((params) => this.getServico(params.id));
+      this.route.params.subscribe((params) => this.getServico(params.id));
+
+      this.spinner.hide();
+    });
   }
 
   getServico(id) {
     if(!id) return;
     this.service.get(id).subscribe((data: Service) => {
-      this.servico = data; console.log(this.servico);
+      this.servico = data; 
       
-
       this.equipamentos = this.servico.pessoa.equipamentos;
+
+      if(this.servico.equipamento == null){
+        this.servico.equipamento = new Equipment();
+      }
 
       this.calcTotal();
       this.spinner.hide();           
@@ -248,6 +255,10 @@ export class ServiceCreateComponent implements OnInit {
       if(element.pago == false) {
         this.blockPag = true;
       }
+
+      if(element.pago == true) {
+        this.blockCanc = true;
+      }
     });
 
     let restante = this.servico.total - this.servico.desconto - this.totalPago;
@@ -278,14 +289,16 @@ export class ServiceCreateComponent implements OnInit {
       return;
     }
 
-    if (this.valorPagamento > this.servico.total) {
+    if (this.valorPagamento > this.servico.total) { console.log(this.valorPagamento);
+    
       this.notify.error(msg.custom(msg.E007, 'do pagamento'));
       return;
     }
 
-    let restante = this.servico.total - this.servico.desconto - this.totalPago;
+    let restante = this.servico.total - this.totalPago;
 
-    if(this.valorPagamento > restante) {
+    if(this.valorPagamento > restante) { console.log(restante);
+    
       this.notify.error(msg.custom(msg.E007, 'do pagamento'));
       return;
     }
@@ -313,20 +326,6 @@ export class ServiceCreateComponent implements OnInit {
       delete conta.caixa;
 
       this.servico.contas.push(conta);
-    }
-
-
-    /** limpa IDs registros novos */
-    if(this.servico.pessoa.id == -1) {
-      delete this.servico.pessoa.id;
-    }
-
-    if(this.servico.equipamento.id == -1) {
-      delete this.servico.equipamento.id;
-    }
-
-    if(this.servico.equipamento.id == 0) {
-      delete this.servico.equipamento;
     }
 
     if(this.previsao != null) {
