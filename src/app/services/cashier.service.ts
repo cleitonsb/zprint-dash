@@ -61,7 +61,11 @@ export class CashierService {
   //   return this.http.get(environment.apiUrl + '/caixa/rel' + param);
   // }
 
-  public getRel(dataIni: String, dataFim: String) { console.log(dataIni);
+  public getRel(dataIni: String, dataFim: String) {
     return this.http.get(environment.apiUrl + '/caixa/relatorio/dataini/' + dataIni + '/datafim/' + dataFim);
+  }
+
+  public getRelDetalhe(dataIni: String, dataFim: String) {
+    return this.http.get(environment.apiUrl + '/caixa/relatorio-detalhado/dataini/' + dataIni + '/datafim/' + dataFim);
   }
 }

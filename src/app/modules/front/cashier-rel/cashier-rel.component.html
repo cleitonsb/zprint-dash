@@ -3,7 +3,7 @@
 <div class="container-fluid mt--7">
   <div class="row" >
     <div class="col-xl-12 mb-5 mb-xl-2">
-      <div class="card shadow table-produtos pr-2" >
+      <div class="card shadow pr-2" >
         <apx-chart
           [series]="chartOptions.series"
           [chart]="chartOptions.chart"
@@ -13,6 +13,64 @@
       </div>
     </div>
   </div>
+
+
+
+  <!-- Table -->
+  <div class="row">
+    <div class="col">
+      <div class="card shadow">
+        <div class="card-header border-0">
+          <h3 class="mb-0">Caixas</h3>
+        </div>
+        <div class="table-responsive">
+          <table class="table table-hover align-items-center table-flush ">
+            <thead class="thead-light">
+            <tr>
+              <th scope="col">Código</th>
+              <th scope="col">Data/Hora</th>
+              <th scope="col">Dinheiro</th>
+              <th scope="col">Cartão de crédito</th>
+              <th scope="col">Cartão de debito</th>
+              <th scope="col">Transferência</th>
+              <th scope="col">Outro</th>
+              <th scope="col">Quebra</th>
+              <th scope="col">Total</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let caixa of caixas" >
+              <th scope="row"> C{{(caixa.id.toString()).padStart(5,0)}}</th>
+              <td>{{caixa.data | date:'dd/MM/yyyy HH:mm'}}</td>
+              <td class="text-right">{{(+caixa.dinheiro).toFixed(2)}}</td>
+              <td class="text-right">{{(+caixa.cartaocredito).toFixed(2)}}</td>
+              <td class="text-right">{{(+caixa.cartaodebito).toFixed(2)}}</td>
+              <td class="text-right">{{(+caixa.transferencia).toFixed(2)}}</td>
+              <td class="text-right">{{(+caixa.outros).toFixed(2)}}</td>
+              <td class="text-right" [ngClass]="{'text-red': caixa.quebra != '0'}" >{{(+caixa.quebra).toFixed(2)}}</td>
+              <td class="text-right">{{(+caixa.total).toFixed(2)}}</td>
+            </tr>
+
+            <tr  >
+              <th colspan="2" class="sub-total"> Totais </th>
+              <td class="text-right sub-total">{{(totalDinheiro).toFixed(2)}}</td>
+              <td class="text-right sub-total">{{(totalCcredito).toFixed(2)}}</td>
+              <td class="text-right sub-total">{{(totalCdebito).toFixed(2)}}</td>
+              <td class="text-right sub-total">{{(totalTransferencia).toFixed(2)}}</td>
+              <td class="text-right sub-total">{{(totalOutros).toFixed(2)}}</td>
+              <td class="text-right sub-total text-red">{{(totalQuebra).toFixed(2)}}</td>
+              <td class="text-right sub-total">{{(total).toFixed(2)}}</td>
+            </tr>
+
+            <tr  >
+              <th colspan="8" class="total"> Total geral </th>
+              <td class="text-right total">{{(total-totalQuebra).toFixed(2)}}</td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>
-
-

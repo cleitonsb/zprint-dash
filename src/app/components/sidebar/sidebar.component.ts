@@ -33,7 +33,7 @@ export class SidebarComponent implements OnInit {
 
   menuItems: any[];
   isCollapsed = true;
-  version = '0.5';
+  version = '0.7';
 
   constructor(private router: Router, private service: UserService, private emitterService: EmitterService ) { }
 
