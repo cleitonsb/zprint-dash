@@ -5,11 +5,9 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { AdminLayoutComponent } from './layouts/admin-layout/admin-layout.component';
 import { AuthLayoutComponent } from './layouts/auth-layout/auth-layout.component';
-import { ServicePrintComponent } from './modules/front/service-print/service-print.component';
-import { AuthGuard } from './helpers/auth.guard';
 
 const routes: Routes =[
-  { path: '', redirectTo: 'login', pathMatch: 'full'}, 
+  { path: '', redirectTo: 'login', pathMatch: 'full'},
   {
     path: '',
     component: AdminLayoutComponent,

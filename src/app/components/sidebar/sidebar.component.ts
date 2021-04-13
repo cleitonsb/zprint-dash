@@ -22,6 +22,7 @@ export const ROUTES: RouteInfo[] = [
   { path: '/purchases', title: 'Compras',  icon: 'fa-shopping-basket text-grey', class: '', route: '/compra' },
   { path: '/payments', title: 'Contas',  icon: 'fa-dollar-sign text-red', class: '', route: '/conta' },
   { path: '/people', title: 'Pessoas',  icon: 'fa-users text-green', class: '', route: '/pessoa' },
+  { path: '/clocks', title: 'Ponto',  icon: 'fa-clock text-black', class: '', route: '/ponto' },
 ];
 
 @Component({
@@ -33,7 +34,7 @@ export class SidebarComponent implements OnInit {
 
   menuItems: any[];
   isCollapsed = true;
-  version = '0.7';
+  version = '0.10';
 
   constructor(private router: Router, private service: UserService, private emitterService: EmitterService ) { }
 

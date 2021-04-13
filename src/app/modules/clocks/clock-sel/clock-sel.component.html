@@ -1,0 +1,53 @@
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<div class="container-fluid mt--7">
+  <form >
+    <div class="row">
+      <div class="col-xl-6">
+          <div class="card bg-secondary shadow">
+            <div class="card-header bg-white border-0">
+              <div class="row align-items-center">
+                <div class="col-8">
+                  <h3 class="mb-0">Registro de ponto</h3>
+                </div>
+                <div class="col-4">
+                  
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                  <div class="form-group col-md-12">
+                    <div class="form-group">
+                      <label class="form-control-label" >Usuário</label>
+                      <select name="usuario" [(ngModel)]="usuario" class="form-control form-control-alternative">
+                        <option value="0">Selecione</option>
+                        <option *ngFor="let usuario of usuarios" value="{{usuario.id}}-{{ usuario.nome }}">{{ usuario.nome }}</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <div class="form-group">
+                      <label class="form-control-label" >Período</label>
+                      <input type="text" [(ngModel)]="data" name="data"  class="form-control form-control-alternative" mask="00/0000">
+                      
+                    </div>
+                  </div>
+
+                  
+                </div>
+              </div>
+            </div>
+
+            <div class="col col-lg-12 pl-lg-12 d-flex flex-row-reverse pt-4" >
+                <button #btnBuscar (keydown.enter)="onKeydown($event)" (click)=buscar() class="btn btn-info mr-2 mb-2" > <i class="fas fa-search"></i> Buscar</button>                
+              </div>
+
+          </div>
+
+      </div>
+    </form>
+  </div>
+
+ 
