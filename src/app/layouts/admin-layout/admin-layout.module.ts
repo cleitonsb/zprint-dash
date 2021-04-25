@@ -14,6 +14,7 @@ import {NgxMaskModule} from 'ngx-mask';
 import {RolesModule} from '../../modules/roles/roles.module';
 import {ProductsModule} from '../../modules/products/products.module';
 import { PeopleModule } from 'src/app/modules/people/people.module';
+import { ClocksModule } from 'src/app/modules/clocks/clocks.module';
 
 @NgModule({
   imports: [
@@ -29,6 +30,7 @@ import { PeopleModule } from 'src/app/modules/people/people.module';
     PaymentsModule,
     PurchasesModule,
     PeopleModule,
+    ClocksModule,
     NgxMaskModule.forRoot(),
   ],
 })
