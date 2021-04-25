@@ -28,7 +28,25 @@ export class ServiceService {
   }
 
   public store(data) {
+    data = this.formatarServico(data);
     return this.http.post(environment.apiUrl + '/servico', data, {observe: 'response'});
+  }
+
+  private formatarServico(servico){
+    /** limpa IDs registros novos */
+    if(servico.pessoa.id == -1) {
+      servico.pessoa.id = null;
+    }
+
+    if(servico.equipamento.id == -1) {
+      servico.equipamento.id = null;
+    }
+
+    if(servico.equipamento.id == 0) {
+      servico.equipamento.id  = null;
+    }
+
+    return servico;    
   }
 
   public update(data) {

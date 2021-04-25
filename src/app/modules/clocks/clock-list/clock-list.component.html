@@ -1,0 +1,78 @@
+<app-breadcrumb [titulo]="titulo" [subTitulo]="subTitulo" [urlBreadcrumb]="urlBreadcrumb"></app-breadcrumb>
+
+<div class="container-fluid mt--7">
+    <!-- Table -->
+    <div class="row">
+        <div class="col">
+            <div class="card shadow">
+            <div class="card-header border-0">
+                <div class="row">
+                    <div class="col-lg-3">
+                        <div class="form-group">
+                            <label class="form-control-label" >Funcionário</label>
+                            <h3 class="mb-0">{{user.nome}}</h3>
+                        </div>
+                    </div>
+
+                    <div class="col-lg-2 ">
+                        <label class="form-control-label" >Carga Semana:</label> {{user.cargaSemana}}hs <br>
+                        <label class="form-control-label" >Carga Sabado:</label> {{user.cargaSabado}}hs
+                    </div>
+                </div>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover align-items-center table-flush ">
+                <thead class="thead-light">
+                <tr>
+                    <th scope="col">Data</th>
+                    <th scope="col">Entrada</th>
+                    <th scope="col">Intervalo</th>
+                    <th scope="col">Retorno</th>
+                    <th scope="col">Saída</th>
+                    <th scope="col">Saldo</th>
+                    <th scope="col text-center">Autorizado</th>              
+                </tr>
+                </thead>
+                <tbody>
+                <tr *ngFor="let ponto of pontos" >
+                    <th scope="row">{{ponto.dataEntrada | date:'dd/MM/yyyy'}}</th>
+                    <td class="text-center">{{ponto.dataEntrada | date:'HH:mm'}} <a href="javascript:" *ngIf=ponto.gpsEntrada (click)=showMaps(ponto.gpsEntrada) ><i class="far fa-map"></i></a></td>
+                    <td class="text-center">{{ponto.dataIntervalo | date:'HH:mm'}} <a href="javascript:" *ngIf=ponto.gpsIntervalo (click)='showMaps(ponto.gpsIntervalo)' ><i class="far fa-map"></i></a></td>
+                    <td class="text-center">{{ponto.dataRetorno | date:'HH:mm'}} <a href="javascript:" *ngIf=ponto.gpsRetorno (click)='showMaps(ponto.gpsRetorno)' ><i class="far fa-map"></i></a></td>
+                    <td class="text-center">{{ponto.dataSaida | date:'HH:mm'}} <a href="javascript:" *ngIf=ponto.gpsSaida (click)='showMaps(ponto.gpsSaida)' ><i class="far fa-map"></i></a></td>
+                    <td class="text-center">{{ponto.resultado}}</td>
+                    <td *ngIf=ponto.autorizado class="text-center"><i class="fas fa-calendar-check text-green"></i></td>
+                    <td *ngIf=!ponto.autorizado class="text-center">
+                        <i *ngIf="(ponto.resultado > 10 || ponto.resultado < -10)" class="far fa-calendar-times text-red"></i> &nbsp; 
+                        <a *ngIf="(ponto.resultado > 10 || ponto.resultado < -10)"  href="javascript:" (click)=setAutorizacao(ponto.id)><i class="far fa-check-square"></i></a>
+                    </td>
+                </tr>
+
+                <tr  >
+                    <th colspan="4" class="sub-total"> Totais </th>
+                    <th class="sub-total"> Mês: {{(totalMes/60).toFixed(0)}}:{{totalMes%60}}hrs </th>
+                    <th class="sub-total"> Trabalhado: {{(totalPonto/60).toFixed(0)}}:{{totalPonto%60}}hrs </th>
+                    <th class="total" *ngIf="((totalPonto-totalMes)%60) < 0"> Saldo: {{((totalPonto-totalMes)/60).toFixed(0)}}:{{((totalPonto-totalMes)%60)*-1}}hrs </th>
+                    <th class="total" *ngIf="((totalPonto-totalMes)%60) >= 0"> Saldo: {{((totalPonto-totalMes)/60).toFixed(0)}}:{{((totalPonto-totalMes)%60)}}hrs </th>
+                </tr>
+
+                </tbody>
+                </table>
+            </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<swal #mapsSwal title="Local de registro" [showConfirmButton]='false'>
+    <div *swalPortal >
+        <div class="row justify-content-md-center maps">
+            <div class="col col-lg-12">
+                <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng">
+                    <agm-marker  [latitude]="lat" [longitude]="lng"></agm-marker>
+                </agm-map>                
+            </div>        
+        </div>
+    </div>
+</swal>

@@ -4,10 +4,12 @@
 
 export const environment = {
   production: false,
-  apiUrl: 'http://localhost:8080/zprint',
-  frontUrl: 'http://localhost:4200'
+  // apiUrl: 'http://localhost:8080/zprint',
+  // frontUrl: 'http://localhost:4200'
   // apiUrl: 'http://45.180.144.58:8080/zprint',
   // frontUrl: 'http://45.180.144.58'
+  apiUrl: 'http://45.180.144.58:8081/zprint',
+  frontUrl: 'http://45.180.144.58:81'
 };
 
 /*

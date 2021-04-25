@@ -138,12 +138,12 @@
                     <div class="col-lg-3 text-right">
                       <div class="form-group">
                         <label class="form-control-label">Desconto</label>
-                        <input type="text" [(ngModel)]="servico.desconto" name="desconto" class="form-control form-control-alternative"  value="{{servico.desconto.toFixed(2)}}" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
+                        <input type="text" [(ngModel)]="servico.desconto" (blur)="calcTotal()" name="desconto" class="form-control form-control-alternative"  value="{{servico.desconto.toFixed(2)}}" currencyMask [options]="{ prefix: 'R$ ', thousands: '.', decimal: ',' }">
                       </div>
                     </div>
                     <div class="col col-lg-3 pl-lg-12 text-right" >
                         <label class="form-control-label text-prod" >Total</label>
-                        <h2>{{(servico.total - servico.desconto).toFixed(2)}}</h2>
+                        <h2>{{(servico.total).toFixed(2)}}</h2>                        
                     </div>
     
 
@@ -170,7 +170,7 @@
                     </div>
                     <div class="col col-lg-3 pl-lg-12 text-right" >
                         <label class="form-control-label text-prod" >Restante</label>
-                        <h2>{{(servico.total - servico.desconto - totalPago - valorPagamento).toFixed(2)}}</h2>
+                        <h2>{{(servico.total - totalPago - valorPagamento).toFixed(2)}}</h2>
                     </div>
                   </div>
                 </div>
@@ -208,7 +208,7 @@
                 <div class="col col-lg-6 pl-lg-12 d-flex flex-row-reverse pt-4" >
                   <button style="display: none;" >Workaroud</button>
                   <button #btnFinalizar (keydown.enter)="onKeydown($event)" [swal]="{ title: 'Confirme', text: 'Confirma o registro deste serviço?', icon: 'question', showCancelButton: true, focusCancel: true }" (confirm)=finalizar() class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Salvar (F9)</button>
-                  <button #btnCancelar class="btn btn-danger mr-2 mb-2" [swal]="{ title: 'Confirme', text: 'Deseja cancelar este serviço?', icon: 'question', showCancelButton: true, focusCancel: true }"
+                  <button #btnCancelar [disabled]="blockCanc" class="btn btn-danger mr-2 mb-2" [swal]="{ title: 'Confirme', text: 'Deseja cancelar este serviço?', icon: 'question', showCancelButton: true, focusCancel: true }"
                   (confirm)="checkCancelar()" >  <i class="fas fa-ban"></i> Cancelar (F8)</button>
                 </div>
               </div>

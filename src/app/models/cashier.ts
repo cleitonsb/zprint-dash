@@ -6,4 +6,5 @@ export class Cashier {
   fundo = 0;
   usuario = new User();
   quebra = 0;
+  total = 0;
 }

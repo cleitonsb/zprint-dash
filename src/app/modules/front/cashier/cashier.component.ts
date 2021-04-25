@@ -187,26 +187,23 @@ export class CashierComponent implements OnInit {
       if (data === null || data === undefined) {
         this.caixa.dataAbertura = new Date();
         this.caixa.usuario.id = this.usuario.id;
-        this.caixa.fundo = 0;
+        this.caixa.fundo = 100;
+        this.caixa.total = 0;
 
         this.caixaSwal.fire();
       } else {
-        localStorage.setItem('caixa', data);
         this.caixa = data;
         this.getRegistros();
+        this.caixaSwal.dismiss();
       }
     });
   }
 
   abrirCaixa() {
     this.spinner.show();
-
     this.cashierService.store(this.caixa).subscribe((response: any) => {
       if (response.status === 200) {
-        localStorage.setItem('caixa', response);
-        this.getRegistros();
-
-        this.caixaSwal.dismiss();
+        this.checkCaixa()
       }
 
       this.spinner.hide();
@@ -331,9 +328,9 @@ export class CashierComponent implements OnInit {
         if (element[0] === 'DINHEIRO') {
           this.fTotal += element[1];
         }
-      });
 
-      this.fTotal += this.caixa.fundo;
+        this.caixa.total += element[1];
+      });     
 
       this.fechaCaixaSwal.fire();
     });

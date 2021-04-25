@@ -12,5 +12,7 @@ export class User {
   token?: string;
   avatar?: any;
   enderecos = new Array<Endereco>();
+  cargaSemana?: number;
+  cargaSabado?: number;
 }
 

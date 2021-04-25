@@ -1,0 +1,13 @@
+.sub-total {
+    background-color: #e9e9e9;
+}
+
+.total {
+    background-color: #d4d4d4;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.text-red {
+    color: red;
+}

@@ -91,13 +91,6 @@
                 <div class="form-group">
                   <label class="form-control-label" >Dt Nasc</label>
 
-<!--                  <div class="input-group input-group-alternative">-->
-<!--                    <div class="input-group-prepend">-->
-<!--                      <span class="input-group-text"><i class="ni ni-calendar-grid-58"></i></span>-->
-<!--                    </div>-->
-<!--                    <input class="form-control datepicker" placeholder="Dt Nascimento" name="dt_nasc" [(ngModel)]="user.dt_nasc" ngbDatepicker #d="ngbDatepicker" (click)="d.toggle()" type="text"/>-->
-<!--                  </div>-->
-
                   <input type="text" [(ngModel)]="user.dt_nasc" [disabled]="!formEdit" name="dt_nasc"  class="form-control form-control-alternative" mask="00/00/0000" placeholder="Dt Nascimento" value="{{user.dt_nasc | mask: '11/11/1111'}}">
 
                 </div>
@@ -167,7 +160,30 @@
                   <input [(ngModel)]="endereco.numero" [disabled]="!formEdit" name="numero" class="form-control form-control-alternative" placeholder="Número" value="" type="text">
                 </div>
               </div>
+            </div>            
+          </div>
+
+          <hr class="my-4" />
+          <!-- Address -->
+          <h6 class="heading-small text-muted mb-4">Carga horária</h6>
+          <div class="pl-lg-4" >
+            <div class="row">
+              <div class="col-lg-2">
+                <div class="form-group">
+                  <label class="form-control-label" >Seg-Sex</label>
+                  <input [(ngModel)]="user.cargaSemana" [disabled]="!formEdit" value="{{user.cargaSemana}}" name="cargaSemana" type="text" mask="0*" class="form-control form-control-alternative" >
+                </div>
+              </div>
+              <div class="col-lg-2">
+                <div class="form-group">
+                  <label class="form-control-label" >Sábado</label>
+                  <input [(ngModel)]="user.cargaSabado" [disabled]="!formEdit" value="{{user.cargaSabado}}" name="cargaSabado" type="text" mask="0*" class="form-control form-control-alternative" >
+                </div>
+              </div>
             </div>
+          </div>
+
+          <div class="pl-lg-4" >
             <div class="row">
               <button class="btn btn-info" *ngIf="formEdit">Salvar</button>
             </div>

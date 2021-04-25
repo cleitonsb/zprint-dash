@@ -42,6 +42,15 @@ export class CashierRelComponent implements OnInit {
   public clicked = true;
   public clicked1 = false;
 
+  caixas: any;
+  totalDinheiro = 0;
+  totalCcredito = 0;
+  totalCdebito = 0;
+  totalTransferencia = 0;
+  totalOutros = 0;
+  totalQuebra = 0;
+  total = 0;
+
   constructor(
     private service: CashierService,
     private spinner: NgxSpinnerService,
@@ -76,16 +85,12 @@ export class CashierRelComponent implements OnInit {
       const arrCat = [];
 
       data.map(function (value) {
-        const d = new Date(value[0].dataFechamento);
+        const d = new Date(value[0]);
         arrCat.push( d.getDate() + '/' + (d.getMonth() + 1) + '/' + d.getFullYear() );
 
-        const vl = value[1] + value[0].fundo + value[0].quebra;
+        const vl = value[1];
         arrValores.push(vl);
       });
-
-      console.log(arrValores);
-      console.log(arrCat);
-
 
       this.chartOptions = {
         series: [
@@ -113,8 +118,21 @@ export class CashierRelComponent implements OnInit {
         }
       };
 
+      this.service.getRelDetalhe(this.dataInicial, this.dataFinal).pipe(first()).subscribe((data: any) => {
+        this.caixas = data;
 
-      this.spinner.hide();
+        data.forEach(element => {
+          this.totalDinheiro += element.dinheiro;
+          this.totalCcredito += element.cartaocredito;
+          this.totalCdebito += element.cartaodebito;
+          this.totalTransferencia += element.transferencia;
+          this.totalOutros += element.outros;
+          this.totalQuebra += element.quebra;
+          this.total += element.total;
+        });
+
+        this.spinner.hide();
+      });    
     });
   }
 
