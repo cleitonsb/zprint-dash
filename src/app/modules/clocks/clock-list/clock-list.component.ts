@@ -89,17 +89,21 @@ export class ClockListComponent implements OnInit {
   }
 
   getResultado(resultado, saldo, autorizado, carga) { 
+
     /** caso seja negativo, soma direto */
     if(resultado < -10 && (autorizado == false || autorizado == null || autorizado == undefined)){
       this.totalPonto += parseFloat(saldo);
+      console.log(resultado + ' - ' + saldo + ' - ' + carga + '----');
     }
     /** caso positivo, verifica se for autorizado */
     else if(resultado > 10 && autorizado == true){
       this.totalPonto += parseFloat(saldo);
+      console.log(resultado + ' - ' + saldo + ' - ' + carga + '++++');
     }
     /** qualquer outra condição, pega o valor trabalhado */
     else{
       this.totalPonto += carga;
+      console.log(resultado + ' - ' + saldo + ' - ' + carga + '====');
     }
   }
 

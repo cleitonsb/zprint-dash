@@ -37,13 +37,20 @@ export class DateFunctions{
     return result.getDate() + '-' + (result.getMonth() + 1) + '-' + result.getFullYear();
   }
 
-  today() {
+  today(data) {
+    if(!data) return;
     const result = new Date();
-    return result.getDate() + '-' + (result.getMonth() + 1) + '-' + result.getFullYear();
+    return result.getDate() + '-' + data.substr(0, 2) + '-' + data.substr(-4);
   }
 
-  firstDay() {
-    const result = new Date();
-    return '01-' + (result.getMonth() + 1) + '-' + result.getFullYear();
+  lastDay(data){
+    if(!data) return;
+    var d = new Date(data.substr(-4), data.substr(0, 2), 0);
+    return d.getDate() + '-' + data.substr(0, 2) + '-' + data.substr(-4);
+  }
+
+  firstDay(data) {
+    if(!data) return;
+    return '01-' + data.substr(0, 2) + '-' + data.substr(-4);
   }
 }

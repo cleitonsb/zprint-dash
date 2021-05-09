@@ -12,6 +12,7 @@ import {
   ApexTitleSubtitle
 } from 'ng-apexcharts';
 import { DatePipe } from '@angular/common';
+import { NotificationService } from 'src/app/services/notification.service';
 
 export type ChartOptions = {
   series: ApexAxisChartSeries;
@@ -54,7 +55,9 @@ export class CashierRelComponent implements OnInit {
   constructor(
     private service: CashierService,
     private spinner: NgxSpinnerService,
-    private date: DateFunctions
+    private notify: NotificationService,    
+    private date: DateFunctions,
+    private datePipe: DatePipe
   ) {
     this.chartOptions = {
       series: [],
@@ -68,7 +71,25 @@ export class CashierRelComponent implements OnInit {
    }
 
   ngOnInit(): void {
+    this.data = this.datePipe.transform(new Date(), 'MM/yyyy').toString();
     this.getRelatorio();
+  }
+
+  buscar() {
+    if(this.valida()) {
+      this.getRelatorio()
+    }
+  }
+
+  valida(){
+    if(this.data == null || this.data == undefined) {
+      this.notify.error('Favor informar o período');
+      return false;
+    }else{
+      this.data = this.data.replace('/', '');
+    }
+
+    return true;
   }
 
   getRelatorio() {
@@ -76,8 +97,8 @@ export class CashierRelComponent implements OnInit {
 
     this.spinner.show();
 
-    this.dataInicial = this.date.firstDay();
-    this.dataFinal = this.date.today();
+    this.dataInicial = this.date.firstDay(this.data);
+    this.dataFinal = this.date.lastDay(this.data);
 
     this.service.getRel(this.dataInicial, this.dataFinal).pipe(first()).subscribe((data: any) => {
 
