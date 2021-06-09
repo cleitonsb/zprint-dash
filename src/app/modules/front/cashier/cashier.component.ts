@@ -200,8 +200,13 @@ export class CashierComponent implements OnInit {
     });
   }
 
-  informaCpf() {
-    this.cpfSwal.fire();
+  closeCpf() {
+    if(this.venda.cpf.length > 0 && this.venda.cpf.length < 11) {
+      this.notify.error(msg.custom(msg.E008, 'CPF'));
+      return;
+    }
+
+    this.cpfSwal.dismiss();
   }
 
   abrirCaixa() {
@@ -311,7 +316,23 @@ export class CashierComponent implements OnInit {
       });
     }
 
-   
+    this.paymentBill.update(this.conta).subscribe((response: any) => {
+      if (response.status === 200) {
+        this.showSucess(response.body.id);
+        // if(this.venda.cpf.length >= 11) {
+        //   this.emitirNfe(function() {
+        //     this.showSucess(response.body.id);
+        //   });
+        // }else {
+        //   this.showSucess(response.body.id);
+        // }
+
+          
+      }
+    });
+  }
+
+  emitirNfe(callback?) {
 
     this.nfeService.generate(this.conta, this.venda).subscribe((response: any) => {
       if (response.status === 200) {
@@ -324,21 +345,21 @@ export class CashierComponent implements OnInit {
       this.spinner.hide();
     });
 
-    // this.paymentBill.update(this.conta).subscribe((response: any) => {
-    //   if (response.status === 200) {
-    //       this.notify.sucess(msg.S001);
-    //       if (response.body.id) {
-    //         this.clear();
-    //         this.getRegistros();
-    //       }
+    callback;
+  }
 
-    //       this.spinner.hide();
-    //   }
-    // });
+  showSucess(id) {
+    this.notify.sucess(msg.S001);
+    if (id) {
+      this.clear();
+      this.getRegistros();
+    }
+
+    this.spinner.hide();
   }
 
   delayCaixa() {
-    return new Promise(resolve => setTimeout(resolve, 3000));
+    return new Promise(resolve => setTimeout(resolve, 300000));
   }
 
   fecharCaixa() {

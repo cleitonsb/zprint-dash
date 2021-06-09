@@ -65,8 +65,8 @@ export class ClockListComponent implements OnInit {
     var ano = periodo.substr(2);
 
     this.service.getByUser(usuario, mes, ano).pipe(first()).subscribe((data: any) => {
-      var hSem = this.user.cargaSemana * 60; 
-      var hSab = this.user.cargaSabado * 60;          
+      var hSem =  60; 
+      var hSab =  60;          
 
       for (let index = 0; index < data.length; index++) {
         const element = data[index];
@@ -127,9 +127,8 @@ export class ClockListComponent implements OnInit {
       if(dCheck.getDay() != 6 && dCheck.getDay() != 0) qtDias++;
     }
 
-    var hSab = this.user.cargaSabado * 60;    
-    var hSem = this.user.cargaSemana * 60;          
-    this.totalMes = (qtSab * hSab) + (qtDias * hSem);    
+    
+    this.totalMes =  (qtDias);    
   }
 
   showMaps(localizacao) {

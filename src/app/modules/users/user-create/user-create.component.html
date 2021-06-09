@@ -168,16 +168,46 @@
           <h6 class="heading-small text-muted mb-4">Carga horária</h6>
           <div class="pl-lg-4" >
             <div class="row">
-              <div class="col-lg-2">
+              <div class="col-lg-1">
                 <div class="form-group">
-                  <label class="form-control-label" >Seg-Sex</label>
-                  <input [(ngModel)]="user.cargaSemana" [disabled]="!formEdit" value="{{user.cargaSemana}}" name="cargaSemana" type="text" mask="0*" class="form-control form-control-alternative" >
+                  <label class="form-control-label" >Seg</label>
+                  <input [(ngModel)]="user.cargaSeg" [disabled]="!formEdit" value="{{user.cargaSeg}}" name="cargaSeg" type="text" mask="0*" class="form-control form-control-alternative" >
                 </div>
               </div>
-              <div class="col-lg-2">
+              <div class="col-lg-1">
                 <div class="form-group">
-                  <label class="form-control-label" >Sábado</label>
-                  <input [(ngModel)]="user.cargaSabado" [disabled]="!formEdit" value="{{user.cargaSabado}}" name="cargaSabado" type="text" mask="0*" class="form-control form-control-alternative" >
+                  <label class="form-control-label" >Ter</label>
+                  <input [(ngModel)]="user.cargaTer" [disabled]="!formEdit" value="{{user.cargaTer}}" name="cargaTer" type="text" mask="0*" class="form-control form-control-alternative" >
+                </div>
+              </div>
+              <div class="col-lg-1">
+                <div class="form-group">
+                  <label class="form-control-label" >Qua</label>
+                  <input [(ngModel)]="user.cargaQua" [disabled]="!formEdit" value="{{user.cargaQua}}" name="cargaQua" type="text" mask="0*" class="form-control form-control-alternative" >
+                </div>
+              </div>
+              <div class="col-lg-1">
+                <div class="form-group">
+                  <label class="form-control-label" >Qui</label>
+                  <input [(ngModel)]="user.cargaQui" [disabled]="!formEdit" value="{{user.cargaQui}}" name="cargaQui" type="text" mask="0*" class="form-control form-control-alternative" >
+                </div>
+              </div>
+              <div class="col-lg-1">
+                <div class="form-group">
+                  <label class="form-control-label" >Sex</label>
+                  <input [(ngModel)]="user.cargaSex" [disabled]="!formEdit" value="{{user.cargaSex}}" name="cargaSex" type="text" mask="0*" class="form-control form-control-alternative" >
+                </div>
+              </div>
+              <div class="col-lg-1">
+                <div class="form-group">
+                  <label class="form-control-label" >Sab</label>
+                  <input [(ngModel)]="user.cargaSab" [disabled]="!formEdit" value="{{user.cargaSab}}" name="cargaSab" type="text" mask="0*" class="form-control form-control-alternative" >
+                </div>
+              </div>
+              <div class="col-lg-1">
+                <div class="form-group">
+                  <label class="form-control-label" >Dom</label>
+                  <input [(ngModel)]="user.cargaDom" [disabled]="!formEdit" value="{{user.cargaDom}}" name="cargaDom" type="text" mask="0*" class="form-control form-control-alternative" >
                 </div>
               </div>
             </div>

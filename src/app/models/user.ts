@@ -12,7 +12,12 @@ export class User {
   token?: string;
   avatar?: any;
   enderecos = new Array<Endereco>();
-  cargaSemana?: number;
-  cargaSabado?: number;
+  cargaSeg?: number;
+  cargaTer?: number;
+  cargaQua?: number;
+  cargaQui?: number;
+  cargaSex?: number;
+  cargaSab?: number;
+  cargaDom?: number;
 }
 

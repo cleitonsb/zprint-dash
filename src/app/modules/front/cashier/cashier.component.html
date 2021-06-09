@@ -62,7 +62,8 @@
         </div>
         <div class="col" >
           <div class="d-flex flex-row-reverse pt-4" >            
-            <button #btnCpf [disabled]="detTotal == 0" [swal]="cpfSwal"  class="btn btn-info mr-2 mb-2" > Informar CPF (F8)</button>
+            <!-- <button #btnCpf [disabled]="detTotal == 0" [swal]="cpfSwal"  class="btn btn-info mr-2 mb-2" > Informar CPF (F8)</button> -->
+            <!-- <button #btnCpf (click)=emitirNfe() class="btn btn-info mr-2 mb-2" > Emitir NFe</button> -->
           </div>
         </div>
 
@@ -232,24 +233,21 @@
     </div>
   </swal>
 
-  <swal #cpfSwal title="Informe o CPF" [showConfirmButton]=true>
+  <swal #cpfSwal title="Informe o CPF" [showConfirmButton]=false>
     <div *swalPortal >
       <div class="card-body ">
         <div class="table-responsive" >
           <table class="table table-hover align-items-center table-flush ">
             <tbody>
               <tr>
-                <td class="pl-0 text-left">CPF</td>
                 <td class="text-right">
-                  <input type="text" name="cpf" #valor (keyup.enter)=addPagamento() [(ngModel)]="fContagem"  class="form-control"  >
+                  <input type="text" name="cpf" #cpf (keyup.enter)=closeCpf() [(ngModel)]="venda.cpf" mask="000.000.000-00" class="form-control" >
                 </td>
+                <td class="pl-0 text-left"><button (click)=closeCpf() class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Salvar</button></td>
               </tr>
             </tbody>
           </table>
-        </div>
-        <div class="d-flex flex-row-reverse pt-4" >
-          <button #btnSalvarFechamento (click)="confirmFechamento()"  class="btn btn-info mr-2 mb-2" > <i class="fas fa-save"></i> Salvar</button>
-        </div>
+        </div>        
       </div>
     </div>
   </swal>

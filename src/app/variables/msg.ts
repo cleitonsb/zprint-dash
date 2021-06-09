@@ -14,6 +14,7 @@ export const msg = {
   E005: 'Selecione um produto!',
   E006: 'O campo $$ é obrigatório!',
   E007: 'Valor $$ não permitido.',
+  E008: 'Valor do campo $$ é invalido.',
   E400: 'Requisição inválida',
   E401: 'Recurso não autorizado',
   E403: 'Recurso não autorizado',

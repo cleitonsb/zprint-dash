@@ -10,8 +10,13 @@ export class NfeService {
 
   constructor(private http: HttpClient) { }
 
+  public getByCashier(idCaixa: Number) {
+    return this.http.get(environment.apiUrl + '/pagamento/' + idCaixa);
+  }
+
   public generate(conta, venda) {
-    
+    // return this.http.get(environment.apiUrl + '/nfe/venda/' + venda.id + '/cpf/' + venda.cpf);
+    return this.http.get(environment.apiUrl + '/nfe/venda/13/cpf/95782354100');
 
     console.log(conta);
     console.log(venda);
