@@ -13,11 +13,12 @@ import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
 import localePT from '@angular/common/locales/pt'
 import {SweetAlert2Module} from '@sweetalert2/ngx-sweetalert2';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { UserPassComponent } from './user-pass/user-pass.component';
 
 registerLocaleData(localePT);
 
 @NgModule({
-  declarations: [UserListComponent, UserCreateComponent, UserShowComponent],
+  declarations: [UserListComponent, UserCreateComponent, UserShowComponent, UserPassComponent],
   imports: [
       CommonModule,
       RouterModule.forChild(UserRoutes),

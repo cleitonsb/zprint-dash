@@ -67,4 +67,21 @@ export class UserService {
     if (id === null) { return; }
     return this.http.get(environment.apiUrl + '/usuario/remove/' + id, {observe: 'response'});
   }
+
+  public storePass(usuarioid: number, pass: string) {
+    if (usuarioid === null || pass === null) { return; }
+    
+    const headers = new HttpHeaders();
+    headers.append('Accept', 'application/json');
+
+    const formData = new FormData();
+
+    formData.append('senha', pass);
+    formData.append('id', usuarioid+"");
+
+    return this.http.post(environment.apiUrl + '/usuario/senha', formData, {
+      observe: 'response',
+      headers: headers
+    });
+  }
 }

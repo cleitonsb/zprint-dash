@@ -12,12 +12,7 @@
                             <label class="form-control-label" >Funcionário</label>
                             <h3 class="mb-0">{{user.nome}}</h3>
                         </div>
-                    </div>
-
-                    <div class="col-lg-2 ">
-                        <label class="form-control-label" >Carga Semana:</label> {{user.cargaSemana}}hs <br>
-                        <label class="form-control-label" >Carga Sabado:</label> {{user.cargaSabado}}hs
-                    </div>
+                    </div>                    
                 </div>
             </div>
             <div class="table-responsive">
@@ -29,31 +24,39 @@
                     <th scope="col">Intervalo</th>
                     <th scope="col">Retorno</th>
                     <th scope="col">Saída</th>
+                    <th scope="col">Carga</th>
+                    <th scope="col">Trabalhado</th>
                     <th scope="col">Saldo</th>
                     <th scope="col text-center">Autorizado</th>              
                 </tr>
                 </thead>
                 <tbody>
                 <tr *ngFor="let ponto of pontos" >
-                    <th scope="row">{{ponto.dataEntrada | date:'dd/MM/yyyy'}}</th>
-                    <td class="text-center">{{ponto.dataEntrada | date:'HH:mm'}} <a href="javascript:" *ngIf=ponto.gpsEntrada (click)=showMaps(ponto.gpsEntrada) ><i class="far fa-map"></i></a></td>
+                    <th scope="row" >{{ponto.dataEntrada | date:'dd/MM/yyyy'}}</th>
+                    <td class="text-center" *ngIf=ponto.gpsEntrada>{{ponto.dataEntrada | date:'HH:mm'}} <a href="javascript:" (click)=showMaps(ponto.gpsEntrada) ><i class="far fa-map"></i></a></td>
+                    <td class="text-center" *ngIf=!ponto.gpsEntrada></td>
                     <td class="text-center">{{ponto.dataIntervalo | date:'HH:mm'}} <a href="javascript:" *ngIf=ponto.gpsIntervalo (click)='showMaps(ponto.gpsIntervalo)' ><i class="far fa-map"></i></a></td>
                     <td class="text-center">{{ponto.dataRetorno | date:'HH:mm'}} <a href="javascript:" *ngIf=ponto.gpsRetorno (click)='showMaps(ponto.gpsRetorno)' ><i class="far fa-map"></i></a></td>
                     <td class="text-center">{{ponto.dataSaida | date:'HH:mm'}} <a href="javascript:" *ngIf=ponto.gpsSaida (click)='showMaps(ponto.gpsSaida)' ><i class="far fa-map"></i></a></td>
-                    <td class="text-center">{{ponto.resultado}}</td>
+                    <td class="text-center">{{ponto.carga}} ({{ponto.carga*60}})</td>
+                    <td class="text-center">{{ponto.saldoTrab}} ({{ponto.saldoTrab - (ponto.carga*60)}})</td>
+                    <td class="text-center">{{ponto.saldo}}</td>
                     <td *ngIf=ponto.autorizado class="text-center"><i class="fas fa-calendar-check text-green"></i></td>
                     <td *ngIf=!ponto.autorizado class="text-center">
-                        <i *ngIf="(ponto.resultado > 10 || ponto.resultado < -10)" class="far fa-calendar-times text-red"></i> &nbsp; 
-                        <a *ngIf="(ponto.resultado > 10 || ponto.resultado < -10)"  href="javascript:" (click)=setAutorizacao(ponto.id)><i class="far fa-check-square"></i></a>
+                        <i *ngIf="(ponto.nAut)" class="far fa-calendar-times text-red"></i> &nbsp; 
+                        <a *ngIf="(ponto.nAut)"  href="javascript:" (click)=setAutorizacao(ponto.id)><i class="far fa-check-square"></i></a>
                     </td>
                 </tr>
 
                 <tr  >
-                    <th colspan="4" class="sub-total"> Totais </th>
-                    <th class="sub-total"> Mês: {{(totalMes/60).toFixed(0)}}:{{totalMes%60}}hrs </th>
-                    <th class="sub-total"> Trabalhado: {{(totalPonto/60).toFixed(0)}}:{{totalPonto%60}}hrs </th>
-                    <th class="total" *ngIf="((totalPonto-totalMes)%60) < 0"> Saldo: {{((totalPonto-totalMes)/60).toFixed(0)}}:{{((totalPonto-totalMes)%60)*-1}}hrs </th>
-                    <th class="total" *ngIf="((totalPonto-totalMes)%60) >= 0"> Saldo: {{((totalPonto-totalMes)/60).toFixed(0)}}:{{((totalPonto-totalMes)%60)}}hrs </th>
+                    <th colspan="6" class="sub-total"> Totais </th>
+                    <th class="sub-total"> Mês: {{(totalMes/60).toFixed(0)}}:{{totalMes%60 | number: '2.0'}}hrs </th>
+                    <th class="sub-total"> 
+                        Trabalhado: {{(totalPonto/60).toFixed(0)}}:{{totalPonto%60 | number: '2.0'}}hrs <br />
+                        Autorizado: {{((totalMes+totalSaldo)/60).toFixed(0)}}:{{(totalMes+(totalSaldo))%60 | number: '2.0'}}hrs
+                    </th>
+                    <th class="total" *ngIf="((totalSaldo)%60) < 0"> Saldo: {{((totalSaldo)/60).toFixed(0)}}:{{((totalSaldo)%60)*-1 | number: '2.0'}}hrs </th>
+                    <th class="total" *ngIf="((totalSaldo)%60) >= 0"> Saldo: {{((totalSaldo)/60).toFixed(0)}}:{{((totalSaldo)%60) | number: '2.0'}}hrs </th>
                 </tr>
 
                 </tbody>
