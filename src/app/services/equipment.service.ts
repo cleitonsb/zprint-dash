@@ -10,7 +10,7 @@ export class EquipmentService {
   constructor(private http: HttpClient) { }
 
   public getByPerson(idPessoa: Number) {
-    return this.http.get(environment.apiUrl + '/equipamento/' + idPessoa);
+    return this.http.get(environment.config.apiUrl + '/equipamento/' + idPessoa);
   }
 
 }

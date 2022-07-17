@@ -11,16 +11,16 @@ export class NfeService {
   constructor(private http: HttpClient) { }
 
   public getByCashier(idCaixa: Number) {
-    return this.http.get(environment.apiUrl + '/pagamento/' + idCaixa);
+    return this.http.get(environment.config.apiUrl + '/pagamento/' + idCaixa);
   }
 
   public generate(conta, venda) {
-    // return this.http.get(environment.apiUrl + '/nfe/venda/' + venda.id + '/cpf/' + venda.cpf);
-    return this.http.get(environment.apiUrl + '/nfe/venda/13/cpf/95782354100');
+    // return this.http.get(environment.config.apiUrl + '/nfe/venda/' + venda.id + '/cpf/' + venda.cpf);
+    return this.http.get(environment.config.apiUrl + '/nfe/venda/13/cpf/95782354100');
 
     console.log(conta);
     console.log(venda);
-    
+
     let arrProdutos = []
     venda.itensVenda.forEach(element => {
       let objItemVenda = {
@@ -79,7 +79,7 @@ export class NfeService {
       'X-Access-Token': '2638-itQw1ebjTaNmdEXt0FAclL3Sc1gbE2udnfEDiefOI7a1oSwt',
       'X-Access-Token-Secret': 'TpUDrWEraWajlXxEEWylNXUWHjOZpGaNW5iLLPqWUikzPwN4'
     });
-    
+
     // return this.http.get('https://webmaniabr.com/api/1/nfe/consulta?uuid=efea7c6c-ccf1-4a3d-9cd5-226ac43126f3', {
     //   headers: headers
     // });
@@ -92,7 +92,7 @@ export class NfeService {
   }
 
   public consulta(conta, venda) {
-    
+
 
     console.log(conta);
     console.log(venda);
@@ -157,12 +157,12 @@ export class NfeService {
       'X-Access-Token': '2638-itQw1ebjTaNmdEXt0FAclL3Sc1gbE2udnfEDiefOI7a1oSwt',
       'X-Access-Token-Secret': 'TpUDrWEraWajlXxEEWylNXUWHjOZpGaNW5iLLPqWUikzPwN4'
     });
-    
+
     return this.http.get('https://webmaniabr.com/api/1/nfe/consulta?uuid=663a5a52-af76-4768-87e5-0353a034f87c', {
       headers: headers
     });
 
   }
 
-  
+
 }

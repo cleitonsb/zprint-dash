@@ -79,7 +79,7 @@ export class DataService {
     }
 
     public getByParam(param) {
-      return this.http.get(environment.apiUrl + '/produto/busca/' + param);
+      return this.http.get(environment.config.apiUrl + '/produto/busca/' + param);
     }
 }
 

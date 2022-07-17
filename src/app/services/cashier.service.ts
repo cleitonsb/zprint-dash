@@ -11,38 +11,38 @@ export class CashierService {
   constructor(private http: HttpClient) { }
 
   public getAll(param, page: number = 1) {
-    return this.http.get(environment.apiUrl + '/caixa/page/' + page + param);
+    return this.http.get(environment.config.apiUrl + '/caixa/page/' + page + param);
   }
 
   public getByParam(param) {
-    return this.http.get(environment.apiUrl + '/caixa/busca/' + param);
+    return this.http.get(environment.config.apiUrl + '/caixa/busca/' + param);
   }
 
   public get(id: number = null) {
     if (id === null) { return; }
-    return this.http.get(environment.apiUrl + '/caixa/' + id);
+    return this.http.get(environment.config.apiUrl + '/caixa/' + id);
   }
 
   public getItems(id: number = null) {
     if (id === null) { return; }
-    return this.http.get(environment.apiUrl + '/caixa/items/' + id);
+    return this.http.get(environment.config.apiUrl + '/caixa/items/' + id);
   }
 
   public getOpen() {
-    return this.http.get(environment.apiUrl + '/caixa/aberto');
+    return this.http.get(environment.config.apiUrl + '/caixa/aberto');
   }
 
   public store(data) {
-    return this.http.post(environment.apiUrl + '/caixa', data, {observe: 'response'});
+    return this.http.post(environment.config.apiUrl + '/caixa', data, {observe: 'response'});
   }
 
   public close(data) {
-    return this.http.post(environment.apiUrl + '/caixa/fechar', data, {observe: 'response'});
+    return this.http.post(environment.config.apiUrl + '/caixa/fechar', data, {observe: 'response'});
   }
 
   public delete(id) {
     if (id === null) { return; }
-    return this.http.get(environment.apiUrl + '/caixa/remove/' + id, {observe: 'response'});
+    return this.http.get(environment.config.apiUrl + '/caixa/remove/' + id, {observe: 'response'});
   }
 
   // public getRel(dataIni: String = '', dataFim: String = '') { console.log(dataIni);
@@ -58,14 +58,14 @@ export class CashierService {
   //   let param = '/' + ((dataIni !== '') ? dataIni : di);
   //       param = param + '/' + ((dataFim !== '') ? dataFim : df);
 
-  //   return this.http.get(environment.apiUrl + '/caixa/rel' + param);
+  //   return this.http.get(environment.config.apiUrl + '/caixa/rel' + param);
   // }
 
   public getRel(dataIni: String, dataFim: String) {
-    return this.http.get(environment.apiUrl + '/caixa/relatorio/dataini/' + dataIni + '/datafim/' + dataFim);
+    return this.http.get(environment.config.apiUrl + '/caixa/relatorio/dataini/' + dataIni + '/datafim/' + dataFim);
   }
 
   public getRelDetalhe(dataIni: String, dataFim: String) {
-    return this.http.get(environment.apiUrl + '/caixa/relatorio-detalhado/dataini/' + dataIni + '/datafim/' + dataFim);
+    return this.http.get(environment.config.apiUrl + '/caixa/relatorio-detalhado/dataini/' + dataIni + '/datafim/' + dataFim);
   }
 }

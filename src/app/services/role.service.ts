@@ -11,7 +11,7 @@ export class RoleService {
   constructor(private http: HttpClient, private permissionService: PermissionService) { }
 
   public getAll() {
-    return this.http.get(environment.apiUrl + '/perfil');
+    return this.http.get(environment.config.apiUrl + '/perfil');
   }
 
   public getPermissions() {
@@ -20,15 +20,15 @@ export class RoleService {
 
   public get(id : number = null) {
     if(id === null) return;
-    return this.http.get(environment.apiUrl + '/perfil/' + id);
+    return this.http.get(environment.config.apiUrl + '/perfil/' + id);
   }
 
   public store(data) {
-    return this.http.post(environment.apiUrl + '/perfil', data, {observe: 'response'});
+    return this.http.post(environment.config.apiUrl + '/perfil', data, {observe: 'response'});
   }
 
   public delete(id) {
     if(id === null) return;
-    return this.http.delete(environment.apiUrl + '/perfil/' + id, {observe: 'response'});
+    return this.http.delete(environment.config.apiUrl + '/perfil/' + id, {observe: 'response'});
   }
 }

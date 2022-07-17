@@ -16,6 +16,9 @@ export class UserPassComponent implements OnInit {
   pass: string;
   passConfirm: string;
   usuario: User;
+  urlBreadcrumb: any;
+  subTitulo: any;
+  titulo: any;
 
   constructor(
     private service: UserService,

@@ -1,4 +1,5 @@
 export const environment = {
   production: true,
-  apiUrl: 'http://graficazprint.com.br/zprint'
+  config: {},
+  resolver: (prop: string) => () => (environment.config[prop] as string),
 };

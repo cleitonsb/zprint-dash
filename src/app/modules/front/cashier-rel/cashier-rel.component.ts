@@ -55,7 +55,7 @@ export class CashierRelComponent implements OnInit {
   constructor(
     private service: CashierService,
     private spinner: NgxSpinnerService,
-    private notify: NotificationService,    
+    private notify: NotificationService,
     private date: DateFunctions,
     private datePipe: DatePipe
   ) {
@@ -153,8 +153,11 @@ export class CashierRelComponent implements OnInit {
         });
 
         this.spinner.hide();
-      });    
+      });
     });
   }
 
+  onKeydown($event: any) {
+
+  }
 }

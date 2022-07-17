@@ -19,12 +19,12 @@ export class UserService {
   ) { }
 
   public getAll(param, page: number = 1) {
-    return this.http.get(environment.apiUrl + '/usuario/page/' + page + param);
+    return this.http.get(environment.config.apiUrl + '/usuario/page/' + page + param);
   }
 
   public get(id: number = null) {
     if (id === null) { return; }
-    return this.http.get(environment.apiUrl + '/usuario/' + id);
+    return this.http.get(environment.config.apiUrl + '/usuario/' + id);
   }
 
   public getByParam(param?) {
@@ -32,16 +32,16 @@ export class UserService {
     if (param !== undefined) {
       busca = '/busca/' + param;
     }
-    return this.http.get(environment.apiUrl + '/usuario' + busca);
+    return this.http.get(environment.config.apiUrl + '/usuario' + busca);
   }
 
   public getByEmail(email: string = null) {
     if (email === null) { return; }
-    return this.http.get(environment.apiUrl + '/usuario/' + email + '/email');
+    return this.http.get(environment.config.apiUrl + '/usuario/' + email + '/email');
   }
 
   public store(data) {
-    return this.http.post(environment.apiUrl + '/usuario', data, {observe: 'response'});
+    return this.http.post(environment.config.apiUrl + '/usuario', data, {observe: 'response'});
   }
 
   public upload(avatar, usuarioid) {
@@ -56,7 +56,7 @@ export class UserService {
       formData.append('usuarioid', usuarioid);
     }
 
-    return this.http.post(environment.apiUrl + '/usuario/upload', formData, {
+    return this.http.post(environment.config.apiUrl + '/usuario/upload', formData, {
       observe: 'response',
       headers: headers
     });
@@ -65,12 +65,12 @@ export class UserService {
 
   public delete(id) {
     if (id === null) { return; }
-    return this.http.get(environment.apiUrl + '/usuario/remove/' + id, {observe: 'response'});
+    return this.http.get(environment.config.apiUrl + '/usuario/remove/' + id, {observe: 'response'});
   }
 
   public storePass(usuarioid: number, pass: string) {
     if (usuarioid === null || pass === null) { return; }
-    
+
     const headers = new HttpHeaders();
     headers.append('Accept', 'application/json');
 
@@ -79,7 +79,7 @@ export class UserService {
     formData.append('senha', pass);
     formData.append('id', usuarioid+"");
 
-    return this.http.post(environment.apiUrl + '/usuario/senha', formData, {
+    return this.http.post(environment.config.apiUrl + '/usuario/senha', formData, {
       observe: 'response',
       headers: headers
     });

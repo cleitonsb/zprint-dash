@@ -5,5 +5,6 @@ export class Product {
   codigo?: string;
   ean?: string;
   tipo?: number;
+  prazo: any;
 }
 

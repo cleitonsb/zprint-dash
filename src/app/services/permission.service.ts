@@ -10,7 +10,7 @@ export class PermissionService {
   constructor(private http: HttpClient) { }
 
   public getAll() {
-    return this.http.get(environment.apiUrl + '/permissoes');
+    return this.http.get(environment.config.apiUrl + '/permissoes');
   }
 
 }

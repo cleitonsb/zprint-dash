@@ -17,6 +17,7 @@ export class PersonListComponent implements OnInit {
   total: Number;
 
   paramBusca = '';
+  p: number;
 
   constructor(private service: PersonService, private spinner: NgxSpinnerService) { }
 

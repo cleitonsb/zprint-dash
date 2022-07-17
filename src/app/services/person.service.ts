@@ -12,7 +12,7 @@ export class PersonService {
   ) { }
 
   public getAll(param, page: number = 1) {
-    return this.http.get(environment.apiUrl + '/pessoa/page/' + page + param);
+    return this.http.get(environment.config.apiUrl + '/pessoa/page/' + page + param);
   }
 
   public getByParam(param?) {
@@ -20,20 +20,20 @@ export class PersonService {
     if (param !== undefined) {
       busca = '/busca/' + param;
     }
-    return this.http.get(environment.apiUrl + '/pessoa' + busca);
+    return this.http.get(environment.config.apiUrl + '/pessoa' + busca);
   }
 
   public get(id: number = null) {
     if (id === null) { return; }
-    return this.http.get(environment.apiUrl + '/pessoa/' + id);
+    return this.http.get(environment.config.apiUrl + '/pessoa/' + id);
   }
 
   public store(data) {
-    return this.http.post(environment.apiUrl + '/pessoa', data, {observe: 'response'});
+    return this.http.post(environment.config.apiUrl + '/pessoa', data, {observe: 'response'});
   }
 
   public delete(id) {
     if (id === null) { return; }
-    return this.http.get(environment.apiUrl + '/pessoa/remove/' + id, {observe: 'response'});
+    return this.http.get(environment.config.apiUrl + '/pessoa/remove/' + id, {observe: 'response'});
   }
 }
