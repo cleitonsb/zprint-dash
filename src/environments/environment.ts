@@ -4,8 +4,4 @@
 
 export const environment = {
   production: false,
-  config: {
-    apiUrl: 'http://localhost:8080/zprint',
-    frontUrl: 'http://localhost:4200'
-  }
 };

@@ -30,7 +30,27 @@ export class BaseService {
     );
   }
 
-  protected basePost<T>(endpoint: string, data: any): Observable<T> {
+  protected baseGetObservable<T>(endpoint: string): Observable<T> {
+    return this.configService.get('apiUrl').pipe(
+      switchMap(
+        (apiUrl: string) => this.httpClient.get<T>(`${apiUrl}/${this.sanitizeEndpoint(endpoint)}`,
+        ).pipe(take(1))
+      )
+    );
+  }
+
+  protected basePostObservable<T>(endpoint: string, data: any): Observable<T> {
+    return this.configService.get('apiUrl').pipe(
+      switchMap(
+        (apiUrl: string) =>
+          this.httpClient.post<T>(`${apiUrl}/${this.sanitizeEndpoint(endpoint)}`,
+            data
+          ).pipe(take(1))
+      )
+    );
+  }
+
+  protected basePost<T>(endpoint: string, data: any) {
     return this.configService.get('apiUrl').pipe(
       switchMap(
         (apiUrl: string) =>

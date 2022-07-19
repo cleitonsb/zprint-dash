@@ -16,7 +16,6 @@ export class AuthenticationService extends BaseService {
   private email: string;
   private senha: string;
 
-
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
   }
