@@ -4,17 +4,22 @@ import {User} from '../models/user';
 import {HttpClient} from '@angular/common/http';
 import {environment} from '../../environments/environment';
 import {map} from 'rxjs/operators';
-import { UserService } from './user.service';
 import {BaseService} from './base.service';
-import {ConfigService} from './config.service';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AuthenticationService extends BaseService {
+export class AuthenticationService {
+  private currentUserSubject: BehaviorSubject<User>;
+  private currentUser: Observable<User>;
   private user: any;
   private email: string;
   private senha: string;
+
+  constructor(private http: HttpClient) {
+    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
+    this.currentUser = this.currentUserSubject.asObservable();
+  }
 
   public get currentUserValue(): User {
     return this.currentUserSubject.value;
@@ -24,7 +29,9 @@ export class AuthenticationService extends BaseService {
     this.email = email;
     this.senha = senha;
 
-    return this.basePost<any>(`login`, JSON.stringify({email, senha}))
+    console.log(email);
+
+    return this.http.post<any>(`${environment.config.apiUrl}/login`, JSON.stringify({email, senha}))
       .pipe(map(token => {
 
         this.user = {

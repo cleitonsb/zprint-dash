@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {BaseService} from './services/base.service';
 
 @Component({
   selector: 'app-root',
@@ -6,5 +7,9 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent {
-  title = 'argon-dashboard-angular';
+  title = 'zprint-caixa';
+
+  constructor(private baseService: BaseService) {
+  }
+
 }

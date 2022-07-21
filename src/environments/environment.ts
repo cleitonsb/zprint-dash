@@ -4,4 +4,8 @@
 
 export const environment = {
   production: false,
+  config: {
+    apiUrl: localStorage.getItem('apiUrl'),
+    frontUrl: localStorage.getItem('frontUrl'),
+  }
 };

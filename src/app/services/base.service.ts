@@ -1,68 +1,38 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ConfigService} from './config.service';
-import {BehaviorSubject, Observable} from 'rxjs';
-import {User} from '../models/user';
-import {switchMap, take} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import {switchMap} from 'rxjs/operators';
+import {NgxSpinnerService} from 'ngx-spinner';
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseService {
 
-  public currentUserSubject: BehaviorSubject<User>;
-  public currentUser: Observable<User>;
-
   constructor(
     private httpClient: HttpClient,
     private configService: ConfigService,
+    private spinner: NgxSpinnerService
   ) {
-    this.currentUserSubject = new BehaviorSubject<User>(JSON.parse(localStorage.getItem('currentUser')));
-    this.currentUser = this.currentUserSubject.asObservable();
-  }
-
-  protected baseGet<T>(endpoint: string) {
-    return this.configService.get('apiUrl').pipe(
+    this.spinner.show();
+    this.configService.get('apiUrl').pipe(
       switchMap(
-        (apiUrl: string) => this.httpClient.get<T>(`${apiUrl}/${this.sanitizeEndpoint(endpoint)}`,
-        ).pipe(take(1))
+        (apiUrl: string) => {
+          localStorage.setItem('apiUrl', apiUrl);
+          return apiUrl;
+        }
       )
-    );
-  }
+    ).subscribe(() => this.spinner.hide());
 
-  protected baseGetObservable<T>(endpoint: string): Observable<T> {
-    return this.configService.get('apiUrl').pipe(
+    this.configService.get('frontUrl').pipe(
       switchMap(
-        (apiUrl: string) => this.httpClient.get<T>(`${apiUrl}/${this.sanitizeEndpoint(endpoint)}`,
-        ).pipe(take(1))
+        (apiUrl: string) => {
+          localStorage.setItem('frontUrl', apiUrl);
+          return apiUrl;
+        }
       )
-    );
-  }
-
-  protected basePostObservable<T>(endpoint: string, data: any): Observable<T> {
-    return this.configService.get('apiUrl').pipe(
-      switchMap(
-        (apiUrl: string) =>
-          this.httpClient.post<T>(`${apiUrl}/${this.sanitizeEndpoint(endpoint)}`,
-            data
-          ).pipe(take(1))
-      )
-    );
-  }
-
-  protected basePost<T>(endpoint: string, data: any) {
-    return this.configService.get('apiUrl').pipe(
-      switchMap(
-        (apiUrl: string) =>
-          this.httpClient.post<T>(`${apiUrl}/${this.sanitizeEndpoint(endpoint)}`,
-            data
-          ).pipe(take(1))
-      )
-    );
-  }
-
-  private sanitizeEndpoint(endpoint: string): string {
-    return endpoint.trim().replace(/^\//, '');
+    ).subscribe(() => this.spinner.hide());
   }
 
 }
