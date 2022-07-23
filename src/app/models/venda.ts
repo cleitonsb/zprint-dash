@@ -12,5 +12,6 @@ export class Venda {
   itensVenda = new Array<ItemVenda>();
   situacao: boolean;
   contas = new Array<PaymentBill>();
+  cpf?: string;
 }
 

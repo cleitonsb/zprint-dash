@@ -17,6 +17,7 @@ export class SaleListComponent implements OnInit {
   total: Number;
 
   paramBusca = '';
+  p: number;
 
   constructor(private salesService: SaleService, private spinner: NgxSpinnerService, private router: Router) { }
 

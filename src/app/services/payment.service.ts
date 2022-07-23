@@ -10,7 +10,7 @@ export class PaymentService {
   constructor(private http: HttpClient) { }
 
   public getByCashier(idCaixa: Number) {
-    return this.http.get(environment.apiUrl + '/pagamento/' + idCaixa);
+    return this.http.get(environment.config.apiUrl + '/pagamento/' + idCaixa);
   }
 
 }

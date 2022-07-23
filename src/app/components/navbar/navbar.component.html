@@ -27,7 +27,7 @@
             <i class="ni ni-single-02"></i>
             <span>Meus dados</span>
           </a>
-          <a routerLinkActive="active" class="dropdown-item">
+          <a routerLinkActive="active" [routerLink]="['/user/change-pass/' + userId]" class="dropdown-item">
             <i class="ni ni-key-25"></i>
             <span>Trocar senha</span>
           </a>

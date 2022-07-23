@@ -29,7 +29,7 @@ export class ErrorInterceptor implements HttpInterceptor {
       let errosString = '';
 
       if (err.status === 401) {
-        if (err.url === environment.apiUrl + '/login') {
+        if (err.url === environment.config.apiUrl + '/login') {
           errosString = msg.E002;
         } else {
           this.authenticationService.logout();

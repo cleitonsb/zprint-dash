@@ -17,7 +17,7 @@ import { Component, OnInit, ElementRef, ViewChild, HostListener } from '@angular
 import { Person } from 'src/app/models/person';
 import { EquipmentService } from 'src/app/services/equipment.service';
 import { PaymentBill } from 'src/app/models/paymentBill';
-import { environment  } from "../../../../environments/environment";
+import { environment  } from '../../../../environments/environment';
 
 import Swal from 'sweetalert2';
 
@@ -28,7 +28,7 @@ import Swal from 'sweetalert2';
 })
 export class ServiceCreateComponent implements OnInit {
 
-  @ViewChild('btnFinalizar') btnFinalizar: ElementRef;  
+  @ViewChild('btnFinalizar') btnFinalizar: ElementRef;
   @ViewChild('clienteSwal') private clienteSwal: SwalComponent;
   @ViewChild('equipamentoSwal') private equipamentoSwal: SwalComponent;
   @ViewChild('cancelarSwal') private cancelarSwal: SwalComponent;
@@ -63,8 +63,8 @@ export class ServiceCreateComponent implements OnInit {
 
   previsao: Date;
 
-  blockPag: boolean = false;
-  blockCanc: boolean = false;
+  blockPag = false;
+  blockCanc = false;
 
   constructor(
     private service: ServiceService,
@@ -132,18 +132,18 @@ export class ServiceCreateComponent implements OnInit {
   }
 
   getServico(id) {
-    if(!id) return;
+    if (!id) { return; }
     this.service.get(id).subscribe((data: Service) => {
-      this.servico = data; 
-      
+      this.servico = data;
+
       this.equipamentos = this.servico.pessoa.equipamentos;
 
-      if(this.servico.equipamento == null){
+      if (this.servico.equipamento == null) {
         this.servico.equipamento = new Equipment();
       }
 
       this.calcTotal();
-      this.spinner.hide();           
+      this.spinner.hide();
     });
   }
 
@@ -155,7 +155,7 @@ export class ServiceCreateComponent implements OnInit {
   @HostListener('document:keydown', ['$event'])
   detectKey(e: KeyboardEvent) {
     if (e.key === 'F8') {
-      
+
     }
 
     if (e.key === 'F9') {
@@ -172,13 +172,13 @@ export class ServiceCreateComponent implements OnInit {
   }
 
   onKeydown(event) {
-    if (event.key === "Enter") {
+    if (event.key === 'Enter') {
       console.log(event);
     }
   }
 
-  setCliente() {    
-    if(this.servico.pessoa.id != null) {
+  setCliente() {
+    if (this.servico.pessoa.id != null) {
       this.equipmentService.getByPerson(this.servico.pessoa.id).subscribe((response: any) => {
         this.equipamentos = response;
       });
@@ -252,18 +252,18 @@ export class ServiceCreateComponent implements OnInit {
     this.servico.contas.forEach(element => {
       this.totalPago += element.valor;
 
-      if(element.pago == false) {
+      if (element.pago === false) {
         this.blockPag = true;
       }
 
-      if(element.pago == true) {
+      if (element.pago === true) {
         this.blockCanc = true;
       }
     });
 
-    let restante = this.servico.total - this.servico.desconto - this.totalPago;
+    const restante = this.servico.total - this.servico.desconto - this.totalPago;
 
-    if(restante <= 0) {
+    if (restante <= 0) {
       this.blockPag = true;
     }
 
@@ -290,31 +290,31 @@ export class ServiceCreateComponent implements OnInit {
     }
 
     if (this.valorPagamento > this.servico.total) { console.log(this.valorPagamento);
-    
+
       this.notify.error(msg.custom(msg.E007, 'do pagamento'));
       return;
     }
 
-    let restante = this.servico.total - this.totalPago;
+    const restante = this.servico.total - this.totalPago;
 
-    if(this.valorPagamento > restante) { console.log(restante);
-    
+    if (this.valorPagamento > restante) { console.log(restante);
+
       this.notify.error(msg.custom(msg.E007, 'do pagamento'));
       return;
     }
 
-    if(!this.servico.pessoa.id || this.servico.pessoa.id == 0) {
+    if (!this.servico.pessoa.id || this.servico.pessoa.id === 0) {
       this.notify.warning(msg.custom(msg.E006, 'Cliente'));
       return;
     }
 
-    if(!this.servico.responsavel.id || this.servico.responsavel.id == 0) {
+    if (!this.servico.responsavel.id || this.servico.responsavel.id === 0) {
       this.notify.warning(msg.custom(msg.E006, 'Responsável'));
       return;
     }
 
     /** gera a primeira conta, caso o serviço tenha entrada */
-    if(this.valorPagamento != 0 && this.valorPagamento != null) {
+    if (this.valorPagamento !== 0 && this.valorPagamento != null) {
       const conta = new PaymentBill();
       conta.dataPagamento = new Date();
       conta.dataVencimento = new Date();
@@ -328,31 +328,31 @@ export class ServiceCreateComponent implements OnInit {
       this.servico.contas.push(conta);
     }
 
-    if(this.previsao != null) {
-      let str = this.previsao;
+    if (this.previsao != null) {
+      const str = this.previsao;
 
-      let dd = String(str).substr(0,2);
-      let mm = String(str).substr(2,2);
-      let yy = String(str).substr(4,4);
+      const dd = String(str).substr(0, 2);
+      const mm = String(str).substr(2, 2);
+      const yy = String(str).substr(4, 4);
 
-      this.servico.previsao = new Date(parseInt(yy), parseInt(mm)-1, parseInt(dd));
+      this.servico.previsao = new Date(+yy, +mm - 1, +dd);
     }
 
     this.service.store(this.servico).subscribe((response: any) => {
       if (response.status === 200) {
           this.notify.sucess(msg.S001);
           if (response.body.id) {
-            window.location.href = environment.frontUrl + '/#/front/service-create';                
+            window.location.href = environment.config.frontUrl + '/#/front/service-create';
 
             Swal.fire({
               title: 'Impressão',
-              showCancelButton: true, 
+              showCancelButton: true,
               focusCancel: true,
-              text: 'Deseja imprimir a guia do serviço?', 
+              text: 'Deseja imprimir a guia do serviço?',
               icon: 'question'
             }).then((result) => {
               if (result.isConfirmed) {
-                window.open(environment.frontUrl + '/#/front/service-print/' + response.body.id, '_blank')                
+                window.open(environment.config.frontUrl + '/#/front/service-print/' + response.body.id, '_blank');
               }
             });
           }
@@ -365,14 +365,14 @@ export class ServiceCreateComponent implements OnInit {
   checkImpressao() {
     Swal.fire({
       title: 'Impressão',
-      showCancelButton: true, 
+      showCancelButton: true,
       focusCancel: true,
-      text: 'Deseja imprimir a guia do serviço?', 
+      text: 'Deseja imprimir a guia do serviço?',
       icon: 'question'
     }).then((result) => {
       if (result.isConfirmed) {
         console.log(1);
-        
+
       }
     });
   }
@@ -380,20 +380,20 @@ export class ServiceCreateComponent implements OnInit {
   checkCancelar() {
     if (this.servico.id) {
       this.cancelarSwal.fire();
-    }else{
+    } else {
       this.montaTela();
     }
   }
 
-  execCancelar() {   
+  execCancelar() {
 
     this.service.delete(this.servico.id, this.usuarioCanc, this.senhaCanc).subscribe((response: any) => {
-      console.log(response)
+      console.log(response);
       if (response.status === 200) {
           this.notify.sucess(msg.S002);
           this.montaTela();
           this.cancelarSwal.dismiss();
-          
+
           this.usuarioCanc = '';
           this.senhaCanc = '';
 
@@ -404,7 +404,7 @@ export class ServiceCreateComponent implements OnInit {
 
   addCliente() {
 
-    if(this.servico.pessoa.nome == null) {
+    if (this.servico.pessoa.nome == null) {
       this.notify.warning(msg.custom(msg.E006, 'Nome'));
       return;
     }
@@ -427,22 +427,22 @@ export class ServiceCreateComponent implements OnInit {
   }
 
   openEquipamento() {
-  
-    if(this.servico.pessoa.id != 0 && this.servico.pessoa.id != null) {
+
+    if (this.servico.pessoa.id !== 0 && this.servico.pessoa.id != null) {
       this.equipamentoSwal.fire();
-    }else{
-      this.notify.warning("Antes de adicionar um equipamento, favor selecionar o cliente!");
+    } else {
+      this.notify.warning('Antes de adicionar um equipamento, favor selecionar o cliente!');
     }
   }
 
-  addEquipamento() {   
+  addEquipamento() {
 
-    if(this.servico.equipamento.marca == null) {
+    if (this.servico.equipamento.marca == null) {
       this.notify.warning(msg.custom(msg.E006, 'Marca'));
       return;
     }
 
-    if(this.servico.equipamento.modelo == null) {
+    if (this.servico.equipamento.modelo == null) {
       this.notify.warning(msg.custom(msg.E006, 'Modelo'));
       return;
     }

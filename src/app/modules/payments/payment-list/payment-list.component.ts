@@ -18,6 +18,7 @@ export class PaymentListComponent implements OnInit {
   total: Number;
 
   paramBusca = '';
+  p: number;
 
   constructor(private service: PaymentBillService, private spinner: NgxSpinnerService, private router: Router) { }
 

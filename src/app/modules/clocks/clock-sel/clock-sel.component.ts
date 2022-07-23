@@ -54,10 +54,6 @@ export class ClockSelComponent implements OnInit {
 
   buscar() {
     if(this.valida()) {
-
-console.log('/clock/' + this.usuario + '/' + this.data);
-
-
       this.router.navigate(['/clock/' + this.usuario + '/' + this.data]);
     }
   }

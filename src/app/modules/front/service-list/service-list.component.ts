@@ -18,6 +18,7 @@ export class ServiceListComponent implements OnInit {
   total: Number;
 
   paramBusca = '';
+  p: number;
 
   constructor(private service: ServiceService, private spinner: NgxSpinnerService, private router: Router) { }
 

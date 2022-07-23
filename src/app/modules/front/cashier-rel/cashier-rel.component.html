@@ -4,6 +4,29 @@
   <div class="row" >
     <div class="col-xl-12 mb-5 mb-xl-2">
       <div class="card shadow pr-2" >
+        <div class="card-body">
+          <div class="row">
+            <div class="col-lg-2 col-md-6">
+              <div class="form-group">
+                <label class="form-control-label" >Período</label>
+                <input type="text" [(ngModel)]="data" name="data"  class="form-control form-control-alternative" mask="00/0000">
+                
+              </div>
+            </div>
+            <div class="col-lg-2 col-md-6">
+              <div class="form-group s-label">                
+                <button #btnBuscar (keydown.enter)="onKeydown($event)" (click)=buscar() class="btn btn-info mr-2 mb-2" > <i class="fas fa-search"></i> Buscar</button>                                
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row" >
+    <div class="col-xl-12 mb-5 mb-xl-2">
+      <div class="card shadow pr-2" >
         <apx-chart
           [series]="chartOptions.series"
           [chart]="chartOptions.chart"
@@ -13,8 +36,6 @@
       </div>
     </div>
   </div>
-
-
 
   <!-- Table -->
   <div class="row">

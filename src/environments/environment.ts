@@ -4,19 +4,8 @@
 
 export const environment = {
   production: false,
-  // apiUrl: 'http://localhost:8080/zprint',
-  // frontUrl: 'http://localhost:4200'
-  // apiUrl: 'http://45.180.144.58:8080/zprint',
-  // frontUrl: 'http://45.180.144.58'
-  apiUrl: 'http://45.180.144.58:8081/zprint',
-  frontUrl: 'http://45.180.144.58:81'
+  config: {
+    apiUrl: window['env']['apiUrl'] || 'http://localhost:8080/zprint',
+    frontUrl: window['env']['frontUrl'] || 'http://localhost:4200',
+  }
 };
-
-/*
- * For easier debugging in development mode, you can import the following file
- * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
- *
- * This import should be commented out in production mode because it will have a negative impact
- * on performance if an error is thrown.
- */
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.

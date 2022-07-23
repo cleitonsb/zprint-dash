@@ -19,6 +19,7 @@ import { ChartBill } from 'src/app/models/chartBill';
 import { User } from 'src/app/models/user';
 import { ServiceService } from 'src/app/services/service.service';
 import { Service } from 'src/app/models/service';
+import { NfeService } from "src/app/services/nfe.service";
 
 @Component({
   selector: 'app-cashier',
@@ -31,6 +32,8 @@ export class CashierComponent implements OnInit {
   @ViewChild('tpPagamentoSwal') private tpPagamentoSwal: SwalComponent;
   @ViewChild('fechaCaixaSwal') private fechaCaixaSwal: SwalComponent;
   @ViewChild('btnFinalizar') btnFinalizar: ElementRef;
+  @ViewChild('btnCpf') btnCpf: ElementRef;
+  @ViewChild('cpfSwal') private cpfSwal: SwalComponent;
 
   innerHeight: number;
   disableDinheiro = null;
@@ -70,6 +73,7 @@ export class CashierComponent implements OnInit {
     private cashierService: CashierService,
     private paymentService: PaymentService,
     private paymentBill: PaymentBillService,
+    private nfeService: NfeService,
     private authenticationService: AuthenticationService,
     private notify: NotificationService,
     private spinner: NgxSpinnerService,
@@ -91,7 +95,12 @@ export class CashierComponent implements OnInit {
     if (e.key === 'F9') {
       this.btnFinalizar.nativeElement.click();
     }
+
+    if (e.key === 'F8') {
+      this.btnCpf.nativeElement.click();
+    }
   }
+  
 
   async getRegistros() {
     this.paymentBill.getByParam('noCaixa').subscribe((data: any) => {
@@ -116,7 +125,7 @@ export class CashierComponent implements OnInit {
   getVenda(vendaId?: number) {
     this.salesService.get(vendaId).subscribe((data: Venda) => {
       this.clear();
-      //this.venda = data;
+      this.venda = data;
 
       this.detItens = data.itensVenda;
       this.detTotal = data.total;
@@ -129,14 +138,6 @@ export class CashierComponent implements OnInit {
       this.conta = data.contas[data.contas.length - 1];
 
       this.tipoConta = 1;
-
-      // delete this.venda.usuario;
-      // this.venda.usuario = new User();
-      // this.venda.usuario.id = this.usuario.id;
-
-      // delete this.conta.usuario;
-      // this.conta.usuario = new User();
-      // this.conta.usuario.id = this.usuario.id;
 
     });
   }
@@ -197,6 +198,15 @@ export class CashierComponent implements OnInit {
         this.caixaSwal.dismiss();
       }
     });
+  }
+
+  closeCpf() {
+    if(this.venda.cpf.length > 0 && this.venda.cpf.length < 11) {
+      this.notify.error(msg.custom(msg.E008, 'CPF'));
+      return;
+    }
+
+    this.cpfSwal.dismiss();
   }
 
   abrirCaixa() {
@@ -271,6 +281,10 @@ export class CashierComponent implements OnInit {
     }
   }
 
+  consultar() {
+    this.nfeService.consulta(this.conta, this.venda);
+  }
+
   finalizaConta() {
     this.spinner.show();
 
@@ -304,19 +318,48 @@ export class CashierComponent implements OnInit {
 
     this.paymentBill.update(this.conta).subscribe((response: any) => {
       if (response.status === 200) {
-          this.notify.sucess(msg.S001);
-          if (response.body.id) {
-            this.clear();
-            this.getRegistros();
-          }
+        this.showSucess(response.body.id);
+        // if(this.venda.cpf.length >= 11) {
+        //   this.emitirNfe(function() {
+        //     this.showSucess(response.body.id);
+        //   });
+        // }else {
+        //   this.showSucess(response.body.id);
+        // }
 
-          this.spinner.hide();
+          
       }
     });
   }
 
+  emitirNfe(callback?) {
+
+    this.nfeService.generate(this.conta, this.venda).subscribe((response: any) => {
+      if (response.status === 200) {
+
+      }
+
+      console.log(response);
+      
+
+      this.spinner.hide();
+    });
+
+    callback;
+  }
+
+  showSucess(id) {
+    this.notify.sucess(msg.S001);
+    if (id) {
+      this.clear();
+      this.getRegistros();
+    }
+
+    this.spinner.hide();
+  }
+
   delayCaixa() {
-    return new Promise(resolve => setTimeout(resolve, 3000));
+    return new Promise(resolve => setTimeout(resolve, 300000));
   }
 
   fecharCaixa() {

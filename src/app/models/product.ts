@@ -4,5 +4,7 @@ export class Product {
   preco?: string;
   codigo?: string;
   ean?: string;
+  tipo?: number;
+  prazo: any;
 }
 

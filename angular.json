@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "argon-dashboard-angular": {
+    "zprint-dashboard": {
       "root": "",
       "sourceRoot": "src",
       "projectType": "application",
@@ -45,6 +45,10 @@
                   "with": "src/environments/environment.prod.ts"
                 }
               ],
+              "assets": [
+                "src/assets",
+                "src/config/env.json"
+              ],
               "optimization": true,
               "outputHashing": "all",
               "sourceMap": false,
@@ -60,18 +64,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "argon-dashboard-angular:build"
+            "browserTarget": "zprint-dashboard:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "argon-dashboard-angular:build:production"
+              "browserTarget": "zprint-dashboard:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "argon-dashboard-angular:build"
+            "browserTarget": "zprint-dashboard:build"
           }
         },
         "test": {
@@ -87,7 +91,8 @@
             "scripts": [],
             "assets": [
               "src/favicon.ico",
-              "src/assets"
+              "src/assets",
+              "src/config/env.json"
             ]
           }
         },
@@ -105,7 +110,7 @@
         }
       }
     },
-    "argon-dashboard-angular-e2e": {
+    "zprint-dashboard-e2e": {
       "root": "e2e/",
       "projectType": "application",
       "architect": {
@@ -113,11 +118,11 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "argon-dashboard-angular:serve"
+            "devServerTarget": "zprint-dashboard:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "argon-dashboard-angular:serve:production"
+              "devServerTarget": "zprint-dashboard:serve:production"
             }
           }
         },
@@ -133,7 +138,7 @@
       }
     }
   },
-  "defaultProject": "argon-dashboard-angular",
+  "defaultProject": "zprint-dashboard",
   "schematics": {
     "@schematics/angular:component": {
       "styleext": "scss"

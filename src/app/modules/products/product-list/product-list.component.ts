@@ -16,6 +16,7 @@ export class ProductListComponent implements OnInit {
   total: number;
 
   paramBusca = '';
+  p: string | number;
 
   constructor(private productService: ProductService, private spinner: NgxSpinnerService) { }
 

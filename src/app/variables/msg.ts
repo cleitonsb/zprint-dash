@@ -3,6 +3,7 @@ export const msg = {
   S001: 'Registro salvo com sucesso!',
   S002: 'Registro removido com sucesso!',
   S003: 'Caixa fechado com sucesso!',
+  S004: 'Senha alterada com sucesso!',
 
   /** Alertas */
   A001: 'O desconto não pode ser maior que o valor da venda/serviço!',
@@ -14,6 +15,8 @@ export const msg = {
   E005: 'Selecione um produto!',
   E006: 'O campo $$ é obrigatório!',
   E007: 'Valor $$ não permitido.',
+  E008: 'Valor do campo $$ é invalido.',
+  E009: 'Os valores digitados não são iguais!',
   E400: 'Requisição inválida',
   E401: 'Recurso não autorizado',
   E403: 'Recurso não autorizado',

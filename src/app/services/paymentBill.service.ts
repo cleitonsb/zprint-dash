@@ -10,33 +10,33 @@ export class PaymentBillService {
   constructor(private http: HttpClient) { }
 
   public getAll(param, page: number = 1) {
-    return this.http.get(environment.apiUrl + '/conta/page/' + page + param);
+    return this.http.get(environment.config.apiUrl + '/conta/page/' + page + param);
   }
 
   public getByParam(param?) {
-    return this.http.get(environment.apiUrl + '/conta/busca/' + param);
+    return this.http.get(environment.config.apiUrl + '/conta/busca/' + param);
   }
 
   public getByCaixa(param?) {
-    return this.http.get(environment.apiUrl + '/conta/caixa/' + param);
+    return this.http.get(environment.config.apiUrl + '/conta/caixa/' + param);
   }
 
   public get(id: number = null) {
     if (id === null) { return; }
-    return this.http.get(environment.apiUrl + '/conta/' + id);
+    return this.http.get(environment.config.apiUrl + '/conta/' + id);
   }
 
   public store(data) {
-    return this.http.post(environment.apiUrl + '/conta', data, {observe: 'response'});
+    return this.http.post(environment.config.apiUrl + '/conta', data, {observe: 'response'});
   }
 
   public update(data) {
-    return this.http.post(environment.apiUrl + '/conta', data, {observe: 'response'});
+    return this.http.post(environment.config.apiUrl + '/conta', data, {observe: 'response'});
   }
 
   public delete(id) {
     if (id === null) { return; }
-    return this.http.get(environment.apiUrl + '/conta/remove/' + id, {observe: 'response'});
+    return this.http.get(environment.config.apiUrl + '/conta/remove/' + id, {observe: 'response'});
   }
 
 }

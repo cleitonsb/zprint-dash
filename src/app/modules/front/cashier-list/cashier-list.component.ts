@@ -19,6 +19,7 @@ export class CashierListComponent implements OnInit {
   total: Number;
 
   paramBusca = '';
+  p: number;
 
   constructor(private service: CashierService, private spinner: NgxSpinnerService, private router: Router) { }
 

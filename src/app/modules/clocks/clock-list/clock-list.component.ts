@@ -32,6 +32,7 @@ export class ClockListComponent implements OnInit {
   user = new User();
   totalPonto: number = 0;
   totalMes: number = 0;
+  totalSaldo: number = 0;
 
   constructor(
     private service: ClockService,
@@ -59,29 +60,24 @@ export class ClockListComponent implements OnInit {
 
     if(!periodo) return;
 
-    this.totalPonto = 0;
+    this.totalPonto = this.totalMes = this.totalSaldo = 0;
 
     var mes = periodo.substr(0, 2);
     var ano = periodo.substr(2);
 
     this.service.getByUser(usuario, mes, ano).pipe(first()).subscribe((data: any) => {
-      var hSem = this.user.cargaSemana * 60; 
-      var hSab = this.user.cargaSabado * 60;          
+      var hSem =  60; 
+      var hSab =  60;          
 
       for (let index = 0; index < data.length; index++) {
-        const element = data[index];
-        if(this.isWeekend(element.dataEntrada)) {          
-          data[index].resultado = data[index].saldo - hSab;
-          this.getResultado(data[index].resultado, data[index].saldo, data[index].autorizado, hSab);        
-        }else{
-          data[index].resultado = data[index].saldo - hSem;                    
-          this.getResultado(data[index].resultado, data[index].saldo, data[index].autorizado, hSem);        
-        }        
+        this.totalMes += data[index].saldoDia;
+        this.totalPonto += data[index].saldoTrab;  
+        this.totalSaldo += data[index].saldo;  
       }
       this.pontos = data;
       
       this.periodo = periodo;
-      this.getTotalMes(mes, ano);
+      //this.getTotalMes(mes, ano);
       this.spinner.hide();
 
       console.log(this.totalPonto)
@@ -89,17 +85,21 @@ export class ClockListComponent implements OnInit {
   }
 
   getResultado(resultado, saldo, autorizado, carga) { 
+
     /** caso seja negativo, soma direto */
     if(resultado < -10 && (autorizado == false || autorizado == null || autorizado == undefined)){
       this.totalPonto += parseFloat(saldo);
+      console.log(resultado + ' - ' + saldo + ' - ' + carga + '----');
     }
     /** caso positivo, verifica se for autorizado */
     else if(resultado > 10 && autorizado == true){
       this.totalPonto += parseFloat(saldo);
+      console.log(resultado + ' - ' + saldo + ' - ' + carga + '++++');
     }
     /** qualquer outra condição, pega o valor trabalhado */
     else{
       this.totalPonto += carga;
+      console.log(resultado + ' - ' + saldo + ' - ' + carga + '====');
     }
   }
 
@@ -122,10 +122,8 @@ export class ClockListComponent implements OnInit {
       if(dCheck.getDay() == 6) qtSab++;
       if(dCheck.getDay() != 6 && dCheck.getDay() != 0) qtDias++;
     }
-
-    var hSab = this.user.cargaSabado * 60;    
-    var hSem = this.user.cargaSemana * 60;          
-    this.totalMes = (qtSab * hSab) + (qtDias * hSem);    
+    
+    this.totalMes =  (qtDias);    
   }
 
   showMaps(localizacao) {

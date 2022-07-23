@@ -47,13 +47,32 @@ export class ProductCreateComponent implements OnInit {
   }
 
   save() {
-    this.spinner.show();
+    if(this.valida()) {
+      this.spinner.show();
 
-    this.service.store(this.product).subscribe((response: any) => {
-      if (response.status === 200) {
-          this.saveSuccess(response.body.id);
+      this.service.store(this.product).subscribe((response: any) => {
+        if (response.status === 200) {
+            this.saveSuccess(response.body.id);
+        }
+      });
+    }
+  }
+
+  valida(){
+
+    if(this.product.tipo == null ) {
+      this.notify.error(msg.custom(msg.E006, 'Tipo'));
+      return false;
+    }
+    
+    if(this.product.tipo == 0) {
+      if(this.product.ean == ''  || this.product.ean == null) {
+        this.notify.error(msg.custom(msg.E006, 'Código EAN'));
+        return false;
       }
-    });
+    }
+
+    return true;
   }
 
   saveSuccess(id: string) {
