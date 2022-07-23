@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   config: {
-    apiUrl: localStorage.getItem('apiUrl'),
-    frontUrl: localStorage.getItem('frontUrl'),
+    apiUrl: window['env']['apiUrl'] || 'http://localhost:8080/zprint',
+    frontUrl: window['env']['frontUrl'] || 'http://localhost:4200',
   }
 };
